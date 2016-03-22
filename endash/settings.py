@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/lennin92/endash/static/'
-MEDIA_ROOT = '/home/lennin92/endash/static/'
+MEDIA_ROOT = '/home/lennin92/endash/media/'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
