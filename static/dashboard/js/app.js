@@ -7,7 +7,8 @@ var dashboarApp = angular.module('DashboardApp', ['ngMaterial']);
 
 dashboarApp.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('red');
+    .primaryPalette('red')
+    .dark();
 });
 
 dashboarApp.controller('AppCtrl', function($scope) {
