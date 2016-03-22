@@ -31,7 +31,7 @@ dashboarApp.controller('AppCtrl', function($scope) {
 
     var photos = [];
 
-    for(var i = 0; i < 100; i++) {
+    for(var i = 0; i < 25; i++) {
     	photos.push({
     		id: i,
     		path: getImagePath()
