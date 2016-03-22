@@ -12,14 +12,14 @@ dashboarApp.config(function($mdThemingProvider) {
 });
 
 dashboarApp.controller('AppCtrl', function($scope) {
-	    var getImagePath = function() {
+    var getImagePath = function() {
     	if(Math.random()<.5) {
-    		return 'http://dummyimage.com/400x16:9';
+    		return '//static/dashboard/img/400x16-9.png';
     	}
     	else {
-    		return 'http://dummyimage.com/225x9:16';
+    		return '//static/dashboard/img/225x9-16.png';
     	}
-    }
+    };
 
     var partition = function (input, size) {
         var newArr = [];
@@ -27,7 +27,7 @@ dashboarApp.controller('AppCtrl', function($scope) {
             newArr.push(input.slice(i, i + size));
         }
         return newArr;
-    }
+    };
 
     var photos = [];
 
@@ -35,7 +35,7 @@ dashboarApp.controller('AppCtrl', function($scope) {
     	photos.push({
     		id: i,
     		path: getImagePath()
-    	})
+    	});
     }
 
     $scope.data = {
