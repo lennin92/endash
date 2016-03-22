@@ -121,6 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media'
+STATIC_ROOT = '/home/lennin92/endash/static/'
+MEDIA_ROOT = '/home/lennin92/endash/static/'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
