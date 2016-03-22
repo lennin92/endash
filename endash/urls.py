@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.shortcuts import render
 from rest_framework import routers
 from dashboard.api import NodoViewSet, MedicionViewSet
 
@@ -22,8 +23,12 @@ router = routers.DefaultRouter()
 router.register(r'nodos', NodoViewSet)
 router.register(r'mediciones', MedicionViewSet)
 
+def main(request):
+    return render(request, 'main.html')
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^$', main)
 ]

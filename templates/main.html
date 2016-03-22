@@ -1,0 +1,23 @@
+<html lang="en" >{% load staticfiles %}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="{% static "dashboard/css/angular-material.min.css" %}">
+  <title>UES Energy Dashboard</title>
+</head>
+<body ng-app="DashboardApp" ng-cloak>
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="{% static "dashboard/js/angular.min.js" %}"></script>
+  <script src="{% static "dashboard/js/angular-animate.min.js" %}"></script>
+  <script src="{% static "dashboard/js/angular-aria.min.js" %}"></script>
+  <script src="{% static "dashboard/js/angular-messages.min.js" %}"></script>
+
+  <!-- Angular Material Library -->
+  <script src="{% static "dashboard/js/angular-material.min.js" %}"></script>
+
+  <!-- Your application bootstrap  -->
+  <script src="{% static "dashboard/js/app.js" %}"></script>
+
+</body>
+</html>
