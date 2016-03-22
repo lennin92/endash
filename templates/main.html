@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{% static "dashboard/css/angular-material.min.css" %}">
   <title>UES Energy Dashboard</title>
 </head>
-<body ng-app="DashboardApp" ng-cloak>
+<body ng-app="DashboardApp" ng-cloak layout-fill>
 
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="{% static "dashboard/js/angular.min.js" %}"></script>
@@ -19,5 +19,19 @@
   <!-- Your application bootstrap  -->
   <script src="{% static "dashboard/js/app.js" %}"></script>
 
-</body>
+    <div ng-controller="AppCtrl" layout='column'>
+      <md-toolbar class='md-tall'>
+        <div class="md-toolbar-tools">
+          <span>UES ENERGY DASHBOARD</span>
+        </div>
+      </md-toolbar>
+      <div layout="row" flex>
+        <div layout="column" ng-repeat="photoColumn in data.photos3p" flex>
+          <md-card ng-repeat="photo in photoColumn" layout layout-padding>
+            <img ng-src="{{photo.path}}">
+          </md-card>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
