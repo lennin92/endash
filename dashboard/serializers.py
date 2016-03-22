@@ -5,7 +5,7 @@ from rest_framework import serializers
 class NodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nodo
-        fields = ('id', 'url', 'padre', 'nombre', 'descripcion', 'hijos')
+        fields = ('id', 'url', 'padre', 'nombre', 'descripcion', 'hijos', 'fotografia')
 
 
 class MedicionSerializer(serializers.ModelSerializer):
