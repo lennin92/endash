@@ -8,7 +8,7 @@ def get_imagen_nodo_dir(obj, filename):
 
 
 class Nodo(models.Model):
-    padre = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    padre = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='dependientes')
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField()
     fotografia = models.ImageField(upload_to=get_imagen_nodo_dir)
