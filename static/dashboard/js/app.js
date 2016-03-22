@@ -5,6 +5,11 @@
 
 var dashboarApp = angular.module('DashboardApp', ['ngMaterial']);
 
+dashboarApp.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('red');
+});
+
 dashboarApp.controller('AppCtrl', function($scope) {
 	    var getImagePath = function() {
     	if(Math.random()<.5) {
