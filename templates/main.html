@@ -28,7 +28,7 @@
       <div layout="row" flex>
         <div layout="column" ng-repeat="photoColumn in data.photos3p" flex>
           <md-card ng-repeat="photo in photoColumn" layout layout-padding>
-            <img ng-src="{{photo.path}}">
+            <img ng-src="photo.path">
           </md-card>
         </div>
       </div>
