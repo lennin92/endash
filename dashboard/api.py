@@ -11,3 +11,4 @@ class NodoViewSet(viewsets.ModelViewSet):
 class MedicionViewSet(viewsets.ModelViewSet):
     queryset = Medicion.objects.all()
     serializer_class = MedicionSerializer
+
