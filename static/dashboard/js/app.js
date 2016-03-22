@@ -21,14 +21,6 @@ dashboarApp.controller('AppCtrl', function($scope) {
     	}
     };
 
-    var partition = function (input, size) {
-        var newArr = [];
-        for (var i = 0; i < input.length; i += size) {
-            newArr.push(input.slice(i, i + size));
-        }
-        return newArr;
-    };
-
     var photos = [];
 
     for(var i = 0; i < 25; i++) {
@@ -38,9 +30,6 @@ dashboarApp.controller('AppCtrl', function($scope) {
     	});
     }
 
-    $scope.data = {
-        photos: photos,
-        photos3p: partition(photos, photos.length / 4)
-    };
+    $scope.fotos = photos;
 
 });

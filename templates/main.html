@@ -25,13 +25,18 @@
           <span>UES ENERGY DASHBOARD</span>
         </div>
       </md-toolbar>
-      <div layout="row" flex>
-        <div layout="column" ng-repeat="photoColumn in data.photos3p" flex>
-          <md-card ng-repeat="photo in photoColumn" layout layout-padding>
-            <img ng-src="{{ photo.path }}">
-          </md-card>
-        </div>
-      </div>
+
+        <md-grid-list md-cols-sm="12" md-cols-md="8" md-cols-lg="4" md-cols-gt-lg="2" >
+            <md-grid-tile ng-repeat="f in fotos">
+              <img src="{{ f.path }}" />
+              <md-grid-tile-header>
+                <h3>This is a header</h3>
+              </md-grid-tile-header>
+              <md-grid-tile-footer>
+                <h3>This is a footer</h3>
+              </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
     </div>
   </body>
 </html>
