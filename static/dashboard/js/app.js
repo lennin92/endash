@@ -26,9 +26,10 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 		var res=response.data;
 		var arr =[];
 		for(var i=0;i<res.length;i++) {
+			if(res[i].padre==null) res[i].padre=-1;
 			if(res[i].fotografia==null) res[i].fotografia='//static/dashboard/img/none.png';
 			arr.push(angular.extend({}, res[i]));
 		}
-		$scope.nodos = arr;
+		vm.nodos = arr;
 	});
 }]);
