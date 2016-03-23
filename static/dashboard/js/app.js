@@ -5,9 +5,11 @@
 
 var dashboardApp = angular.module('DashboardApp', ['ngMaterial']);
 
-dashboardApp.config(function($mdThemingProvider) {
+dashboardApp.config(function($mdThemingProvider, $interpolateProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('red');
+  $interpolateProvider.startSymbol('{[{');
+  $interpolateProvider.endSymbol('}]}');
 });
 
 dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {

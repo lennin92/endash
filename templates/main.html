@@ -31,18 +31,18 @@
 	    <md-card-content>
             <md-grid-list md-row-height="7:5" md-cols-sm="1" md-cols-md="3" md-cols-lg="4" md-cols="4">
                 <md-grid-tile ng-repeat="n in vm.nodos">
-                    <img src="{{ n.fotografia }}" height="100%" width="100%"/>
+                    <img src="{[{ n.fotografia }]}" height="100%" width="100%"/>
                     <md-grid-tile-header>
-                        <h3>{{ n.nombre }}</h3>
+                        <h3>{[{ n.nombre }]}</h3>
                     </md-grid-tile-header>
                     <md-grid-tile-footer>
-                        <p>{{ n.descripcion }}</p>
+                        <p>{[{ n.descripcion }]}</p>
                     </md-grid-tile-footer>
                 </md-grid-tile>
             </md-grid-list>
         </md-card-content>
     </md-card>
-<pre>nodos = {{ vm.nodos }}</pre>
+<pre>nodos = {[{ vm.nodos|json }]}</pre>
 </div>
 </body>
 </html>
