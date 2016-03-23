@@ -22,7 +22,7 @@ dashboarApp.controller('AppCtrl', function($scope) {
     };
 
     var photos = [];
-
+	$scope.fotos = [];
     for(var i = 0; i < 25; i++) {
     	photos.push({
     		id: i,
