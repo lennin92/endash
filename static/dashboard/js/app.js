@@ -10,7 +10,7 @@ dashboardApp.config(function($mdThemingProvider) {
     .primaryPalette('red');
 });
 
-dashboardApp.controller('AppCtrl', function($scope) {
+dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     var getImagePath = function() {
     	if(Math.random()<.5) {
     		return '//static/dashboard/img/400x16-9.png';
@@ -21,13 +21,8 @@ dashboardApp.controller('AppCtrl', function($scope) {
     };
 
 	var vm = this;
-
-	var crearGrid = function(size){
-		var res = [];
-		for(var i=0;i<size;i++)
-			res.push(angular.extend({},{id:1,path:getImagePath()}));
-		return res;
-	};
-
-	vm.fotos = crearGrid(25);
-});
+	$http.get('/rest-api/nodos/?format=json').then(function(response){
+		var res=response.data;
+		vm.nodos = res;
+	});
+}]);
