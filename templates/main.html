@@ -20,7 +20,7 @@
 <!-- Your application bootstrap  -->
 <script src="{% static "dashboard/js/app.js" %}"></script>
 
-<div ng-controller="AppCtrl as appCtrl" layout='column'>
+<div ng-controller="AppCtrl as vm" layout='column'>
     <md-toolbar>
         <div class="md-toolbar-tools">
             <span>UES ENERGY DASHBOARD</span>
@@ -30,7 +30,7 @@
     <md-card>
 	    <md-card-content>
             <md-grid-list md-row-height="7:5" md-cols-sm="1" md-cols-md="3" md-cols-lg="4" md-cols="4">
-                <md-grid-tile ng-repeat="n in appCtrl.nodos">
+                <md-grid-tile ng-repeat="n in vm.nodos">
                     <img src="{{ n.fotografia }}" height="100%" width="100%"/>
                     <md-grid-tile-header>
                         <h3>{{ n.nombre }}</h3>
@@ -43,5 +43,6 @@
         </md-card-content>
     </md-card>
 </div>
+<pre>nodos = {{ vm.nodos|json }}</pre>
 </body>
 </html>
