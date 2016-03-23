@@ -21,15 +21,13 @@ dashboarApp.controller('AppCtrl', function($scope) {
     	}
     };
 
-    var photos = [];
 	$scope.fotos = [];
-    for(var i = 0; i < 25; i++) {
-    	photos.push({
+
+	for(var i = 0; i < 25; i++) {
+    	$scope.fotos.push({
     		id: i,
     		path: getImagePath()
     	});
     }
-
-    $scope.fotos = photos;
 
 });
