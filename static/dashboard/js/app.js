@@ -25,8 +25,10 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 	$http.get('/rest-api/nodos/?format=json').then(function(response){
 		var res=response.data;
 		var arr =[];
-		for(var i=0;i<res.length;i++)
+		for(var i=0;i<res.length;i++) {
+			if(res[i].fotografia==null) res[i].fotografia='//static/dashboard/img/none.png';
 			arr.push(angular.extend({}, res[i]));
+		}
 		vm.nodos = arr;
 	});
 }]);
