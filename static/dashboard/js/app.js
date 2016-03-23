@@ -24,6 +24,9 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 	vm.nodos=[];
 	$http.get('/rest-api/nodos/?format=json').then(function(response){
 		var res=response.data;
-		vm.nodos = res;
+		var arr =[];
+		for(var i=0;i<res.length;i++)
+			arr.push(angular.extend({}, res[i]));
+		vm.nodos = arr;
 	});
 }]);
