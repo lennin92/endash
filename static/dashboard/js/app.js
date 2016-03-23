@@ -30,5 +30,5 @@ dashboarApp.controller('AppCtrl', function($scope) {
 		return res;
 	};
 
-	vm.fotos = crearGrid();
+	vm.fotos = crearGrid(25);
 });
