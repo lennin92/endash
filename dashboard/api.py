@@ -2,15 +2,21 @@ from dashboard.models import Medicion, Nodo
 from rest_framework import viewsets
 from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
+from rest_framework.permissions import BasePermission
 from dashboard.serializers import MedicionSerializer, NodoSerializer
 
+
+class ReadOnly(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in ['get', 'GET']:
+            return True
 
 class NodoViewSet(viewsets.ModelViewSet):
     queryset = Nodo.objects.all()
     serializer_class = NodoSerializer
 
     # Query only parents nodes
-    @list_route()
+    @list_route(permission_classes=[ReadOnly])
     def padres(self, request):
         padres = Nodo.objects.filter(padre=None)
         page = self.paginate_queryset(padres)
@@ -21,7 +27,7 @@ class NodoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     # Query childs
-    @detail_route(methods=['get'])
+    @detail_route(methods=['get'], permission_classes=[ReadOnly])
     def hijos(self, request, pk=None):
         padre = self.get_object()
         hijos = Nodo.objects.filter(padre=padre)
