@@ -21,13 +21,14 @@ dashboarApp.controller('AppCtrl', function($scope) {
     	}
     };
 
-	$scope.fotos = [];
+	var vm = this;
 
-	for(var i = 0; i < 25; i++) {
-    	$scope.fotos.push({
-    		id: i,
-    		path: getImagePath()
-    	});
-    }
+	var crearGrid = function(size){
+		var res = [];
+		for(var i=0;i<size;i++)
+			res.push(angular.extend({},{id:1,path:getImagePath()}));
+		return res;
+	};
 
+	vm.fotos = crearGrid();
 });

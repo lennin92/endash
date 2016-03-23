@@ -19,7 +19,7 @@
   <!-- Your application bootstrap  -->
   <script src="{% static "dashboard/js/app.js" %}"></script>
 
-    <div ng-controller="AppCtrl" layout='column'>
+    <div ng-controller="AppCtrl as vm" layout='column'>
       <md-toolbar>
         <div class="md-toolbar-tools">
           <span>UES ENERGY DASHBOARD</span>
@@ -27,7 +27,7 @@
       </md-toolbar>
 
         <md-grid-list md-cols-sm="2" md-cols-md="4" md-cols-lg="8" md-cols-gt-lg="12" md-cols="4">
-            <md-grid-tile ng-repeat="f in fotos">
+            <md-grid-tile ng-repeat="f in vm.fotos">
               <img src="{{ f.path }}" />
               <md-grid-tile-header>
                 <h3>This is a header</h3>
