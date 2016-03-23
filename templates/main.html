@@ -1,42 +1,42 @@
-<html lang="en" >{% load staticfiles %}
+<html lang="en">{% load staticfiles %}
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="{% static "dashboard/css/angular-material.min.css" %}">
-  <title>UES Energy Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="{% static "dashboard/css/angular-material.min.css" %}">
+    <title>UES Energy Dashboard</title>
 </head>
 <body ng-app="DashboardApp" layout-fill>
 
-  <!-- Angular Material requires Angular.js Libraries -->
-  <script src="{% static "dashboard/js/angular.min.js" %}"></script>
-  <script src="{% static "dashboard/js/angular-animate.min.js" %}"></script>
-  <script src="{% static "dashboard/js/angular-aria.min.js" %}"></script>
-  <script src="{% static "dashboard/js/angular-messages.min.js" %}"></script>
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="{% static "dashboard/js/angular.min.js" %}"></script>
+<script src="{% static "dashboard/js/angular-animate.min.js" %}"></script>
+<script src="{% static "dashboard/js/angular-aria.min.js" %}"></script>
+<script src="{% static "dashboard/js/angular-messages.min.js" %}"></script>
 
-  <!-- Angular Material Library -->
-  <script src="{% static "dashboard/js/angular-material.min.js" %}"></script>
+<!-- Angular Material Library -->
+<script src="{% static "dashboard/js/angular-material.min.js" %}"></script>
 
-  <!-- Your application bootstrap  -->
-  <script src="{% static "dashboard/js/app.js" %}"></script>
+<!-- Your application bootstrap  -->
+<script src="{% static "dashboard/js/app.js" %}"></script>
 
-    <div ng-controller="AppCtrl as vm" layout='column'>
-      <md-toolbar>
+<div ng-controller="AppCtrl as vm" layout='column'>
+    <md-toolbar>
         <div class="md-toolbar-tools">
-          <span>UES ENERGY DASHBOARD</span>
+            <span>UES ENERGY DASHBOARD</span>
         </div>
-      </md-toolbar>
+    </md-toolbar>
 
-        <md-grid-list md-cols-sm="2" md-cols-md="4" md-cols-lg="8" md-cols-gt-lg="12" md-cols="4">
-            <md-grid-tile ng-repeat="f in vm.fotos">
-              <img src="{{ f.path }}" />
-              <md-grid-tile-header>
+    <md-grid-list md-row-height="7:5" md-cols-sm="2" md-cols-md="3" md-cols-lg="4" md-cols="4">
+        <md-grid-tile ng-repeat="f in vm.fotos">
+            <img src="{{ f.path }}" height="100%" width="100%"/>
+            <md-grid-tile-header>
                 <h3>This is a header</h3>
-              </md-grid-tile-header>
-              <md-grid-tile-footer>
+            </md-grid-tile-header>
+            <md-grid-tile-footer>
                 <h3>This is a footer</h3>
-              </md-grid-tile-footer>
-            </md-grid-tile>
-        </md-grid-list>
-    </div>
-  </body>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+    </md-grid-list>
+</div>
+</body>
 </html>
