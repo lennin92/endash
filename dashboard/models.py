@@ -32,6 +32,7 @@ class Nodo(models.Model):
         begin = end + datetime.timedelta(-30)
         a.apend(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
+
         return a
 
     def __str__(self):
