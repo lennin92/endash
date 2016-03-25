@@ -4,7 +4,7 @@ from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
 from dashboard.serializers import MedicionSerializer, NodoSerializer
-
+import datetime
 
 class ReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -41,4 +41,14 @@ class NodoViewSet(viewsets.ModelViewSet):
 class MedicionViewSet(viewsets.ModelViewSet):
     queryset = Medicion.objects.all()
     serializer_class = MedicionSerializer
+
+    def get_queryset(self):
+        begin = self.request.query_params.get('begin', None)
+        end = self.request.query_params.get('end', None)
+        nodo = self.request.query_params.get('nodo', None)
+        if end is None: end = datetime.datetime.now()
+        if begin is None: begin = end + datetime.timedelta(-30)
+        if nodo is None: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end))
+        else:  queryset = Medicion.objects.filter(fecha_hora__range=(begin,end), nodo=nodo)
+        return queryset
 
