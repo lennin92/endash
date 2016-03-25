@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Max
 
 
 def get_imagen_nodo_dir(obj, filename):
@@ -12,6 +13,25 @@ class Nodo(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField()
     fotografia = models.ImageField(upload_to=get_imagen_nodo_dir)
+
+    @property
+    def demandas(self):
+        a = []
+        end = datetime.datetime.now()
+        begin = end + datetime.timedelta(-30)
+        a.apend(Medicion.objects.filter(
+            fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
+
+        end = begin + datetime.timedelta(-1)
+        begin = end + datetime.timedelta(-30)
+        a.apend(Medicion.objects.filter(
+            fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
+
+        end = begin + datetime.timedelta(-1)
+        begin = end + datetime.timedelta(-30)
+        a.apend(Medicion.objects.filter(
+            fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
+        return a
 
     def __str__(self):
         lg=15
