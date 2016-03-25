@@ -36,7 +36,7 @@ class Nodo(models.Model):
         return a
 
     def __str__(self):
-        lg=15
+        lg=10
         if len(self.descripcion)<15: lg=len(self.descripcion)
         return '[NODO %s] %s: %s'%(self.id, self.nombre, self.descripcion[:lg]+' ...')
 
