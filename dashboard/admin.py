@@ -11,4 +11,4 @@ admin.site.register(Nodo, NodoAdmin)
 class MedicionAdmin(admin.ModelAdmin):
     list_display = ('id', 'nodo', 'fecha_hora', 'demanda')
 
-admin.site.register(Medicion)
+admin.site.register(Medicion, MedicionAdmin)
