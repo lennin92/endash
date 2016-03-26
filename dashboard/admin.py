@@ -9,6 +9,7 @@ class NodoAdmin(admin.ModelAdmin):
 admin.site.register(Nodo, NodoAdmin)
 
 class MedicionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nodo', 'fecha_hora', 'demanda')
+    list_display = ('id', 'nodo', 'fecha_hora',
+        'demanda', 'energia_activa', 'energia_aparente')
 
 admin.site.register(Medicion, MedicionAdmin)

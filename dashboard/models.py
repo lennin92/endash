@@ -40,6 +40,9 @@ class Nodo(models.Model):
         if len(self.descripcion)<15: lg=len(self.descripcion)
         return '[NODO %s] %s: %s'%(self.id, self.nombre, self.descripcion[:lg]+' ...')
 
+    class Meta:
+        verbose_name = "Nodo"
+        verbose_name_plural = "Nodos"
 
 class Medicion(models.Model):
     nodo = models.ForeignKey('Nodo')
@@ -47,6 +50,10 @@ class Medicion(models.Model):
     energia_activa = models.IntegerField()
     energia_aparente = models.IntegerField()
     demanda = models.FloatField()
+
+    class Meta:
+        verbose_name = "Medicion"
+        verbose_name_plural = "Mediciones"
 
     def __str__(self):
         return '[NODO %s] %s %s'%(self.nodo.id, str(self.fecha_hora), str(self.demanda))
