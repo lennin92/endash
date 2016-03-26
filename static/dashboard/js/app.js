@@ -3,26 +3,36 @@
  */
 
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate']);
 
-dashboardApp.config(function($mdThemingProvider, $interpolateProvider) {
-  $mdThemingProvider.theme('default')
-    .primaryPalette('red');
-  $interpolateProvider.startSymbol('{[{');
-  $interpolateProvider.endSymbol('}]}');
-});
+dashboardApp.config(['$mdThemingProvider', '$routeProvider',
+    function ($mdThemingProvider, $routeProvider) {
+        $mdThemingProvider.theme('default').primaryPalette('red');
+        $routeProvider.
+        when('/', {
+            templateUrl: '/dashboard/js/lista.html',
+            controller: 'AppCtrl'
+        }).
+        when('/nodos/:idNodo', {
+            templateUrl: '/dashboard/js/nodo.html',
+            controller: 'AppCtrl'
+        }).
+        otherwise({
+            redirectTo: '/'
+        });
+    }]);
 
-dashboardApp.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
-	var vm = this;
-	vm.nodos=[];
-	$http.get('/rest-api/nodos/?format=json').then(function(response){
-		var res=response.data;
-		var arr =[];
-		for(var i=0;i<res.length;i++) {
-			if(res[i].padre==null) res[i].padre=-1;
-			if(res[i].fotografia==null) res[i].fotografia='/static/dashboard/img/none.png';
-			arr.push(angular.extend({}, res[i]));
-		}
-		vm.nodos = arr;
-	});
+dashboardApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
+    var vm = this;
+    vm.nodos = [];
+    $http.get('/rest-api/nodos/?format=json').then(function (response) {
+        var res = response.data;
+        var arr = [];
+        for (var i = 0; i < res.length; i++) {
+            if (res[i].padre == null) res[i].padre = -1;
+            if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
+            arr.push(angular.extend({}, res[i]));
+        }
+        vm.nodos = arr;
+    });
 }]);
