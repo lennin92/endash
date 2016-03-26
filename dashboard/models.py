@@ -20,17 +20,17 @@ class Nodo(models.Model):
         a = []
         end = datetime.datetime.now()
         begin = end + datetime.timedelta(-30)
-        a.apend(Medicion.objects.filter(
+        a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
         end = begin + datetime.timedelta(-1)
         begin = end + datetime.timedelta(-30)
-        a.apend(Medicion.objects.filter(
+        a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
         end = begin + datetime.timedelta(-1)
         begin = end + datetime.timedelta(-30)
-        a.apend(Medicion.objects.filter(
+        a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
         return a
