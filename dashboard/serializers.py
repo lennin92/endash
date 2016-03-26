@@ -3,6 +3,9 @@ from rest_framework import serializers
 
 
 class NodoSerializer(serializers.ModelSerializer):
+    demandas = serializers.ListField(
+        child=serializers.FloatField()
+    )
     class Meta:
         model = Nodo
         fields = ('id', 'url', 'padre', 'nombre',
