@@ -10,11 +10,11 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider',
         $mdThemingProvider.theme('default').primaryPalette('red');
         $routeProvider.
         when('/', {
-            templateUrl: '/dashboard/views/lista.html',
+            templateUrl: '/static/dashboard/views/lista.html',
             controller: 'AppCtrl'
         }).
         when('/nodos/:idNodo', {
-            templateUrl: '/dashboard/views/nodo.html',
+            templateUrl: '/static/dashboard/views/nodo.html',
             controller: 'AppCtrl'
         }).
         otherwise({
