@@ -3,7 +3,7 @@
  */
 
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider',
     function ($mdThemingProvider, $routeProvider) {
