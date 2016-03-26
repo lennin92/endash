@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'endash.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lennin92$endash',
+        'USER': 'lennin92',
+        'PASSWORD': 'asdf123321fdsa',
+        'HOST': 'lennin92.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
     }
 }
 
