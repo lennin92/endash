@@ -13,11 +13,13 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
         $routeProvider.
         when('/', {
             templateUrl: '/static/dashboard/views/lista.html',
-            controller: 'AppCtrl'
+            controller: 'AppCtrl',
+            controllerAs:'vm'
         }).
         when('/nodos/:idNodo', {
             templateUrl: '/static/dashboard/views/nodo.html',
-            controller: 'AppCtrl'
+            controller: 'AppCtrl',
+            controllerAs:'vm'
         }).
         otherwise({
             redirectTo: '/'
