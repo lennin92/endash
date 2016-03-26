@@ -5,9 +5,11 @@
 
 var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute']);
 
-dashboardApp.config(['$mdThemingProvider', '$routeProvider',
-    function ($mdThemingProvider, $routeProvider) {
+dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
+    function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
         $mdThemingProvider.theme('default').primaryPalette('red');
+        $interpolateProvider.startSymbol('{[{');
+        $interpolateProvider.endSymbol('}]}');
         $routeProvider.
         when('/', {
             templateUrl: '/static/dashboard/views/lista.html',
