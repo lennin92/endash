@@ -1,10 +1,15 @@
-from dashboard.models import Medicion, Nodo
+from dashboard.models import Medicion, Nodo, DemandaNodo
 from rest_framework import serializers
 
 
+class DemandaNodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DemandaNodo
+        fields = ('fecha_inicio', 'fecha_fin', 'demanda')
+
 class NodoSerializer(serializers.ModelSerializer):
     demandas = serializers.ListField(
-        child=serializers.FloatField()
+        child=DemandaNodoSerializer
     )
     class Meta:
         model = Nodo
