@@ -4,8 +4,12 @@
             <md-card ng-click="vm.cargarNodo(vm.nodo)" style="cursor: pointer;">
                 <md-card-header>
                     <md-card-header-text>
-                        <h5><span class="md-title">{[{ vm.nodo.nombre }]}</span></h5>
-                        <h6 ng-if="vm.nodo.padre!=null"><a href="/#/nodos/{[{vm.nodo.padre}]}">Ver Padre</a></h6>
+                        <h5>
+                            <span class="md-title">{[{ vm.nodo.nombre }]}</span>
+                            <span ng-if="vm.nodo.padre!=null" style="font-size: 9pt; text-align: right;">
+                                <a href="/#/nodos/{[{vm.nodo.padre}]}">Ver Padre</a>
+                            </span>
+                        </h5>
                     </md-card-header-text>
                 </md-card-header>
                 <img ng-src="{[{ vm.nodo.fotografia }]}" class="md-card-image"
