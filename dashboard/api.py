@@ -48,7 +48,7 @@ class MedicionViewSet(viewsets.ModelViewSet):
         nodo = self.request.query_params.get('nodo', None)
         if end is None: end = datetime.datetime.now()
         if begin is None: begin = end + datetime.timedelta(-30)
-        if nodo is None: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end)).order_by('-fecha_hora')
-        else: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end), nodo=nodo).order_by('-fecha_hora')
+        if nodo is None: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end)).order_by('fecha_hora')
+        else: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end), nodo=nodo).order_by('fecha_hora')
         return queryset
 
