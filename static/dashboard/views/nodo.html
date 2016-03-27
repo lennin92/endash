@@ -1,10 +1,11 @@
 <div layout-fill="column">
-    <div layout="row">
-        <div flex="35">
+    <div layout="row" layout-align="space-around stretch">
+        <div flex="30">
             <md-card ng-click="vm.cargarNodo(vm.nodo)" style="cursor: pointer;">
                 <md-card-header>
                     <md-card-header-text>
-                        <span class="md-title">{[{ vm.nodo.nombre }]}</span>
+                        <h5><span class="md-title">{[{ vm.nodo.nombre }]}</span></h5>
+                        <h6 ng-if="vm.nodo.padre!=null"><a href="/#/nodos/{[{vm.nodo.padre}]}">Ver Padre</a></h6>
                     </md-card-header-text>
                 </md-card-header>
                 <img ng-src="{[{ vm.nodo.fotografia }]}" class="md-card-image"
@@ -17,7 +18,7 @@
                 </md-card-content>
             </md-card>
         </div>
-        <div flex="65" layout="column">
+        <div flex="40" layout="column">
             <div layout="column" flex layout-align="center center">
                 <div flex="100">
                     <md-datepicker ng-model="vm.desde" md-placeholder="Desde">
