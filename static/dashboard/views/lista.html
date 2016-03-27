@@ -1,18 +1,21 @@
 <md-content class="md-padding" layout-xs="column" layout="row">
     <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="grupo in vm.grupos">
-        <md-card ng-repeat="nodo in grupo">
-            <img ng-src="{[{ nodo.fotografia }]}" class="md-card-image" alt="Nodo {[{ nodo.id }]} {[{ nodo.nombre }]}">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">{[{ nodo.nombre }]}</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="start center">
-                <md-button>Ver Nodo</md-button>
-            </md-card-actions>
-            <md-card-content>
-                <p>{[{ nodo.descripcion }]}</p>
-            </md-card-content>
-        </md-card>
+        <div ng-repeat="nodo in grupo">
+            <md-card>
+                <img ng-src="{[{ nodo.fotografia }]}" class="md-card-image"
+                     alt="Nodo {[{ nodo.id }]} {[{ nodo.nombre }]}">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{[{ nodo.nombre }]}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="start center">
+                    <md-button>Ver Nodo</md-button>
+                </md-card-actions>
+                <md-card-content>
+                    <p>{[{ nodo.descripcion }]}</p>
+                </md-card-content>
+            </md-card>
+        </div>
     </div>
 </md-content>
