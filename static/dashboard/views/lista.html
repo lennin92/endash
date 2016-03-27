@@ -1,5 +1,19 @@
+<div layout-gt-sm="row">
+    <md-input-container class="md-block" flex-gt-sm>
+        <label>Filtro</label>
+        <md-select ng-model="vm.tipoFiltro" ng-change="vm.filtrarNodos()">
+            <md-option value="0">Todos</md-option>
+            <md-option value="1">Solo principales</md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container class="md-block" flex-gt-sm>
+        <label>Buscar</label>
+        <input name="postalCode" ng-model="vm.busqueda" placeholder="Buscar...">
+    </md-input-container>
+</div>
+
 <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="grupo in vm.grupos">
-    <div ng-repeat="nodo in grupo">
+    <div ng-repeat="nodo in grupo | filter:vm.busqueda">
         <md-card ng-click="vm.cargarNodo(nodo)" style="cursor: pointer;">
             <md-card-header>
                 <md-card-header-text>
