@@ -39,7 +39,7 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
         });
     }]);
 
-dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', '$routeParams', function ($scope, $http, $window, $routeParams) {
+dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams', function ($scope, $http, $window, $routeParams) {
     var vm = this;
     vm.tipoFiltro = 0;
     vm.cargarNodo = function (nodo) {
@@ -67,7 +67,7 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', '$routeParams'
 }]);
 
 
-dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     var vm = this;
     vm.tipoFiltro = 0;
     vm.cargarNodo = function (nodo) {
