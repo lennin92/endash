@@ -7,6 +7,9 @@ class DemandaNodoSerializer(serializers.ModelSerializer):
     fecha_fin = serializers.DateField()
     demanda = serializers.FloatField()
 
+    class Meta:
+        fields = ('fecha_inicio', 'fecha_fin', 'demanda')
+
 class NodoSerializer(serializers.ModelSerializer):
     demandas = serializers.ListField(
         child=DemandaNodoSerializer()
