@@ -13,9 +13,9 @@
             </md-card-actions>
             <md-card-content>
                 <h6>Demandas </h6>
-                <md-chips>
-                    <md-chip ng-repeat="d in nodo.demandas">{[{ vm.demanta2Text(d) }]}</md-chip>
-                </md-chips>
+                <ul>
+                    <li ng-repeat="d in nodo.demandas">{[{ vm.demanta2Text(d) }]}</li>
+                </ul>
                 <h6>Descripcion</h6>
                 <p>{[{ nodo.descripcion }]}</p>
             </md-card-content>
