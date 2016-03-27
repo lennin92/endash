@@ -13,13 +13,11 @@
             </md-card-actions>
             <md-card-content>
                 <h5>Demandas </h5>
-                <md-list-item class="md-2-line" ng-repeat="d in nodo.demandas">
+                <md-list-item class="md-2-line" ng-repeat="d in nodo.demandas" style="height: 50px;">
                     <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }" style="font-size: 9pt;">
                         <p><strong>{[{ vm.demanda2Text(d) }]}:</strong> {[{ d.demanda }]}</p>
                     </div>
                 </md-list-item>
-                <h5>Descripcion</h5>
-                <p>{[{ nodo.descripcion }]}</p>
             </md-card-content>
         </md-card>
     </div>
