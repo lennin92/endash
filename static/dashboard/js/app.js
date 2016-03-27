@@ -84,35 +84,40 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
             vm.grupos = generarGrupos(vm.nodos.slice(), 4);
         });
     });
+
     var hoy = new Date();
     var inicio = new Date(hoy.getYear() + 1900, hoy.getMonth(), 1);
+    vm.desde = inicio;
+    vm.hasta = hoy;
+    vm.aplicarFiltroFechas();
+
     var optionsClimate = {
         dimensions: {
-            temp: {
+            demanda: {
                 axis: 'y',
                 type: 'spline',
                 label: true,
                 color: 'orange',
-                postfix: '°C',
-                name: 'temperature'
+                postfix: 'Kwatts',
+                name: 'Demanda'
             },
-            rain: {
+            energia_aparente: {
                 axis: 'y2',
-                type: 'bar',
+                type: 'spline',
                 label: true,
                 color: 'lightblue',
                 postfix: 'mm',
-                name: 'rain'
+                name: 'Aparente'
             },
-            sun: {
-                axis: 'y',
-                type: 'step',
+            energia_activa  : {
+                axis: 'y3',
+                type: 'spline',
                 color: 'red',
                 label: true,
                 postfix: 'h',
-                name: 'sunshine'
+                name: 'Activa'
             },
-            month: {
+            fecha_hora: {
                 axis: 'x'
             }
         }
@@ -120,7 +125,7 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
 
     // stateful
     vm.statefulOptions = angular.copy(optionsClimate);
-    vm.statefulOptions.data = DemoData().data;
+    vm.statefulOptions.data = vm.mediciones;
     vm.statefulOptions.chart = {
         subchart: {
             show: true
