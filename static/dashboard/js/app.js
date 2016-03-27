@@ -67,6 +67,7 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
         var url = '/rest-api/mediciones/?format=json&nodo='+vm.idNodo+'&begin='+vm.desde.dF()+'&end='+vm.hasta.dF();
         $http.get(url).then(function(response){
             vm.mediciones = response.data;
+            vm.statefulOptions.data = vm.mediciones;
         });
     };
     $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
@@ -114,11 +115,12 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
                 type: 'spline',
                 color: 'red',
                 label: true,
-                postfix: 'h',
+                postfix: 'mm',
                 name: 'Activa'
             },
             fecha_hora: {
-                axis: 'x'
+                axis: 'x',
+                label:true
             }
         }
     };
