@@ -14,7 +14,7 @@ var generarGrupos = function (lista, t) {
     return l;
 };
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'angularChart']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
     function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
