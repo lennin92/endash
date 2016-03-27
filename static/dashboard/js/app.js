@@ -54,7 +54,7 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', function ($sco
             case 8: s='/Sep/';break; case 9: s='/Oct/';break;
             case 10: s='/Nov/';break; case 12: s='/Dic/';break;
         }
-        var txt = '<b>Al '+ d.getDate() + s + (d.getYear()-2000)+':</b> '+demanda.demanda;
+        var txt = 'Al '+ d.getDate() + s + d.getYear()+'';
         return txt;
     };
     vm.nodos = [];

@@ -14,7 +14,7 @@
             <md-card-content>
                 <h6>Demandas </h6>
                 <ul>
-                    <li ng-repeat="d in nodo.demandas">{[{ vm.demanda2Text(d) }]}</li>
+                    <li ng-repeat="d in nodo.demandas"><b>{[{ vm.demanda2Text(d) }]}:</b>{[{ d.demanda }]}</li>
                 </ul>
                 <h6>Descripcion</h6>
                 <p>{[{ nodo.descripcion }]}</p>
