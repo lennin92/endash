@@ -5,7 +5,12 @@
 var generarGrupos = function (lista, t){
     var l = [];
     var lt = lista.length;
-    while(lista.length>0) l.push(lista.splice(0,lt/t));
+    var i = 0;
+    while(l.length<t) l.push([]);
+    while(lista.length>0){
+        l[i%t].push(lista.pop());
+        i+=1;
+    }
     return l;
 };
 
