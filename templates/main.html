@@ -21,16 +21,16 @@
 <!-- Your application bootstrap  -->
 <script src="{% static "dashboard/js/app.js" %}"></script>
 
-<div layout='column'>
+<md-content layout='column'>
     <md-toolbar>
         <div class="md-toolbar-tools">
             <span>UES ENERGY DASHBOARD</span>
         </div>
     </md-toolbar>
 
-    <div ng-view>
+    <md-content class="md-padding" layout-xs="column" layout="row" ng-view>
 
-    </div>
+    </md-content>
 </div>
 </body>
 </html>
