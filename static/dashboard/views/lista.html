@@ -14,9 +14,7 @@
             <md-card-content>
                 <h5>Demandas </h5>
                 <md-list-item class="md-2-line" ng-repeat="d in nodo.demandas" style="height: 50px;">
-                    <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }" style="font-size: 9pt;">
-                        <p><strong>{[{ vm.demanda2Text(d) }]}:</strong> {[{ d.demanda }]}</p>
-                    </div>
+                    <p><strong>{[{ vm.demanda2Text(d) }]}:</strong> {[{ d.demanda }]}</p>
                 </md-list-item>
             </md-card-content>
         </md-card>
