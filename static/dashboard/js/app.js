@@ -14,6 +14,20 @@ var generarGrupos = function (lista, t) {
     return l;
 };
 
+// DJANGO FORMAT FOR DATE TIME YYYY-MM-DD HH:MM
+Date.prototype.dF = function () {
+    var yyyy = this.getFullYear().toString();
+    var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+    var dd = this.getDate().toString();
+    var mn = this.getMinutes().toString();
+    var hh = this.getHours().toString();
+    return yyyy + '-'
+        + (mm[1] ? mm : "0" + mm[0]) + '-'
+        + (dd[1] ? dd : "0" + dd[0]) + ' '
+        + (hh[1] ? hh : "0" + hh[0]) + ':'
+        + (mn[1] ? mn : "0" + mn[0]);
+};
+
 var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'angularChart']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
@@ -50,7 +64,10 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
     vm.grupos = [];
     vm.idNodo = $routeParams.idNodo;
     vm.aplicarFiltroFechas = function () {
-        console.log('APLICAR FILTRO FECHAS');
+        var url = '/rest-api/mediciones/?format=json&nodo='+vm.idNodo+'&begin='+vm.desde.dF()+'&end='+vm.hasta.dF();
+        $http.get(url).then(function(response){
+            vm.mediciones = response.data;
+        });
     };
     $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
         var res = response.data;
@@ -67,6 +84,8 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
             vm.grupos = generarGrupos(vm.nodos.slice(), 4);
         });
     });
+    var hoy = new Date();
+    var inicio = new Date(hoy.getYear() + 1900, hoy.getMonth(), 1);
     var optionsClimate = {
         dimensions: {
             temp: {
