@@ -30,7 +30,7 @@ class Nodo(models.Model):
     def demandas(self):
         a = []
         end = datetime.datetime.now()
-        end = create_valid_date(end.year, end.month, end.day,23,59)
+        end = create_valid_date(end.year, end.month, end.day, 23, 59)
         begin = create_valid_date(end.year, end.month, 1)
         dn = DemandaNodo()
         dn.fecha_inicio = begin
@@ -39,7 +39,7 @@ class Nodo(models.Model):
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max']
         a.append(dn)
 
-        end = create_valid_date(end.year, end.month-1, end.day)
+        end = create_valid_date(end.year, end.month-1, end.day, 23, 59)
         begin = create_valid_date(end.year, end.month, 1)
         dn = DemandaNodo()
         dn.fecha_inicio = begin
@@ -48,7 +48,7 @@ class Nodo(models.Model):
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max']
         a.append(dn)
 
-        end = create_valid_date(end.year, end.month-1, end.day)
+        end = create_valid_date(end.year, end.month-1, end.day, 23, 59)
         begin = create_valid_date(end.year, end.month, 1)
         dn = DemandaNodo()
         dn.fecha_inicio = begin

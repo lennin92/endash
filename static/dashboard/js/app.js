@@ -42,6 +42,20 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', function ($sco
     vm.cargarNodo = function(nodo){
         $window.location.href='/#/nodos/'+nodo.id;
     };
+    vm.demanda2Text = function(demanda){
+        var d = new Date(demanda.fecha_fin);
+        var m = d.getMonth();
+        var s = '';
+        switch (m){
+            case 0: s='/Ene/';break; case 1: s='/Feb/';break;
+            case 2: s='/Mar/';break; case 3: s='/Abr/';break;
+            case 4: s='/May/';break; case 5: s='/Jun/';break;
+            case 6: s='/Jul/';break; case 7: s='/Ago/';break;
+            case 8: s='/Sep/';break; case 9: s='/Oct/';break;
+            case 10: s='/Nov/';break; case 12: s='/Dic/';break;
+        }
+        return '<b>Al '+ d.getDate() + s + (d.getYear()-2000)+':</b> '+demanda.demanda;
+    };
     vm.nodos = [];
     vm.grupos = [];
     $http.get('/rest-api/nodos/?format=json').then(function (response) {
