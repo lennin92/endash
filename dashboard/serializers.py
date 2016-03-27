@@ -9,7 +9,7 @@ class DemandaNodoSerializer(serializers.ModelSerializer):
 
 class NodoSerializer(serializers.ModelSerializer):
     demandas = serializers.ListField(
-        child=DemandaNodoSerializer
+        child=DemandaNodoSerializer()
     )
     class Meta:
         model = Nodo
