@@ -5,7 +5,7 @@ from rest_framework import serializers
 class DemandaNodoSerializer(serializers.Serializer):
     fecha_inicio = serializers.DateTimeField()
     fecha_fin = serializers.DateTimeField()
-    demanda = serializers.FloatField()
+    demanda = serializers.DecimalField(max_digits=8, decimal_places=2)
 
 
 class NodoSerializer(serializers.ModelSerializer):
