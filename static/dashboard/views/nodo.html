@@ -31,38 +31,3 @@
         </md-content>
     </div>
 </div>
-
-<div flex-gt-xs="75" layout="row">
-    <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Filtro</label>
-            <md-select ng-model="vm.tipoFiltro" ng-change="vm.filtrarNodos()">
-                <md-option value="0">Todos</md-option>
-                <md-option value="1">Solo principales</md-option>
-            </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Buscar</label>
-            <input name="postalCode" ng-model="busqueda.nombre" placeholder="Buscar...">
-        </md-input-container>
-    </div>
-    <div flex-gt-xs="25" layout="column" ng-repeat="grupo in vm.grupos">
-        <div ng-repeat="nodo in grupo | filter:busqueda:strict">
-            <md-card ng-click="vm.cargarNodo(nodo)" style="cursor: pointer;">
-                <md-card-header>
-                    <md-card-header-text>
-                        <span class="md-title">{[{ nodo.nombre }]}</span>
-                    </md-card-header-text>
-                </md-card-header>
-                <img ng-src="{[{ nodo.fotografia }]}" class="md-card-image"
-                     alt="Nodo {[{ nodo.id }]} {[{ nodo.nombre }]}" style="max-height: 225px">
-                <md-card-content>
-                    <h5>Demandas </h5>
-                    <p style="font-size: 10px;" ng-repeat="d in nodo.demandas"><strong>{[{ vm.demanda2Text(d)
-                        }]}:</strong>
-                        {[{ d.demanda }]}</p>
-                </md-card-content>
-            </md-card>
-        </div>
-    </div>
-</div>
