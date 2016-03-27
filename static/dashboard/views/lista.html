@@ -11,7 +11,7 @@
         <input name="postalCode" ng-model="busqueda.nombre" placeholder="Buscar...">
     </md-input-container>
 </div>
-<div flex-xs flex-gt-xs="25" layout="column" ng-repeat="grupo in vm.grupos">
+<div flex-gt-xs="25" layout="column" ng-repeat="grupo in vm.grupos">
     <div ng-repeat="nodo in grupo | filter:busqueda:strict">
         <md-card ng-click="vm.cargarNodo(nodo)" style="cursor: pointer;">
             <md-card-header>
