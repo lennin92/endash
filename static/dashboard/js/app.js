@@ -2,6 +2,11 @@
  * Created by Administrador on 22/03/2016.
  */
 
+var generarGrupos = function (lista, t){
+    var l = [];
+    while(lista.length>0) l.push(lista.splice(0,t));
+    return l;
+};
 
 var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute']);
 
@@ -29,6 +34,7 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
 dashboardApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
     var vm = this;
     vm.nodos = [];
+    vm.grupos = [];
     $http.get('/rest-api/nodos/?format=json').then(function (response) {
         var res = response.data;
         var arr = [];
@@ -38,5 +44,6 @@ dashboardApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) 
             arr.push(angular.extend({}, res[i]));
         }
         vm.nodos = arr;
+        vm.grupos = generarGrupos(vm.nodos.slice(), 4);
     });
 }]);

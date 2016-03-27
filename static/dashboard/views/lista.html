@@ -1,11 +1,18 @@
-<md-grid-list md-row-height="7:5" md-cols-sm="1" md-cols-md="3" md-cols-lg="4" md-cols="4">
-    <md-grid-tile ng-repeat="n in vm.nodos">
-        <img src="{[{ n.fotografia }]}" height="100%" width="100%"/>
-        <md-grid-tile-header>
-            <h3>{[{ n.nombre }]}</h3>
-        </md-grid-tile-header>
-        <md-grid-tile-footer>
-            <p>{[{ n.descripcion }]}</p>
-        </md-grid-tile-footer>
-    </md-grid-tile>
-</md-grid-list>
+<md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="25" layout="column" ng-repeat="grupo in grupos">
+        <md-card ng-repeat="nodo in group">
+            <img ng-src="{[{ nodo.fotografia }]}" class="md-card-image" alt="Nodo {[{ nodo.id }]} {[{ nodo.nombre }]}">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{[{ nodo.nombre }]}</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="start center">
+                <md-button>Ver Nodo</md-button>
+            </md-card-actions>
+            <md-card-content>
+                <p>{[{ nodo.descripcion }]}</p>
+            </md-card-content>
+        </md-card>
+    </div>
+</md-content>
