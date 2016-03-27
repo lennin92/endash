@@ -4,7 +4,8 @@
 
 var generarGrupos = function (lista, t){
     var l = [];
-    while(lista.length>0) l.push(lista.splice(0,t));
+    var lt = lista.length;
+    while(lista.length>0) l.push(lista.splice(0,lt/t));
     return l;
 };
 
