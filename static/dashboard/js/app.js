@@ -19,7 +19,7 @@ var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'n
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
     function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
         $mdThemingProvider.theme('default').primaryPalette('red', {
-            'hue-1': '900', // use shade 100 for the <code>md-hue-1</code> class
+            'hue-1': 'A700', // use shade 100 for the <code>md-hue-1</code> class
         });
         $interpolateProvider.startSymbol('{[{');
         $interpolateProvider.endSymbol('}]}');
