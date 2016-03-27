@@ -3,8 +3,8 @@ from rest_framework import serializers
 
 
 class DemandaNodoSerializer(serializers.Serializer):
-    fecha_inicio = serializers.DateField()
-    fecha_fin = serializers.DateField()
+    fecha_inicio = serializers.DateTimeField()
+    fecha_fin = serializers.DateTimeField()
     demanda = serializers.FloatField()
 
 
