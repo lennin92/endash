@@ -38,8 +38,8 @@
             </div>
         </div>
     </div>
-    <div flex="80" layout="column" layout-align="center start">
-        <md-toolbar class="md-tall md-warn md-hue-3" flex>
+    <div flex="80" layout="column" layout-align="center center">
+        <md-toolbar class="md-warn" flex>
             <h2>Nodos Dependientes</h2>
         </md-toolbar>
         <div flex="100" layout="row" layout-align="center center">
@@ -65,7 +65,7 @@
                             </md-card-header-text>
                         </md-card-header>
                         <img ng-src="{[{ n.fotografia }]}" class="md-card-image"
-                             alt="Nodo {[{ n.id }]} {[{ n.nombre }]}" style="max-height: 225px">
+                             alt="Nodo {[{ n.id }]} {[{ n.nombre }]}" style="max-height: 150px">
                         <md-card-content>
                             <h5>Demandas </h5>
                             <p style="font-size: 10px;" ng-repeat="d in nodo.demandas"><strong>{[{ vm.demanda2Text(d)
