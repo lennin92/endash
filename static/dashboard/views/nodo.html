@@ -1,6 +1,6 @@
 <div layout-fill="column">
     <div layout-fill="row">
-        <div flex-xs="30" layout="column">
+        <div flex-gt-xs="30" layout="column">
             <md-card ng-click="vm.cargarNodo(vm.nodo)" style="cursor: pointer;">
                 <md-card-header>
                     <md-card-header-text>
@@ -17,8 +17,8 @@
                 </md-card-content>
             </md-card>
         </div>
-        <div flex-xs="70" layout="column">
-            <md-content flex-gt-xs>
+        <div flex-gt-xs="70" layout="column">
+            <md-content layout-fill="row">
                 <md-datepicker ng-model="vm.desde" md-placeholder="Desde">
                 </md-datepicker>
                 <md-datepicker ng-model="vm.hasta" md-placeholder="Hasta">
