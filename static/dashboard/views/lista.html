@@ -12,14 +12,13 @@
                 <md-button ng-click="vm.cargarNodo(nodo)">Ver Nodo</md-button>
             </md-card-actions>
             <md-card-content>
-                <h4>Demandas </h4>
+                <h5>Demandas </h5>
                 <md-list-item class="md-2-line" ng-repeat="d in nodo.demandas">
-                    <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }">
-                        <h6>{[{ vm.demanda2Text(d) }]}</h6>
-                        <p> {[{ d.demanda }]} </p>
+                    <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }" style="font-size: 9pt;">
+                        <p><strong>{[{ vm.demanda2Text(d) }]}:</strong> {[{ d.demanda }]}</p>
                     </div>
                 </md-list-item>
-                <h4>Descripcion</h4>
+                <h5>Descripcion</h5>
                 <p>{[{ nodo.descripcion }]}</p>
             </md-card-content>
         </md-card>
