@@ -9,6 +9,13 @@ def get_imagen_nodo_dir(obj, filename):
     return 'nodo_%s/%s'%(obj.id, filename)
 
 
+def create_valid_date(y,m,d):
+    if not (y % 4 == 0 and y % 100 != 0 or y % 400 == 0) and m==2 and d==29:
+        return datetime.datetime(y,2,28)
+    else:
+        return datetime.datetime(y,m,d)
+
+
 class Nodo(models.Model):
     padre = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='hijos')
     nombre = models.CharField(max_length=20)
@@ -19,17 +26,17 @@ class Nodo(models.Model):
     def demandas(self):
         a = []
         end = datetime.datetime.now()
-        begin = end + datetime.timedelta(-30)
+        begin = create_valid_date(end.year, end.month, 1)
         a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
-        end = begin + datetime.timedelta(-1)
-        begin = end + datetime.timedelta(-30)
+        end = create_valid_date(end.year, end.month-1, end.day)
+        begin = create_valid_date(end.year, end.month, 1)
         a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
-        end = begin + datetime.timedelta(-1)
-        begin = end + datetime.timedelta(-30)
+        end = create_valid_date(end.year, end.month-1, end.day)
+        begin = create_valid_date(end.year, end.month, 1)
         a.append(Medicion.objects.filter(
             fecha_hora__range=(begin, end)).aggregate(Max('demanda'))['demanda__max'])
 
