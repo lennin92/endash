@@ -18,16 +18,18 @@
             </md-card>
         </div>
         <div flex="70" layout="column">
-            <div layout="row" flex layout-align="center center">
-                <md-datepicker ng-model="vm.desde" md-placeholder="Desde">
-                </md-datepicker>
-                <md-datepicker ng-model="vm.hasta" md-placeholder="Hasta">
-                </md-datepicker>
-                <md-button class="md-raised md-primary" ng-click="vm.aplicarFiltroFechas()">Filtrar</md-button>
-            </div>
-            <div layout="row" flex>
-                <div class="chart-container">
-                    <angular-chart options="vm.statefulOptions"></angular-chart>
+            <div layout="column" flex layout-align="center center">
+                <div flex>
+                    <md-datepicker ng-model="vm.desde" md-placeholder="Desde">
+                    </md-datepicker>
+                    <md-datepicker ng-model="vm.hasta" md-placeholder="Hasta">
+                    </md-datepicker>
+                    <md-button class="md-raised md-primary" ng-click="vm.aplicarFiltroFechas()">Filtrar</md-button>
+                </div>
+                <div flex>
+                    <div class="chart-container">
+                        <angular-chart options="vm.statefulOptions"></angular-chart>
+                    </div>
                 </div>
             </div>
         </div>
