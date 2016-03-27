@@ -37,8 +37,11 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
         });
     }]);
 
-dashboardApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
+dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {
     var vm = this;
+    vm.cargarNodo = function(nodo){
+        $window.location.href='/#/nodos/'+nodo.id;
+    };
     vm.nodos = [];
     vm.grupos = [];
     $http.get('/rest-api/nodos/?format=json').then(function (response) {
