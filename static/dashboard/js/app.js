@@ -110,7 +110,7 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
                 name: 'Aparente'
             },
             energia_activa  : {
-                axis: 'y3',
+                axis: 'y2',
                 type: 'spline',
                 color: 'red',
                 label: true,
