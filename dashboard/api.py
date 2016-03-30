@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import BasePermission
 from dashboard.serializers import MedicionSerializer, NodoSerializer
 import datetime
+from django.db.models import Max
 
 class ReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -51,4 +52,21 @@ class MedicionViewSet(viewsets.ModelViewSet):
         if nodo is None: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end)).order_by('fecha_hora')
         else: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end), nodo=nodo).order_by('fecha_hora')
         return queryset
+
+    # Query childs
+    @detail_route(methods=['get'], permission_classes=[ReadOnly])
+    def max(self, request, pk=None):
+        nodo = self.request.query_params.get('nodo', None)
+        if nodo is None:
+            fh = Medicion.objects.all().aggregate(Max('fecha_hora'))['fecha_hora__max']
+            qs = Medicion.objects.filter(fecha_hora=fh)[0]
+        else:
+            fh = Medicion.objects.filter(nodo_id=nodo).aggregate(Max('fecha_hora'))['fecha_hora__max']
+            qs = Medicion.objects.filter(fecha_hora=fh, nodo_id=nodo)[0]
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = self.get_serializer(page, many=False)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(qs, many=False)
+        return Response(serializer.data)
 
