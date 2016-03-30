@@ -1,6 +1,7 @@
 
 import MySQLdb
 import requests
+import grequests
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -15,7 +16,9 @@ def wlog(v): logging.warning(v)
 def elog(v): logging.error(v)
 
 def postAllDemandas(wsparam, demand_list, url):
-    pass
+    h = {'Authorization':'Token %s'%(wsparam['WS_TKN'])}
+    rs = (grequests.post(url, data=d, headers=h) for d in demand_list)
+    grequests.imap(rs, size=5)
 
 
 def tuple2Dict(tuple):
@@ -47,11 +50,21 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
     return l
 
 def start(dbparam, wsparam, conv):
+    # Paso 0: obtener el token para enviar los datos al WS
+    url = wsparam['WS_HOST']+'/api-token-auth/'
+    login_data={'username':wsparam['WS_USER'],
+                'password':wsparam['WS_PASS']}
+    response = requests.get(url, data=login_data)
+    if response.status_code!=200:
+        elog('ERROR AL INICIAR SESION EN EL WS, REVISAR DATOS DE INICIO DE SESION')
+        return
+    token = response.json()['token']
+    wsparam['WS_TOKN'] = token
     # Paso 1: Por cada elemento en conv, obtener
     # La fecha_hora maxima de mediciones del nodo
     # usando el WS en /rest-api/mediciones/<nodo_id>/max/
     for c in conv:
-        url = '/rest-api/mediciones/%d/max/'%(c[1])
+        url = wsparam['WS_HOST']+'/rest-api/mediciones/%d/max/'%(c[1])
         response = requests.get(url)
         if response.status_code != 200:
             wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[1],response.status_code))
