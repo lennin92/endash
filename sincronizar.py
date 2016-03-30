@@ -4,8 +4,8 @@ import requests
 
 def start(bdparam, wsparam, conv):
     # Paso 1: Por cada elemento en conv, obtener
-    # La fecha_hora maxima usando el WS en
-    # /rest-api/mediciones/<nodo_id>/max/
+    # La fecha_hora maxima de mediciones del nodo
+    # usando el WS en /rest-api/mediciones/<nodo_id>/max/
     # Paso 2: Obtener todas las mediciones del nodo
     # en la base de datos fuente a partir de la fecha
     # obtenida en el WS
@@ -33,6 +33,9 @@ if __name__=='__main__':
 
 
     # TABLA DE CONVERSION TABLA (EN SDB) A NODO (EN WS)
+    # FORMATO: LISTA DE TUPLAS, LA TUPLA DEBE TENER EL
+    # FORMATO SIGUIENTE:
+    #   (<NOMBRE DE TABLA EN SDB>, <ID NODO EN WS>)
     CONVERSIONES = [
         ('', 1),  ('', 2),  ('', 3),  ('', 4),
     #    ('', 5),  ('', 6),  ('', 7),  ('', 8),
