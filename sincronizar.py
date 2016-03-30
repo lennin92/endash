@@ -1,17 +1,72 @@
 
 import MySQLdb
 import requests
+import logging
 
-def start(bdparam, wsparam, conv):
+logging.basicConfig(level=logging.INFO)
+
+
+def dlog(v): logging.debug(v)
+
+def ilog(v): logging.info(v)
+
+def wlog(v): logging.warning(v)
+
+def elog(v): logging.error(v)
+
+def postAllDemandas(wsparam, demand_list, url):
+    pass
+
+
+def tuple2Dict(tuple):
+    # ORDEN DE TUPLA
+    # nodo, fecha_hora, energia_activa, energia_aparente, demanda
+    return {
+        'nodo': tuple[0],
+        'fecha_hora': tuple[1],
+        'energia_activa': tuple[2],
+        'energia_aparente': tuple[3],
+        'demanda': tuple[4],
+    }
+
+def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modifier=None):
+    sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
+          "WhTot as energia_activa, VAhTot as energia_aparente, " \
+          "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
+    sql += "WHERE Fecha_hora>'%s';"
+    db=MySQLdb.connect(host=bdparam['DB_HOST'],
+                       port=bdparam['DB_PORT'],
+                       user=bdparam['DB_USER'],
+                       passwd=bdparam['DB_PASS'],
+                       db=bdparam['DB_NAME'])
+    c=db.cursor()
+    c.execute(sql, (min_date_time,))
+    r=db.store_result()
+    l = [reg_modifier(e) for e in r.fetch_row(maxrows=0, how=1)]
+    c.close()
+    return l
+
+def start(dbparam, wsparam, conv):
     # Paso 1: Por cada elemento en conv, obtener
     # La fecha_hora maxima de mediciones del nodo
     # usando el WS en /rest-api/mediciones/<nodo_id>/max/
-    # Paso 2: Obtener todas las mediciones del nodo
-    # en la base de datos fuente a partir de la fecha
-    # obtenida en el WS
-    # Paso 3: Enviar cada medicion obtenida al WS
-    # en /rest-api/mediciones/ usando POST
-    pass
+    for c in conv:
+        url = '/rest-api/mediciones/%d/max/'%(c[1])
+        response = requests.get(url)
+        if response.status_code != 200:
+            wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[1],response.status_code))
+            continue
+        ilog('Downloaded max datetime for node %d' % (c[1]))
+        # Paso 2: Obtener todas las mediciones del nodo
+        # en la base de datos fuente a partir de la fecha
+        # obtenida en el WS
+        demanda = response.json()
+        jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'])
+        # Paso 3: Enviar cada medicion obtenida al WS
+        # en /rest-api/mediciones/ usando POST
+        postAllDemandas(wsparam, jsons, '/rest-api/mediciones/')
+
+
 
 if __name__=='__main__':
     # PARAMETROS DE CONEXION DE BASE DE DATOS FUENTE (SDB)
