@@ -83,19 +83,19 @@ def start(dbparam, wsparam, conv):
 
 if __name__=='__main__':
     # PARAMETROS DE CONEXION DE BASE DE DATOS FUENTE (SDB)
-    DB_HOST = ''
-    DB_PORT = ''
-    DB_USER = ''
-    DB_PASS = ''
-    DB_NAME = ''
+    DB_HOST = 'lennin92.mysql.pythonanywhere-services.com'
+    DB_PORT = '3306'
+    DB_USER = 'lennin92'
+    DB_PASS = 'asdf123321fdsa'
+    DB_NAME = 'lennin92$uesendash'
 
     SDBP = {'DB_HOST':DB_HOST, 'DB_PORT':DB_PORT, 'DB_USER':DB_USER,
             'DB_PASS':DB_PASS, 'DB_NAME':DB_NAME}
 
     # PARAMETROS DE CONEXION DE SERVICIO WEB (WS)
-    WS_USER = ''
-    WS_PASS = ''
-    WS_HOST = ''
+    WS_USER = 'updater'
+    WS_PASS = 'updater123'
+    WS_HOST = 'http://lennin92.pythonanywhere.com'
 
     WSP = {'WS_USER':WS_USER, 'WS_PASS':WS_PASS, 'WS_HOST':WS_HOST}
 
@@ -105,7 +105,7 @@ if __name__=='__main__':
     # FORMATO SIGUIENTE:
     #   (<NOMBRE DE TABLA EN SDB>, <ID NODO EN WS>)
     CONVERSIONES = [
-        ('', 1),  ('', 2),  ('', 3),  ('', 4),
+        ('Agronomia', 1),  ('ComedorUES', 2),  ('Medicina', 3),  ('Artes', 4),
     #    ('', 5),  ('', 6),  ('', 7),  ('', 8),
     #    ('', 9),  ('', 10), ('', 11), ('', 12),
     #    ('', 13), ('', 14), ('', 15), ('', 16),
