@@ -18,7 +18,8 @@ def create_valid_date(y, m, d, h=0, mm=0):
             return datetime.datetime(y, m, d, h, mm)
     except Exception as e:
         logging.error("Error al crear la fecha %d/%d/%d %d:%d"%(d, m, y, h, mm))
-
+        if m==2 and d>28:
+            return datetime.datetime(y, 2, 28, h, mm)
 
 
 class DemandaNodo:
