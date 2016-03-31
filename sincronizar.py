@@ -88,7 +88,7 @@ def start(dbparam, wsparam, conv):
         jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'], tuple2Dict)
         # Paso 3: Enviar cada medicion obtenida al WS
         # en /rest-api/mediciones/ usando POST
-        postAllDemandas(wsparam, jsons, '/rest-api/mediciones/')
+        postAllDemandas(wsparam, jsons, wsparam['WS_HOST']+'/rest-api/mediciones/')
 
 
 
