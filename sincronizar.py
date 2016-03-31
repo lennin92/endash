@@ -16,7 +16,7 @@ def wlog(v): logging.warning(v)
 def elog(v): logging.error(v)
 
 def postAllDemandas(wsparam, demand_list, url):
-    h = {'Authorization':'Token %s'%(wsparam['WS_TKN'])}
+    h = {'Authorization':'Token %s'%(wsparam['WS_TOKN'])}
     rs = (grequests.post(url, data=d, headers=h) for d in demand_list)
     grequests.imap(rs, size=5)
 
