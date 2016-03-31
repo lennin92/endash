@@ -74,8 +74,9 @@ def start(dbparam, wsparam, conv):
     # Paso 1: Por cada elemento en conv, obtener
     # La fecha_hora maxima de mediciones del nodo
     # usando el WS en /rest-api/mediciones/<nodo_id>/max/
+    ws_host = wsparam['WS_HOST']
     for c in conv:
-        url = wsparam['WS_HOST']+'/rest-api/mediciones/%d/max/'%(c[1])
+        url = ws_host+'/rest-api/mediciones/%d/max/'%(c[1])
         response = requests.get(url)
         if response.status_code != 200:
             wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[1],response.status_code))
@@ -88,7 +89,7 @@ def start(dbparam, wsparam, conv):
         jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'], tuple2Dict)
         # Paso 3: Enviar cada medicion obtenida al WS
         # en /rest-api/mediciones/ usando POST
-        postAllDemandas(wsparam, jsons, wsparam['WS_HOST']+'/rest-api/mediciones/')
+        postAllDemandas(wsparam, jsons, ws_host+'/rest-api/mediciones/')
 
 
 
