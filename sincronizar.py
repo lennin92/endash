@@ -38,7 +38,7 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
           "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
     sql += "WHERE Fecha_hora>'%s';"
     db=MySQLdb.connect(host=bdparam['DB_HOST'],
-                       port=bdparam['DB_PORT'],
+                       port=int(bdparam['DB_PORT']),
                        user=bdparam['DB_USER'],
                        passwd=bdparam['DB_PASS'],
                        db=bdparam['DB_NAME'])
