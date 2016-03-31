@@ -46,8 +46,7 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
     ilog(sql%(min_date_time.replace('T',' ').replace('Z',''),))
     c=db.cursor()
     c.execute(sql, (min_date_time.replace('T',' ').replace('Z',''),))
-    r=db.store_result()
-    l = [reg_modifier(e) for e in r.fetch_row(maxrows=0, how=1)]
+    l = [reg_modifier(e) for e in c.fetchall()]
     c.close()
     return l
 
@@ -77,7 +76,7 @@ def start(dbparam, wsparam, conv):
         # en la base de datos fuente a partir de la fecha
         # obtenida en el WS
         demanda = response.json()
-        jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'])
+        jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'], tuple2Dict)
         # Paso 3: Enviar cada medicion obtenida al WS
         # en /rest-api/mediciones/ usando POST
         postAllDemandas(wsparam, jsons, '/rest-api/mediciones/')
