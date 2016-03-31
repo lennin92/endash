@@ -54,7 +54,7 @@ def start(dbparam, wsparam, conv):
     url = wsparam['WS_HOST']+'/api-token-auth/'
     login_data={'username':wsparam['WS_USER'],
                 'password':wsparam['WS_PASS']}
-    response = requests.get(url, data=login_data)
+    response = requests.post(url, data=login_data)
     if response.status_code!=200:
         elog('ERROR AL INICIAR SESION EN EL WS, REVISAR DATOS DE INICIO DE SESION')
         ilog(response.text)
