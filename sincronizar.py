@@ -57,6 +57,7 @@ def start(dbparam, wsparam, conv):
     response = requests.get(url, data=login_data)
     if response.status_code!=200:
         elog('ERROR AL INICIAR SESION EN EL WS, REVISAR DATOS DE INICIO DE SESION')
+        ilog(response.text)
         return
     token = response.json()['token']
     wsparam['WS_TOKN'] = token
