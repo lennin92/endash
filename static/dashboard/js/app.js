@@ -77,10 +77,7 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
             vm.options = {
                 data: vm.data,
                 dimensions: {
-                    demanda: {
-                        axis: 'y',
-                        type: 'bar'
-                    },
+                    demanda: {axis: 'y'},
                     energia_activa: { axis:"y2"},
                     energia_aparente: { axis:"y2"},       // leave the object empty to add a line to the y-Axis
                     fecha_hora: {
