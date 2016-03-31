@@ -1,53 +1,35 @@
 <div layout-fill="column" layout-align="center center">
-    <div layout="row" layout-align="center center">
-        <div flex="25">
-            <md-card ng-click="vm.cargarNodo(vm.nodo)" style="cursor: pointer;">
-                <md-card-header>
-                    <md-card-header-text>
-                        <h5>
-                            <span class="md-title">{[{ vm.nodo.nombre }]}</span>
-                            <span ng-if="vm.nodo.padre!=null" style="font-size: 9pt; text-align: right;">
-                                <a href="/#/nodos/{[{vm.nodo.padre}]}">Ver Padre</a>
-                            </span>
-                        </h5>
-                    </md-card-header-text>
-                </md-card-header>
-                <img ng-src="{[{ vm.nodo.fotografia }]}" class="md-card-image"
-                     alt="Nodo {[{ vm.nodo.id }]} {[{ vm.nodo.nombre }]}" style="max-height: 225px">
-                <md-card-content>
-                    <h5>Demandas </h5>
-                    <p style="font-size: 10px;" ng-repeat="d in vm.nodo.demandas"><strong>{[{ vm.demanda2Text(d)
-                        }]}:</strong>
-                        {[{ d.demanda }]}</p>
-                </md-card-content>
-            </md-card>
-        </div>
-        <div flex="50" layout="column">
-            <div layout="column" flex layout-align="space-around center">
-                <div flex="100">
-                    <md-datepicker ng-model="vm.desde" md-placeholder="Desde">
-                    </md-datepicker>
-                    <md-datepicker ng-model="vm.hasta" md-placeholder="Hasta">
-                    </md-datepicker>
-                    <md-button class="md-raised md-primary" ng-click="vm.aplicarFiltroFechas()">Filtrar</md-button>
-                    <br>
-                    <div class="chart-container" style="width: 100%">
-                        <nvd3-line-with-focus-chart
-                                data="vm.data"
-                                id="nodo-chart"
-                                height="400"
-                                margin="{left:80,top:50,bottom:30,right:50}"
-                                xAxisTickFormat="vm.xAxisTickFormatFunction()"
-                                noData="Sin Datos">
-                            <svg></svg>
-                        </nvd3-line-with-focus-chart>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <div flex="80"  layout-align="center center">
+        <md-card>
+            <md-card-header>
+                <md-card-avatar>
+                    <img src="{[{ vm.nodo.fotografia }]}"/>
+                </md-card-avatar>
+                <md-card-header-text>
+                    <span class="md-title">Angular</span>
+                    <span class="md-subhead"><a href="/#/nodos/{[{vm.nodo.padre}]}" ng-if="vm.nodo.padre!=null">Ver padre</a></span>
+                </md-card-header-text>
+            </md-card-header>
+            <angular-chart options="vm.options"></angular-chart>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{[{ vm.nodo.nombre }]}</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <h5>Demandas </h5>
+                <p style="font-size: 10px;" ng-repeat="d in vm.nodo.demandas"><strong>
+                    {[{ vm.demanda2Text(d)}]}:</strong>
+                    {[{ d.demanda }]}</p>
+                <h5>Descripcion </h5>
+                <p>{[{vm.nodo.descripcion}]}</p>
+            </md-card-content>
+        </md-card>
+
     </div>
     <div flex><h2 align="center">Nodos Dependientes</h2></div>
-    <div flex="800" layout="row" layout-align="center center">
+    <div flex="80" layout="row" layout-align="center center">
         <div layout-gt-sm="row">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Filtro</label>

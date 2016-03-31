@@ -28,7 +28,7 @@ Date.prototype.dF = function () {
         + (mn[1] ? mn : "0" + mn[0]);
 };
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'nvd3ChartDirectives']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'angularChart']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
     function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
@@ -73,29 +73,30 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
         var url = '/rest-api/mediciones/?format=json&nodo='+vm.idNodo+'&begin='+vm.desde.dF()+'&end='+vm.hasta.dF();
         $http.get(url).then(function(response){
             vm.mediciones = response.data;
-            vm.data_clean = vm.mediciones;
-            var _data = [];
-            var aparente_vals = [];
-            for (var i=0;i<vm.data_clean.length;i++){
-                d = vm.data_clean[i];
-                aparente_vals.push([new Date(d.fecha_hora),d.energia_aparente]);
-            }
-            var activa_vals = [];
-            for (var i=0;i<vm.data_clean.length;i++){
-                d = vm.data_clean[i];
-                activa_vals.push([new Date(d.fecha_hora),d.energia_activa]);
-            }
-            var demanda_vals = [];
-            for (var i=0;i<vm.data_clean.length;i++){
-                d = vm.data_clean[i];
-                demanda_vals.push([new Date(d.fecha_hora),d.demanda]);
-            }
-
-            _data.push({"key":"Aparente", "values":aparente_vals});
-            _data.push({"key":"Activa", "values":activa_vals});
-            _data.push({"key":"Demanda", "values":demanda_vals});
-
-            vm.data = _data;
+            vm.data = vm.mediciones;
+            vm.options = {
+                data: vm.data,
+                dimensions: {
+                    demanda: {
+                        axis: 'y',
+                        type: 'bar'
+                    },
+                    energia_activa: { axis:"y2"},
+                    energia_aparente: { axis:"y2"},       // leave the object empty to add a line to the y-Axis
+                    fecha_hora: {
+                        axis: 'x',
+                        displayFormat: '%Y-%m-%d %H:%M:%S',
+                        dataType: 'datetime',
+                        dataFormat: '%Y-%m-%dT%H:%M:%SZ',
+                        name: 'Date'
+                    }
+                },
+                chart:{
+                    subchart: {
+                        show: true
+                    }
+                }
+            };
         });
     };
     $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
