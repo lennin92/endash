@@ -4,7 +4,7 @@ import requests
 import grequests
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def dlog(v): logging.debug(v)
