@@ -9,16 +9,25 @@ logging.basicConfig(level=logging.INFO)
 
 def dlog(v): logging.debug(v)
 
+
 def ilog(v): logging.info(v)
+
 
 def wlog(v): logging.warning(v)
 
+
 def elog(v): logging.error(v)
+
+
+def ws_exception_handler(req, exc):
+    elog('ERROR EN PETICION ' + str(req))
+    elog(exc)
+
 
 def postAllDemandas(wsparam, demand_list, url):
     h = {'Authorization':'Token %s'%(wsparam['WS_TOKN'])}
     rs = (grequests.post(url, data=d, headers=h) for d in demand_list)
-    grequests.imap(rs, size=5)
+    grequests.map(rs, size=2, exception_handler=ws_exception_handler)
 
 
 def tuple2Dict(tuple):
