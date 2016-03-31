@@ -4,7 +4,7 @@ import requests
 import grequests
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', filename='log.txt', level=logging.DEBUG)
 
 
 def dlog(v): logging.debug(v)
