@@ -28,7 +28,7 @@ Date.prototype.dF = function () {
         + (mn[1] ? mn : "0" + mn[0]);
 };
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'angularChart']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'nvd3ChartDirectives']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
     function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
@@ -55,6 +55,12 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
 
 dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams', function ($scope, $http, $window, $routeParams) {
     var vm = this;
+    vm.xAxisTickFormatFunction = function(){
+        return function(d){
+            return d3.time.format('%x')(new Date(d));  //uncomment for date format
+        }
+    };
+
     vm.tipoFiltro = 0;
     vm.cargarNodo = function (nodo) {
         $window.location.href = '/#/nodos/' + nodo.id;
@@ -67,7 +73,29 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
         var url = '/rest-api/mediciones/?format=json&nodo='+vm.idNodo+'&begin='+vm.desde.dF()+'&end='+vm.hasta.dF();
         $http.get(url).then(function(response){
             vm.mediciones = response.data;
-            vm.statefulOptions.data = vm.mediciones;
+            vm.data_clean = vm.mediciones;
+            var _data = [];
+            var aparente_vals = [];
+            for (var i=0;i<vm.data_clean.length;i++){
+                d = vm.data_clean[i];
+                aparente_vals.push([new Date(d.fecha_hora),d.energia_aparente]);
+            }
+            var activa_vals = [];
+            for (var i=0;i<vm.data_clean.length;i++){
+                d = vm.data_clean[i];
+                activa_vals.push([new Date(d.fecha_hora),d.energia_activa]);
+            }
+            var demanda_vals = [];
+            for (var i=0;i<vm.data_clean.length;i++){
+                d = vm.data_clean[i];
+                demanda_vals.push([new Date(d.fecha_hora),d.demanda]);
+            }
+
+            _data.push({"key":"Aparente", "values":aparente_vals});
+            _data.push({"key":"Activa", "values":activa_vals});
+            _data.push({"key":"Demanda", "values":demanda_vals});
+
+            vm.data = _data;
         });
     };
     $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
@@ -92,50 +120,6 @@ dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams
     vm.hasta = hoy;
     vm.aplicarFiltroFechas();
 
-    var optionsClimate = {
-        dimensions: {
-            demanda: {
-                axis: 'y',
-                type: 'spline',
-                label: true,
-                color: 'orange',
-                postfix: 'Kwatts',
-                name: 'Demanda'
-            },
-            energia_aparente: {
-                axis: 'y2',
-                type: 'spline',
-                label: true,
-                color: 'lightblue',
-                postfix: 'mm',
-                name: 'Aparente'
-            },
-            energia_activa  : {
-                axis: 'y2',
-                type: 'spline',
-                color: 'red',
-                label: true,
-                postfix: 'mm',
-                name: 'Activa'
-            },
-            fecha_hora: {
-                axis: 'x',
-                label:true
-            }
-        }
-    };
-
-    // stateful
-    vm.statefulOptions = angular.copy(optionsClimate);
-    vm.statefulOptions.data = vm.mediciones;
-    vm.statefulOptions.chart = {
-        subchart: {
-            show: true
-        }
-    };
-    vm.statefulOptions.state = {
-        range: [3, 9]
-    };
 }]);
 
 

@@ -32,7 +32,17 @@
                     <md-button class="md-raised md-primary" ng-click="vm.aplicarFiltroFechas()">Filtrar</md-button>
                     <br>
                     <div class="chart-container" style="width: 100%">
-                        <angular-chart options="vm.statefulOptions"></angular-chart>
+                        <nvd3-line-with-focus-chart
+                                data="vm.data"
+                                id="nodo-chart"
+                                height="400"
+                                height2="50"
+                                margin="{left:80,top:50,bottom:30,right:50}"
+                                xAxisTickFormat="vm.xAxisTickFormatFunction()"
+                                x2AxisTickFormat="vm.xAxisTickFormatFunction()"
+                                noData="Sin Datos">
+                            <svg></svg>
+                        </nvd3-line-with-focus-chart>
                     </div>
                 </div>
             </div>
