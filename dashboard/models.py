@@ -12,7 +12,7 @@ def get_imagen_nodo_dir(obj, filename):
 
 def create_valid_date(y, m, d, h=0, mm=0):
     try:
-        if not (y % 4 == 0 and y % 100 != 0 or y % 400 == 0) and m == 2 and d == 29:
+        if not (y % 4 == 0 and y % 100 != 0 or y % 400 == 0) and m == 2 and d > 28:
             return datetime.datetime(y, 2, 28, h, mm)
         else:
             return datetime.datetime(y, m, d, h, mm)
