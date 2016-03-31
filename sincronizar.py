@@ -43,9 +43,9 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
                        passwd=bdparam['DB_PASS'],
                        db=bdparam['DB_NAME'])
     ilog('SQL TO EXECUTE')
-    ilog(sql%(min_date_time,))
+    ilog(sql%(min_date_time.strftime("%Y-%m-%d %H:%M:%S"),))
     c=db.cursor()
-    c.execute(sql, (min_date_time,))
+    c.execute(sql, (min_date_time.strftime("%Y-%m-%d %H:%M:%S"),))
     r=db.store_result()
     l = [reg_modifier(e) for e in r.fetch_row(maxrows=0, how=1)]
     c.close()
