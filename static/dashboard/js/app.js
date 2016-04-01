@@ -67,23 +67,14 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
         var arr = [];
         var marcadores = [];
         for (var i = 0; i < res.length; i++) {
-            if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
-            arr.push(angular.extend({}, res[i]));
             var n = res[i];
+            if (n.fotografia == null) n.fotografia = '/static/dashboard/img/none.png';
+            arr.push(n);
             if (n.coordenada != null)
-                marcadores.push(angular.extend({}, {
-                    "name": n.nombre,
-                    "lat": n.coordenada.coordinates[0],
-                    "lon": n.coordenada.coordinates[1],
-                    "label": {
-                        "message": n.nombre,
-                        "show": true,
-                        "showOnMouseOver": true
-                    }
-                }));
+                marcadores.push(n);
         }
         vm.nodos = arr;
-        vm.marcadores = marcadores;
+        vm.nodosC = marcadores;
     });
 }]);
 
