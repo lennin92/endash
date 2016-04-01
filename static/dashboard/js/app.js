@@ -68,10 +68,9 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
         var marcadores = [];
         for (var i = 0; i < res.length; i++) {
             var n = res[i];
-            if (n.fotografia == null) n.fotografia = '/static/dashboard/img/none.png';
+            if (n.fotografia == null){n.fotografia = '/static/dashboard/img/none.png';}
             arr.push(n);
-            if (n.coordenada != null)
-                marcadores.push(n);
+            if (n.coordenada != null){marcadores.push(n);}
         }
         vm.nodos = arr;
         vm.nodosC = marcadores;
