@@ -82,7 +82,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
                 }));
         }
         vm.nodos = arr;
-        vm.marcadores = marcadores;
+        vm.marcadores = [];
     });
 }]);
 
