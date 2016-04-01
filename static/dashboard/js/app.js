@@ -72,7 +72,8 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
             n = res[i];
             if (n.coordenada != null)
                 marcadores.push(angular.extend({}, {
-                    "name": n.nombre, "lat": n.coordenada.coordinates[0],
+                    "name": n.nombre,
+                    "lat": n.coordenada.coordinates[0],
                     "lon": n.coordenada.coordinates[1],
                     "label": {
                         "message": n.nombre,
@@ -83,7 +84,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
         }
         vm.nodos = arr;
         console.log(marcadores);
-        vm.marcadores = [{name:"PRUEBA",lat:13.719363, lon: -89.203081, label:"TEXTO PRUEBA"}];
+        vm.marcadores = marcadores;
     });
 }]);
 
