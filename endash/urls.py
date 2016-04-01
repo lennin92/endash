@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^rest-api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^$', main),
 ]
