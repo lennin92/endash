@@ -83,7 +83,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
         }
         vm.nodos = arr;
         console.log(marcadores);
-        vm.marcadores = [{lat:13.719363, lon: -89.203081, label:{message:"TEXTO PRUEBA", show:true}}];
+        vm.marcadores = [{lat:13.719363, lon: -89.203081, label:"TEXTO PRUEBA"}];
     });
 }]);
 
