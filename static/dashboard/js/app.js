@@ -61,7 +61,28 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
 
 dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) {
     var vm = this;
-    vm.center = {lat:13.719363, lon :-89.203081, zoom: 16};
+    vm.center = {lat: 13.719363, lon: -89.203081, zoom: 16};
+    $http.get('/rest-api/nodos/?format=json').then(function (response) {
+        var res = response.data;
+        var arr = [];
+        var marcadores = [];
+        for (var i = 0; i < res.length; i++) {
+            if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
+            arr.push(angular.extend({}, res[i]));
+            n = res[i];
+            marcadores.push({
+                "name": n.nombre, "lat": n.coordenada.coordinates[0],
+                "lon": n.coordenada.coordinates[1],
+                "label": {
+                    "message": n.nombre,
+                    "show": false,
+                    "showOnMouseOver": true
+                }
+            });
+        }
+        vm.nodos = arr;
+        vm.marcadores = marcadores;
+    });
 }]);
 
 dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams',
