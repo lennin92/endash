@@ -28,7 +28,8 @@ Date.prototype.dF = function () {
         + (mn[1] ? mn : "0" + mn[0]);
 };
 
-var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'angularChart']);
+var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate',
+    'ngRoute', 'angularChart', 'openlayers-directive']);
 
 dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvider',
     function ($mdThemingProvider, $routeProvider, $interpolateProvider) {
@@ -48,77 +49,88 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
             controller: 'NodoCtrl',
             controllerAs: 'vm'
         }).
+        when('/mapa', {
+            templateUrl: '/static/dashboard/views/mapa.html',
+            controller: 'MapCtrl',
+            controllerAs: 'vm'
+        }).
         otherwise({
             redirectTo: '/'
         });
     }]);
 
-dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams', function ($scope, $http, $window, $routeParams) {
+dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) {
     var vm = this;
-    vm.xAxisTickFormatFunction = function(){
-        return function(d){
-            return d3.time.format('%x')(new Date(d));  //uncomment for date format
-        }
-    };
-
-    vm.tipoFiltro = 0;
-    vm.cargarNodo = function (nodo) {
-        $window.location.href = '/#/nodos/' + nodo.id;
-    };
-    vm.demanda2Text = demanda2Text;
-    vm.nodos = [];
-    vm.grupos = [];
-    vm.idNodo = $routeParams.idNodo;
-    vm.aplicarFiltroFechas = function () {
-        var url = '/rest-api/mediciones/?format=json&nodo='+vm.idNodo+'&begin='+vm.desde.dF()+'&end='+vm.hasta.dF();
-        $http.get(url).then(function(response){
-            vm.mediciones = response.data;
-            vm.data = vm.mediciones;
-            vm.options = {
-                data: vm.data,
-                dimensions: {
-                    demanda: {axis: 'y'},
-                    energia_activa: { axis:"y2"},
-                    energia_aparente: { axis:"y2"},       // leave the object empty to add a line to the y-Axis
-                    fecha_hora: {
-                        axis: 'x',
-                        displayFormat: '%Y-%m-%d %H:%M:%S',
-                        dataType: 'datetime',
-                        dataFormat: '%Y-%m-%dT%H:%M:%SZ',
-                        name: 'Date'
-                    }
-                },
-                chart:{
-                    subchart: {
-                        show: true
-                    }
-                }
-            };
-        });
-    };
-    $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
-        var res = response.data;
-        if (res.fotografia == null) res.fotografia = '/static/dashboard/img/none.png';
-        vm.nodo = res;
-        $http.get('/rest-api/nodos/' + vm.idNodo + '/hijos/?format=json').then(function (response) {
-            var res = response.data;
-            var arr = [];
-            for (var i = 0; i < res.length; i++) {
-                if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
-                arr.push(angular.extend({}, res[i]));
-            }
-            vm.nodos = arr;
-            vm.grupos = generarGrupos(vm.nodos.slice(), 4);
-        });
-    });
-
-    var hoy = new Date();
-    var inicio = new Date(hoy.getYear() + 1900, hoy.getMonth(), 1);
-    vm.desde = inicio;
-    vm.hasta = hoy;
-    vm.aplicarFiltroFechas();
-
+    vm.center = [13.719363, -89.203081];
 }]);
+
+dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams',
+    function ($scope, $http, $window, $routeParams) {
+        var vm = this;
+        vm.xAxisTickFormatFunction = function () {
+            return function (d) {
+                return d3.time.format('%x')(new Date(d));  //uncomment for date format
+            }
+        };
+
+        vm.tipoFiltro = 0;
+        vm.cargarNodo = function (nodo) {
+            $window.location.href = '/#/nodos/' + nodo.id;
+        };
+        vm.demanda2Text = demanda2Text;
+        vm.nodos = [];
+        vm.grupos = [];
+        vm.idNodo = $routeParams.idNodo;
+        vm.aplicarFiltroFechas = function () {
+            var url = '/rest-api/mediciones/?format=json&nodo=' + vm.idNodo + '&begin=' + vm.desde.dF() + '&end=' + vm.hasta.dF();
+            $http.get(url).then(function (response) {
+                vm.mediciones = response.data;
+                vm.data = vm.mediciones;
+                vm.options = {
+                    data: vm.data,
+                    dimensions: {
+                        demanda: {axis: 'y'},
+                        energia_activa: {axis: "y2"},
+                        energia_aparente: {axis: "y2"},       // leave the object empty to add a line to the y-Axis
+                        fecha_hora: {
+                            axis: 'x',
+                            displayFormat: '%Y-%m-%d %H:%M:%S',
+                            dataType: 'datetime',
+                            dataFormat: '%Y-%m-%dT%H:%M:%SZ',
+                            name: 'Date'
+                        }
+                    },
+                    chart: {
+                        subchart: {
+                            show: true
+                        }
+                    }
+                };
+            });
+        };
+        $http.get('/rest-api/nodos/' + vm.idNodo + '/?format=json').then(function (response) {
+            var res = response.data;
+            if (res.fotografia == null) res.fotografia = '/static/dashboard/img/none.png';
+            vm.nodo = res;
+            $http.get('/rest-api/nodos/' + vm.idNodo + '/hijos/?format=json').then(function (response) {
+                var res = response.data;
+                var arr = [];
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
+                    arr.push(angular.extend({}, res[i]));
+                }
+                vm.nodos = arr;
+                vm.grupos = generarGrupos(vm.nodos.slice(), 4);
+            });
+        });
+
+        var hoy = new Date();
+        var inicio = new Date(hoy.getYear() + 1900, hoy.getMonth(), 1);
+        vm.desde = inicio;
+        vm.hasta = hoy;
+        vm.aplicarFiltroFechas();
+
+    }]);
 
 
 dashboardApp.controller('AppCtrl', ['$scope', '$http', '$window', function ($scope, $http, $window) {

@@ -23,13 +23,17 @@
 <script src="{% static "dashboard/js/nv.d3.min.js" %}"></script>
 <script src="{% static "dashboard/js/c3.min.js" %}"></script>
 <script src="{% static "dashboard/js/angular-chart.min.js" %}"></script>
+<script src="{% static "dashboard/js/ol.js" %}"></script>
+<script src="{% static "dashboard/js/angular-openlayers-directive.min.js" %}"></script>
 
 <!-- Your application bootstrap  -->
 <script src="{% static "dashboard/js/app.js" %}"></script>
 
 <md-toolbar class="md-hue-1">
     <div class="md-toolbar-tools">
-        <a href="/#/"><span>UES ENERGY DASHBOARD</span></a>
+        <a href="/#/"><h3>UES ENERGY DASHBOARD</h3></a>
+        <span flex></span>
+        <a href="/#/mapa/"><h4>Ver Mapa</h4></a>
     </div>
 </md-toolbar>
 <md-content class="md-padding" layout-xs="row" layout="row" ng-view style="overflow: inherit;"></md-content>

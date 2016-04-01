@@ -95,7 +95,8 @@ def start(dbparam, wsparam, conv):
 
 if __name__=='__main__':
     # PARAMETROS DE CONEXION DE BASE DE DATOS FUENTE (SDB)
-    DB_HOST = 'lennin92.mysql.pythonanywhere-services.com'
+    # DB_HOST = 'lennin92.mysql.pythonanywhere-services.com'
+    DB_HOST = 'localhost'
     DB_PORT = '3306'
     DB_USER = 'lennin92'
     DB_PASS = 'asdf123321fdsa'

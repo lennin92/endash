@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.db import models
+from django.contrib.gis.db import models
 from django.db.models import Max
 import datetime
 
@@ -33,6 +33,7 @@ class Nodo(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.TextField()
     fotografia = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
+    coordenada = models.PointField(blank=True, null=True)
 
     @property
     def demandas(self):
