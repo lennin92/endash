@@ -61,7 +61,7 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
 
 dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) {
     var vm = this;
-    vm.center = {lat: 13.719363, lon: -89.203081, zoom: 16};
+    vm.center = {lat: 13.719363, lon: -89.203081, zoom: 14};
     $http.get('/rest-api/nodos/?format=json').then(function (response) {
         var res = response.data;
         var arr = [];
