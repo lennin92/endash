@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'endash.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
         'NAME': 'lennin92$endash',
         'USER': 'lennin92',
         'PASSWORD': 'asdf123321fdsa',
