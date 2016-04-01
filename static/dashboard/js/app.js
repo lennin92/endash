@@ -61,7 +61,7 @@ dashboardApp.config(['$mdThemingProvider', '$routeProvider', '$interpolateProvid
 
 dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) {
     var vm = this;
-    vm.center = {lat:13.719363, lon :-89.203081};
+    vm.center = {lat:13.719363, lon :-89.203081, zoom: 10};
 }]);
 
 dashboardApp.controller('NodoCtrl', ['$scope', '$http', '$window', '$routeParams',
