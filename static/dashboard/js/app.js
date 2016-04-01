@@ -71,7 +71,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
             arr.push(angular.extend({}, res[i]));
             n = res[i];
             if (n.coordenada != null)
-                marcadores.push({
+                marcadores.push(angular.extend({}, {
                     "name": n.nombre, "lat": n.coordenada.coordinates[0],
                     "lon": n.coordenada.coordinates[1],
                     "label": {
@@ -79,7 +79,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
                         "show": false,
                         "showOnMouseOver": true
                     }
-                });
+                }));
         }
         vm.nodos = arr;
         vm.marcadores = marcadores;
