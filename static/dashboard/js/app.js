@@ -73,8 +73,8 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
             if (n.coordenada != null){
                 marcadores.push({
                     nombre: n.nombre,
-                    lat: n.coordenada.coordinates[0],
-                    lon: n.coordenada.coordinates[1]
+                    lat: n.coordenada.coordinates[1],
+                    lon: n.coordenada.coordinates[0]
                 });
             }
         }
