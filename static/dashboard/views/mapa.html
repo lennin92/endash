@@ -1,3 +1,6 @@
 <openlayers ol-center="vm.center" height="80%"  width="100%">
-    <ol-marker ng-repeat="m in vm.marcadores" message="{[{m.name}]}" name={[{m.name}]}" lat="{[{m.lat}]}" lon="{[{m.lon}]}" ol-marker-properties="m"></ol-marker>
+    <ol-marker ng-repeat="m in vm.marcadores" message="{[{m.name}]}" name={[{m.name}]}" lat="m.lat" lon="m.lon" ol-marker-properties="m"></ol-marker>
 </openlayers>
+<pre>
+    {[{ vm.marcadores |json }]}
+</pre>
