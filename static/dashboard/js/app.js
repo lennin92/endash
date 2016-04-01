@@ -70,6 +70,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
             if (res[i].fotografia == null) res[i].fotografia = '/static/dashboard/img/none.png';
             arr.push(angular.extend({}, res[i]));
             n = res[i];
+            if(n.coordenada==null) continue;
             marcadores.push({
                 "name": n.nombre, "lat": n.coordenada.coordinates[0],
                 "lon": n.coordenada.coordinates[1],
