@@ -34,7 +34,6 @@ class Nodo(models.Model):
     descripcion = models.TextField()
     fotografia = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
     coordenada = models.PointField(blank=True, null=True)
-    objects = models.GeoManager()
 
     @property
     def demandas(self):
