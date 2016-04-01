@@ -14,7 +14,7 @@ class NodoSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Nodo
-        fields = ('id', 'url', 'padre', 'nombre', 'coordenada'
+        fields = ('id', 'url', 'padre', 'nombre', 'coordenada',
                   'descripcion', 'hijos', 'fotografia', 'demandas')
 
 
