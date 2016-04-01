@@ -77,7 +77,7 @@ dashboardApp.controller('MapCtrl', ['$scope', '$http', function ($scope, $http) 
                     "lon": n.coordenada.coordinates[1],
                     "label": {
                         "message": n.nombre,
-                        "show": false,
+                        "show": true,
                         "showOnMouseOver": true
                     }
                 }));
