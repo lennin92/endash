@@ -1,6 +1,28 @@
 <html lang="en">{% load staticfiles %}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="{% static "dashboard/js/ol.js" %}"></script>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="{% static "dashboard/js/angular.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-sanitize.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-animate.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-aria.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-messages.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-route.min.js" %}"></script>
+
+    <!-- Angular Material Library -->
+    <script src="{% static "dashboard/js/angular-openlayers-directive.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-material.min.js" %}"></script>
+    <script src="{% static "dashboard/js/d3.min.js" %}"></script>
+    <script src="{% static "dashboard/js/nv.d3.min.js" %}"></script>
+    <script src="{% static "dashboard/js/c3.min.js" %}"></script>
+    <script src="{% static "dashboard/js/angular-chart.min.js" %}"></script>
+
+    <!-- Your application bootstrap  -->
+    <script src="{% static "dashboard/js/app.js" %}"></script>
+
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="{% static "dashboard/css/angular-material.min.css" %}">
     <link rel="stylesheet" href="{% static "dashboard/css/c3.min.css" %}">
@@ -11,26 +33,6 @@
     <title>UES Energy Dashboard</title>
 </head>
 <body ng-app="DashboardApp" layout-fill>
-
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="{% static "dashboard/js/angular.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-animate.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-aria.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-messages.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-route.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-sanitize.min.js" %}"></script>
-
-<!-- Angular Material Library -->
-<script src="{% static "dashboard/js/angular-material.min.js" %}"></script>
-<script src="{% static "dashboard/js/d3.min.js" %}"></script>
-<script src="{% static "dashboard/js/nv.d3.min.js" %}"></script>
-<script src="{% static "dashboard/js/c3.min.js" %}"></script>
-<script src="{% static "dashboard/js/angular-chart.min.js" %}"></script>
-<script src="{% static "dashboard/js/ol.js" %}"></script>
-<script src="{% static "dashboard/js/angular-openlayers-directive.min.js" %}"></script>
-
-<!-- Your application bootstrap  -->
-<script src="{% static "dashboard/js/app.js" %}"></script>
 
 <md-toolbar class="md-hue-1">
     <div class="md-toolbar-tools">

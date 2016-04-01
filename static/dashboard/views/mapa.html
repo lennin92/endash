@@ -1,11 +1,8 @@
-<openlayers ol-center="vm.center" height="80%" width="100%" ol-markers="nodosC">
-    <ol-marker lat="13.719363" lon="-89.203081" name="CENTRO"></ol-marker>
-    <ol-marker ng-repeat="nodo in nodosC"
-               message="{[{nodo.nombre}]}"
-               name={[{nodo.nombre}]}"
-               lat="nodo.lat"
-               lon="nodo.lon"></ol-marker>
-</openlayers>
-<pre>
-    {[{ vm.nodosC |json }]}
-</pre>
+
+<openlayers ol-center="vm.center" ol-markers="nodosC"
+            height="400px" width="100%">
+    <ol-marker ng-repeat="marker in nodosC"
+               lat="marker.lat" lon="marker.lon">
+    </ol-marker>
+</openlayers><br/>
+<pre ng-bind="nodosC |json"></pre>
