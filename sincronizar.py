@@ -118,14 +118,17 @@ if __name__=='__main__':
     # FORMATO SIGUIENTE:
     #   (<NOMBRE DE TABLA EN SDB>, <ID NODO EN WS>)
     CONVERSIONES = [
-        ('Agronomia', 1),  ('ComedorUES', 2),  ('Medicina', 3),  ('Artes', 4),
-    #    ('', 5),  ('', 6),  ('', 7),  ('', 8),
-    #    ('', 9),  ('', 10), ('', 11), ('', 12),
-    #    ('', 13), ('', 14), ('', 15), ('', 16),
-    #    ('', 17), ('', 18), ('', 19), ('', 20),
-    #    ('', 21), ('', 22), ('', 23), ('', 24),
-    #    ('', 25), ('', 26), ('', 27), ('', 28),
-    #    ('', 29), ('', 30), ('', 31), ('', 32)
+        (1, 'Agronomia'), (2, 'AgronomiaDecanato'), (32, 'Rectoria'),
+        (3, 'AgronomiaGalera'), (4, 'AgronomiaQuimica'),
+        (5, 'Artes'), (6, 'AuditoriumMarmol'), (7, 'Cafetines'),
+        (8, 'ComedorUES'), (9, 'Derecho'), (10, 'Economia1'),
+        (11, 'Economia2'), (12, 'Economia3'), (13, 'Economia4'),
+        (14, 'Economia5'), (15, 'Economia6'), (16, 'HORAS'),
+        (17, 'Humanidades1'), (18, 'Humanidades2'), (19, 'Humanidades3'),
+        (20, 'Humanidades4'), (21, 'MecanicaComplejo'), (22, 'Medicina'),
+        (23, 'Odontologia1'), (24, 'Odontologia2'), (25, 'Odontologia3'),
+        (26, 'OdontologiaImprenta'), (27, 'Periodismo'), (28, 'PrimarioFIA'),
+        (29, 'Psicologia'), (30, 'Quimica'), (31, 'QuimicaImprenta'),
     ]
 
 
