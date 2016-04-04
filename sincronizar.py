@@ -76,17 +76,17 @@ def start(dbparam, wsparam, conv):
     # usando el WS en /rest-api/mediciones/<nodo_id>/max/
     ws_host = wsparam['WS_HOST']
     for c in conv:
-        url = ws_host+'/rest-api/mediciones/%d/max/'%(c[1])
+        url = ws_host+'/rest-api/mediciones/%d/max/'%(c[0])
         response = requests.get(url)
         if response.status_code != 200:
-            wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[1],response.status_code))
+            wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[0],response.status_code))
             continue
-        ilog('Downloaded max datetime for node %d' % (c[1]))
+        ilog('Downloaded max datetime for node %d' % (c[0]))
         # Paso 2: Obtener todas las mediciones del nodo
         # en la base de datos fuente a partir de la fecha
         # obtenida en el WS
         demanda = response.json()
-        jsons = get_all_node_meditions(dbparam, c[0], c[1], demanda['fecha_hora'], tuple2Dict)
+        jsons = get_all_node_meditions(dbparam, c[1], c[0], demanda['fecha_hora'], tuple2Dict)
         # Paso 3: Enviar cada medicion obtenida al WS
         # en /rest-api/mediciones/ usando POST
         postAllDemandas(wsparam, jsons, ws_host+'/rest-api/mediciones/')
@@ -116,7 +116,7 @@ if __name__=='__main__':
     # TABLA DE CONVERSION TABLA (EN SDB) A NODO (EN WS)
     # FORMATO: LISTA DE TUPLAS, LA TUPLA DEBE TENER EL
     # FORMATO SIGUIENTE:
-    #   (<NOMBRE DE TABLA EN SDB>, <ID NODO EN WS>)
+    #   (<ID NODO EN WS>, <NOMBRE DE TABLA EN SDB>)
     CONVERSIONES = [
         (1, 'Agronomia'), (2, 'AgronomiaDecanato'), (32, 'Rectoria'),
         (3, 'AgronomiaGalera'), (4, 'AgronomiaQuimica'),
