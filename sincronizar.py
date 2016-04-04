@@ -4,7 +4,7 @@ import requests
 import grequests
 import logging
 
-logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', filename='log.txt', level=logging.ERROR)
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', filename='log.txt', level=logging.DEBUG)
 
 
 def dlog(v): logging.debug(v)
@@ -128,7 +128,7 @@ if __name__=='__main__':
         (5, 'Artes'), (6, 'AuditoriumMarmol'), (7, 'Cafetines'),
         (8, 'ComedorUES'), (9, 'Derecho'), (10, 'Economia1'),
         (11, 'Economia2'), (12, 'Economia3'), (13, 'Economia4'),
-        (14, 'Economia5'), (15, 'Economia6'), (16, 'HORAS'),
+        (14, 'Economia5'), (15, 'Economia6'),
         (17, 'Humanidades1'), (18, 'Humanidades2'), (19, 'Humanidades3'),
         (20, 'Humanidades4'), (21, 'MecanicaComplejo'), (22, 'Medicina'),
         (23, 'Odontologia1'), (24, 'Odontologia2'), (25, 'Odontologia3'),
