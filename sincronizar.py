@@ -62,7 +62,6 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
         l=[]
         elog('ERROR AL EJECUTAR SQL' + sql)
         elog(e)
-
     return l
 
 def start(dbparam, wsparam, conv):
