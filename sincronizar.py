@@ -43,20 +43,26 @@ def tuple2Dict(tuple):
 
 def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modifier=None):
     sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
-          "WhTot as energia_activa, VAhTot as energia_aparente, " \
-          "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
+              "WhTot as energia_activa, VAhTot as energia_aparente, " \
+              "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
     sql += "WHERE Fecha_hora>%s limit 50;"
-    db=MySQLdb.connect(host=bdparam['DB_HOST'],
-                       port=int(bdparam['DB_PORT']),
-                       user=bdparam['DB_USER'],
-                       passwd=bdparam['DB_PASS'],
-                       db=bdparam['DB_NAME'])
-    ilog('SQL TO EXECUTE')
-    ilog(sql%(min_date_time.replace('T',' ').replace('Z',''),))
-    c=db.cursor()
-    c.execute(sql, (min_date_time.replace('T',' ').replace('Z',''),))
-    l = [reg_modifier(e) for e in c.fetchall()]
-    c.close()
+    try:
+        db=MySQLdb.connect(host=bdparam['DB_HOST'],
+                           port=int(bdparam['DB_PORT']),
+                           user=bdparam['DB_USER'],
+                           passwd=bdparam['DB_PASS'],
+                           db=bdparam['DB_NAME'])
+        ilog('SQL TO EXECUTE')
+        ilog(sql%(min_date_time.replace('T',' ').replace('Z',''),))
+        c=db.cursor()
+        c.execute(sql, (min_date_time.replace('T',' ').replace('Z',''),))
+        l = [reg_modifier(e) for e in c.fetchall()]
+        c.close()
+    except Exception as e:
+        l=[]
+        elog('ERROR AL EJECUTAR SQL' + sql)
+        elog(e)
+
     return l
 
 def start(dbparam, wsparam, conv):
