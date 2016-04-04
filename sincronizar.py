@@ -44,7 +44,7 @@ def tuple2Dict(tuple):
 def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modifier=None):
     sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
           "WhTot as energia_activa, VAhTot as energia_aparente, " \
-          "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
+          "Pos_Watts_3ph_Av as demanda FROM %s limit 50"%(node_id, tablename)
     sql += "WHERE Fecha_hora>%s;"
     db=MySQLdb.connect(host=bdparam['DB_HOST'],
                        port=int(bdparam['DB_PORT']),
