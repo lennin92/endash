@@ -21,11 +21,18 @@ Date.prototype.dF = function () {
     var dd = this.getDate().toString();
     var mn = this.getMinutes().toString();
     var hh = this.getHours().toString();
-    return yyyy + '-'
+
+    var str =yyyy + '-'
         + (mm[1] ? mm : "0" + mm[0]) + '-'
         + (dd[1] ? dd : "0" + dd[0]) + ' '
         + (hh[1] ? hh : "0" + hh[0]) + ':'
         + (mn[1] ? mn : "0" + mn[0]);
+
+    console.log('CONVERSION DE FECHA');
+    console.log(hh);
+    console.log(str);
+
+    return str;
 };
 
 var dashboardApp = angular.module('DashboardApp', ['ngMaterial', 'ngAnimate',
