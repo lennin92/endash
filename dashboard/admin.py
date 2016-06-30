@@ -1,15 +1,15 @@
 from django.contrib import admin
-from dashboard.models import Medicion, Nodo
-# Register your models here.
+from dashboard.models import Measure, Node
 
 
-class NodoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'padre', 'nombre')
+class NodeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'parent', 'name')
 
-admin.site.register(Nodo, NodoAdmin)
+admin.site.register(Node, NodoAdmin)
 
-class MedicionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nodo', 'fecha_hora',
-        'demanda', 'energia_activa', 'energia_aparente')
 
-admin.site.register(Medicion, MedicionAdmin)
+class MeasureAdmin(admin.ModelAdmin):
+    list_display = ('id', 'node', 'datetime',
+                    'active', 'apparent' ,'demand')
+
+admin.site.register(Measure, MeasureAdmin)

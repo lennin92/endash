@@ -1,4 +1,4 @@
-from dashboard.models import Medicion, Nodo
+from dashboard.models import Measure, Node
 from rest_framework import viewsets
 from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
@@ -7,40 +7,28 @@ from dashboard.serializers import MedicionSerializer, NodoSerializer
 import datetime
 from django.db.models import Max
 
+
 class ReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in ['get', 'GET']:
             return True
 
-class NodoViewSet(viewsets.ModelViewSet):
-    queryset = Nodo.objects.all()
+
+class NodeViewSet(viewsets.ModelViewSet):
+    queryset = Node.objects.all()
     serializer_class = NodoSerializer
 
     # Query only parents nodes
     @list_route(permission_classes=[ReadOnly])
-    def padres(self, request):
-        padres = Nodo.objects.filter(padre=None)
-        page = self.paginate_queryset(padres)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = self.get_serializer(padres, many=True)
-        return Response(serializer.data)
+    def parents(self, request): pass
 
     # Query childs
     @detail_route(methods=['get'], permission_classes=[ReadOnly])
-    def hijos(self, request, pk=None):
-        padre = self.get_object()
-        hijos = Nodo.objects.filter(padre=padre)
-        page = self.paginate_queryset(hijos)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = self.get_serializer(hijos, many=True)
-        return Response(serializer.data)
+    def childs(self, request, pk=None): pass
 
-class MedicionViewSet(viewsets.ModelViewSet):
-    queryset = Medicion.objects.all()
+
+class MeasureViewSet(viewsets.ModelViewSet):
+    queryset = Measure.objects.all()
     serializer_class = MedicionSerializer
 
     def get_queryset(self):
@@ -53,7 +41,6 @@ class MedicionViewSet(viewsets.ModelViewSet):
         else: queryset = Medicion.objects.filter(fecha_hora__range=(begin,end), nodo=nodo).order_by('fecha_hora')
         return queryset
 
-    # Query childs
     @detail_route(methods=['get'], permission_classes=[ReadOnly])
     def max(self, request, pk=None):
         fh = Medicion.objects.filter(nodo_id=pk).aggregate(Max('fecha_hora'))['fecha_hora__max']
@@ -64,4 +51,3 @@ class MedicionViewSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(qs, many=False)
         return Response(serializer.data)
-
