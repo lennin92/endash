@@ -3,28 +3,28 @@ from dashboard.models import Node, Month, Day, Year, Time, Measure
 
 
 class NodeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'parent', 'name')
+    list_display = ('id', 'parent', 'name', )
 
 
 class MonthAdmin(admin.ModelAdmin):
-    list_display('id', 'month')
+    list_display = ('id', 'month', )
 
 
 class DayAdmin(admin.ModelAdmin):
-    list_display('id', 'day')
+    list_display = ('id', 'day', )
 
 
 class YearAdmin(admin.ModelAdmin):
-    list_display('id', 'year')
+    list_display = ('id', 'year', )
 
 
 class TimeAdmin(admin.ModelAdmin):
-    list_display('id', 'hour', 'mins')
+    list_display = ('id', 'hour', 'mins', )
 
 
 class MeasureAdmin(admin.ModelAdmin):
-    list_display('id', 'datetime_str_rep',
-                 'active', 'apparent', 'demand')
+    list_display = ('id', 'datetime_str_rep',
+                 'active', 'apparent', 'demand', )
 
 
 admin.site.register(Node, NodoAdmin)
