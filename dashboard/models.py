@@ -22,39 +22,34 @@ class Year(models.Model):
 
 class Month(models.Model):
     month = models.CharField(max_length=15)
-    char_rep = models.CharField(max_length=3)
+    char_rep = models.CharField(max_length=2)
     integer_rep = models.IntegerField()
 
-    def char_rep(self):
-        s = str(self.integer_rep)
-        if len(s)==1: s="0"+s
-        return s
 
-
-class DayOfMonth(models.Model):
-    month = models.ForeignKey('Month')
+class Day(models.Model):
     day = models.IntegerField()
+    char_rep = models.CharField(max_length=2)
+    integer_rep = models.IntegerField()
 
-    def char_rep(self):
-        s = str(self.day)
-        if len(s)==1: s="0"+s
-        return s + "/" + self.month.char_rep()
+
+class Time(models.Model):
+    HOURS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    MINS  = [0, 15, 30, 45]
+    hour = models.IntegerField(blank=False, null=False, choices=HOURS)
+    mins = models.IntegerField(blank=False, null=False, choices=MINS)
+    char_rep = models.CharField(max_length=5)
 
 
 class Measure(models.Model):
     node = models.ForeignKey('Node')
     year = models.ForeignKey('Year')
-    day_of_month = models.ForeignKey('DayOfMonth')
+    month = models.ForeignKey('Month')
+    day = models.ForeignKey('Day')
+    time = models.ForeignKey('Time')
     active = models.IntegerField()
     apparent = models.IntegerField()
     demand = models.FloatField()
 
-    def datetime(self):
-        return self.day_of_month.char_rep() + "/" + self.year.char_rep()
-
-    def datetime_int(self):
-        y = str(self.year.year)
-        m = self.day_of_month.month.char_rep()
-        d = str(self.day_of_month.day)
-        if len(d)==1: d="0"+d
-        return int(y+m+d)
+    def datetime_str_rep(self):
+        return '%s/%s/%s %s'%(self.year.char_rep, self.month.char_rep,
+                              self.day.char_rep, self.time.char_rep)
