@@ -1,4 +1,4 @@
-from dashboard.models import Measure, Node, DemandaNodo
+from dashboard.models import Measure, Node
 from rest_framework import serializers
 
 
