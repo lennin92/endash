@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'endash.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        'NAME': 'lennin92$endash',
+        'NAME': 'lennin92$endashv2',
         'USER': 'lennin92',
-        'PASSWORD': 'asdf123321fdsa',
+        'PASSWORD': 'endashv2',
         'HOST': 'lennin92.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
