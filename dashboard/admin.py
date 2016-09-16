@@ -27,7 +27,7 @@ class MeasureAdmin(admin.ModelAdmin):
                  'active', 'apparent', 'demand', )
 
 
-admin.site.register(Node, NodoAdmin)
+admin.site.register(Node, NodeAdmin)
 admin.site.register(Month, MonthAdmin)
 admin.site.register(Day, DayAdmin)
 admin.site.register(Year, YearAdmin)
