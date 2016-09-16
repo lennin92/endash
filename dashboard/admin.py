@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dashboard.models import Node, Month, Day, Year, Hour, Measure
+from dashboard.models import Node, Month, Day, Year, Time, Measure
 
 
 class NodeAdmin(admin.ModelAdmin):
@@ -18,7 +18,7 @@ class YearAdmin(admin.ModelAdmin):
     list_display('id', 'year')
 
 
-class HourAdmin(admin.ModelAdmin):
+class TimeAdmin(admin.ModelAdmin):
     list_display('id', 'hour', 'mins')
 
 
@@ -28,8 +28,8 @@ class MeasureAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Node, NodoAdmin)
-admin.site.register(Mont, NodoAdmin)
-admin.site.register(Day, NodoAdmin)
-admin.site.register(Year, NodoAdmin)
-admin.site.register(Hour, NodoAdmin)
+admin.site.register(Month, MonthAdmin)
+admin.site.register(Day, DayAdmin)
+admin.site.register(Year, YearAdmin)
+admin.site.register(Time, TimeAdmin)
 admin.site.register(Measure, MeasureAdmin)
