@@ -13,6 +13,9 @@ class Node(models.Model):
     photography = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
     location = GeopositionField(blank=True, null=True)
 
+    def __str__(self):
+        return "[%d] %s"%(self.id, self.name)
+
 
 class Year(models.Model):
     year = models.IntegerField()
