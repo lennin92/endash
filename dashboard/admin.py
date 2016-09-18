@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dashboard.models import Node, Month, Day, Year, Time, Measure
+from dashboard.models import Node, Month, Day, Year, Time, Measure, TariffSchedule, Supplier
 
 
 class NodeAdmin(admin.ModelAdmin):
@@ -26,6 +26,13 @@ class MeasureAdmin(admin.ModelAdmin):
     list_display = ('id', 'datetime_str_rep',
                  'active', 'apparent', 'demand', )
 
+
+class TariffScheduleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'supplier', 'valid_from', 'valid_to',
+            'fixed', 'peak', 'rest', 'valley', 'power')
+
+class SupplierAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'logo')
 
 admin.site.register(Node, NodeAdmin)
 admin.site.register(Month, MonthAdmin)

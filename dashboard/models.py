@@ -17,7 +17,7 @@ class Supplier(models.Model):
 class TariffSchedule(models.Model):
     supplier = models.ForeignKey('Supplier')
     valid_from = models.DateField()
-    valid_to = models.ForeignKey()
+    valid_to = models.DateField(blank=True, null=True)
     fixed = models.FloatField()
     peak = models.FloatField()
     rest = models.FloatField()
