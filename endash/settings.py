@@ -38,7 +38,8 @@ GEOPOSITION_MAP_OPTIONS = {
 GEOPOSITION_MARKER_OPTIONS = {
     'cursor': 'move',
     'clickable': True,
-    'draggable': True
+    'draggable': True,
+    'position': {'lat': 13.720298, 'lng': -89.202990}
 }
 
 # Application definition
