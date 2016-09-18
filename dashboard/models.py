@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
-from django.db.models import Max
-import datetime, logging
+from location_field.models.spatial import LocationField
 
 
 def get_imagen_nodo_dir(obj, filename):
@@ -12,7 +11,7 @@ class Node(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
     photography = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
-    coordinates = models.PointField(blank=True, null=True)
+    location = LocationField(based_fields=['city'], zoom=9, blank=True, null=True)
 
 
 class Year(models.Model):

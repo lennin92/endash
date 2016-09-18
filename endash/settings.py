@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_gis',
     'rest_framework_swagger',
+    'location_field.apps.DefaultConfig',
     'dashboard'
 ]
 
