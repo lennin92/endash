@@ -27,6 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyAp1xZSLF6qDUKxQrwJoFR8esKb54P61j4'
+
+GEOPOSITION_MAP_OPTIONS = {
+    'minZoom': 6,
+    'maxZoom': 15,
+    'center': {'lat': 13.720298, 'lng': -89.202990}
+}
+
+GEOPOSITION_MARKER_OPTIONS = {
+    'cursor': 'move'
+}
 
 # Application definition
 
@@ -42,7 +53,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_gis',
     'rest_framework_swagger',
-    'location_field.apps.DefaultConfig',
+    'geoposition',
     'dashboard'
 ]
 

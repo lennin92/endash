@@ -1,5 +1,5 @@
 from django.contrib.gis.db import models
-from location_field.models.spatial import LocationField
+from geoposition.fields import GeopositionField
 
 
 def get_imagen_nodo_dir(obj, filename):
@@ -11,7 +11,7 @@ class Node(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
     photography = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
-    location = LocationField(based_fields=['city'], zoom=9, blank=True, null=True)
+    location = GeopositionField(blank=True, null=True)
 
 
 class Year(models.Model):
