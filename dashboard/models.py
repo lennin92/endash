@@ -11,7 +11,7 @@ class Supplier(models.Model):
     logo = models.ImageField(blank=True, null=True)
 
     def __str__(self):
-        return self.nombre
+        return self.name
 
 
 class TariffSchedule(models.Model):
