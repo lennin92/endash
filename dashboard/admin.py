@@ -7,19 +7,19 @@ class NodeAdmin(admin.ModelAdmin):
 
 
 class MonthAdmin(admin.ModelAdmin):
-    list_display = ('id', 'month', )
+    list_display = ('id', 'char_rep','month', )
 
 
 class DayAdmin(admin.ModelAdmin):
-    list_display = ('id', 'day', )
+    list_display = ('id', 'char_rep', 'day', )
 
 
 class YearAdmin(admin.ModelAdmin):
-    list_display = ('id', 'year', )
+    list_display = ('id', 'char_rep', 'year', )
 
 
 class TimeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'hour', 'mins', )
+    list_display = ('id', 'char_rep', 'hour', 'mins', )
 
 
 class MeasureAdmin(admin.ModelAdmin):
