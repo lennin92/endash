@@ -21,17 +21,26 @@ class Year(models.Model):
     year = models.IntegerField()
     char_rep = models.CharField(max_length=2)
 
+    def __str__(self):
+        return self.char_rep
+
 
 class Month(models.Model):
     month = models.CharField(max_length=15)
     char_rep = models.CharField(max_length=2)
     integer_rep = models.IntegerField()
 
+    def __str__(self):
+        return self.char_rep
+
 
 class Day(models.Model):
     day = models.IntegerField()
     char_rep = models.CharField(max_length=2)
     integer_rep = models.IntegerField()
+
+    def __str__(self):
+        return self.char_rep
 
 
 class Time(models.Model):
@@ -49,6 +58,9 @@ class Time(models.Model):
     hour = models.IntegerField(blank=False, null=False, choices=HOURS)
     mins = models.IntegerField(blank=False, null=False, choices=MINS)
     char_rep = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.char_rep
 
 
 class Measure(models.Model):
