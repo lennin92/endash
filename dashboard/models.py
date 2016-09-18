@@ -6,8 +6,33 @@ def get_imagen_nodo_dir(obj, filename):
     return 'nodo_%s/%s' % (obj.id, filename)
 
 
+class Supplier(models.Model):
+    name = models.CharField(max_length=10)
+    logo = models.ImageField(blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+
+class TariffSchedule(models.Model):
+    supplier = models.ForeignKey('Supplier')
+    valid_from = models.DateField()
+    valid_to = models.ForeignKey()
+    fixed = models.FloatField()
+    peak = models.FloatField()
+    rest = models.FloatField()
+    valley = models.FloatField()
+    power = models.FloatField()
+
+    def __str__(self):
+        return "Tariff Schedule %s FROM: %s TO: %s"%(self.supplier.name,
+                    self.valid_from.strftime("%Y-%m-%d"),
+                    self.valid_to.strftime("%Y-%m-%d"))
+
+
 class Node(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='hijos')
+    supplier = models.ForeignKey('Supplier', blank=True, null=True)
     name = models.CharField(max_length=20)
     description = models.TextField()
     photography = models.ImageField(upload_to=get_imagen_nodo_dir, blank=True, null=True)
