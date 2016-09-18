@@ -31,8 +31,10 @@ class TariffScheduleAdmin(admin.ModelAdmin):
     list_display = ('id', 'supplier', 'valid_from', 'valid_to',
             'fixed', 'peak', 'rest', 'valley', 'power')
 
+
 class SupplierAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'logo')
+
 
 admin.site.register(Node, NodeAdmin)
 admin.site.register(Month, MonthAdmin)
@@ -40,3 +42,5 @@ admin.site.register(Day, DayAdmin)
 admin.site.register(Year, YearAdmin)
 admin.site.register(Time, TimeAdmin)
 admin.site.register(Measure, MeasureAdmin)
+admin.site.register(TariffSchedule, TariffScheduleAdmin)
+admin.site.register(Supplier, SupplierAdmin)
