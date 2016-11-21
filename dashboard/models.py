@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.gis.db import models
 from geoposition.fields import GeopositionField
 
@@ -97,7 +99,13 @@ class Measure(models.Model):
     active = models.IntegerField()
     apparent = models.IntegerField()
     demand = models.FloatField()
+    datetime_str = models.CharField(max_length=16, default=None)
 
-    def datetime_str_rep(self):
-        return '%s/%s/%s %s'%(self.year.char_rep, self.month.char_rep,
-                              self.day.char_rep, self.time.char_rep)
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        self.datetime_str = '%s-%s-%s %s'%(
+            self.year.year,
+            self.month.char_rep,
+            self.day.char_rep,
+            self.time.char_rep
+        )
+        super(Measure, self).save(force_insert, force_update, *args, **kwargs)

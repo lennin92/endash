@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for endash project.
 
@@ -76,7 +77,7 @@ ROOT_URLCONF = 'endash.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/lennin92/endash/templates/'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,8 +146,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/lennin92/endash/static/'
-MEDIA_ROOT = '/home/lennin92/endash/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -159,3 +159,10 @@ REST_FRAMEWORK = {
     )
 }
 
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
+
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
