@@ -26,7 +26,7 @@ SECRET_KEY = '#399&n1*)by_)ej3p2xztr2ml+i3sf%pb!#283%5hw2k9e%asn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lennin92.pythonanywhere.com']
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyAp1xZSLF6qDUKxQrwJoFR8esKb54P61j4'
 
