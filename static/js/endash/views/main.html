@@ -1,0 +1,13 @@
+<div id="map">
+    <ui-gmap-google-map center="controller.map.center" zoom="controller.map.zoom" options="controller.options">
+        <ui-gmap-markers models="controller.markers" coords="'self'" icon="'icon'" events="controller.markerEvents">
+            <ui-gmap-window show="controller.window.show" coords="controller.window.model"
+                            options="controller.window.options" closeClick="controller.window.closeClick()">
+                <div style="color: black">
+                    {{controller.window.title}}
+                    <a href="/#/nodes/{{ controller.window.model.id }}/">Ver nodo</a>
+                </div>
+            </ui-gmap-window>
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+</div>

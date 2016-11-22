@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from dashboard.models import Node, Month, Day, Year, Time, Measure, TariffSchedule, Supplier
 
@@ -23,8 +24,9 @@ class TimeAdmin(admin.ModelAdmin):
 
 
 class MeasureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'datetime_str_rep',
+    list_display = ('id', 'datetime_str',
                  'active', 'apparent', 'demand', )
+    exclude = ('datetime_str',)
 
 
 class TariffScheduleAdmin(admin.ModelAdmin):
