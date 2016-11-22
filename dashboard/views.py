@@ -74,5 +74,5 @@ measure_list = MeasuresViewSet.as_view({'get': 'node_detail'})
 urls = [
     url(r'^nodes/$', node_list, name='node_list'),
     url(r'^nodes/(?P<pk>[0-9]+)/$', node_detail, name='node_detail'),
-    url(r'^nodes/(?P<node>[0-9]+)/measures$', measure_list, name='measure_list'),
+    url(r'^nodes/(?P<node>[0-9]+)/measures/$', measure_list, name='measure_list'),
 ]

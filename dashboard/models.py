@@ -100,6 +100,9 @@ class Measure(models.Model):
     apparent = models.IntegerField()
     demand = models.FloatField()
     datetime_str = models.CharField(max_length=16, default=None)
+    
+    class Meta:
+        unique_together = ("node", "year", "month", "day", "time")
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         self.datetime_str = '%s-%s-%s %s'%(
