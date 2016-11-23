@@ -28,7 +28,8 @@ class MeasureSerializer(serializers.ModelSerializer):
             'year_id',
             'month_id',
             'day_id',
-            'time_id'
+            'time_id',
+            'node_id'
         )
 
 
