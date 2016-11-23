@@ -24,7 +24,10 @@ class MeasureSerializer(serializers.ModelSerializer):
             'datetime_str',
             'active',
             'apparent',
-            'demand'
+            'demand',
+            'year__id',
+            'month__id',
+            'day__id'
         )
 
 
