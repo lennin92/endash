@@ -25,9 +25,9 @@ class MeasureSerializer(serializers.ModelSerializer):
             'active',
             'apparent',
             'demand',
-            'year__id',
-            'month__id',
-            'day__id'
+            'year_id',
+            'month_id',
+            'day_id'
         )
 
 
