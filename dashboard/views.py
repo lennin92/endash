@@ -44,7 +44,6 @@ class NodeViewSet(viewsets.ModelViewSet):
 class MeasuresViewSet(viewsets.ModelViewSet):
     queryset = Measure.objects.all()
     serializer_class = MeasureSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     @list_route(methods=['get'])
     def node_detail(self, request, node=None):
