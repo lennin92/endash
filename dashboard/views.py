@@ -67,7 +67,7 @@ class MeasuresViewSet(viewsets.ModelViewSet):
         return resp.Response(serializer.data)
     
     @detail_route(methods=['post'])
-    def post(self, request, node=None):
+    def create_measure(self, request, node=None):
         measure = self.get_object()
         serializer = MeasureSerializer(data=request.data)
         if serializer.is_valid():
@@ -83,7 +83,7 @@ class MeasuresViewSet(viewsets.ModelViewSet):
 # Views
 node_list = NodeViewSet.as_view({'get': 'list'})
 node_detail = NodeViewSet.as_view({'get': 'retrieve'})
-measure_list = MeasuresViewSet.as_view({'get': 'node_detail', 'post':'post'})
+measure_list = MeasuresViewSet.as_view({'get': 'node_detail', 'post':'create_measure'})
 measure_last = MeasuresViewSet.as_view({'get': 'last'})
 
 # URLS
