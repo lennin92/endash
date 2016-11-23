@@ -8,9 +8,8 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.conf import settings
-from rest_framework.decorators import list_route
-import json
-
+from rest_framework.decorators import list_route, detail_route
+from django.db.models import Max
 
 class IndexView(TemplateView):
     template_name = 'main.html'
@@ -58,9 +57,14 @@ class MeasuresViewSet(viewsets.ModelViewSet):
             measures = Measure.objects.filter(node__id=node)
         serializer = MeasureSerializer(measures, many=True)
         return resp.Response(serializer.data)
-
-
-
+    
+    @detail_route(methods=['get'])
+    def last(self, request, node=None):
+        fh = Measure.objects.filter(node__id=node).aggregate(Max('datetime_str'))['datetime_str__max']
+        qs = Measure.objects.filter(datetime_str=fh, node__id=node)[0]
+        serializer = MeasureSerializer(qs, many=False)
+        return resp.Response(serializer.data)
+        
 
 
 
@@ -68,6 +72,7 @@ class MeasuresViewSet(viewsets.ModelViewSet):
 node_list = NodeViewSet.as_view({'get': 'list'})
 node_detail = NodeViewSet.as_view({'get': 'retrieve'})
 measure_list = MeasuresViewSet.as_view({'get': 'node_detail'})
+measure_last = MeasuresViewSet.as_view({'get': 'last'})
 
 # URLS
 
@@ -75,4 +80,5 @@ urls = [
     url(r'^nodes/$', node_list, name='node_list'),
     url(r'^nodes/(?P<pk>[0-9]+)/$', node_detail, name='node_detail'),
     url(r'^nodes/(?P<node>[0-9]+)/measures/$', measure_list, name='measure_list'),
+    url(r'^nodes/(?P<node>[0-9]+)/measures/last$', measure_last, name='measure_last'),
 ]
