@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.conf import settings
 from rest_framework.decorators import list_route, detail_route
 from django.db.models import Max
+from rest_framework.response import Response
 
 class IndexView(TemplateView):
     template_name = 'main.html'
@@ -64,14 +65,25 @@ class MeasuresViewSet(viewsets.ModelViewSet):
         qs = Measure.objects.filter(datetime_str=fh, node__id=node)[0]
         serializer = MeasureSerializer(qs, many=False)
         return resp.Response(serializer.data)
-        
+    
+    @detail_route(methods=['post'])
+    def post(self, request, node=None):
+        measure = self.get_object()
+        serializer = MeasureSerializer(data=request.data)
+        if serializer.is_valid():
+            measure.node_id=node
+            node.save()      
+            return Response({'status': 'stored'})  
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 
 # Views
 node_list = NodeViewSet.as_view({'get': 'list'})
 node_detail = NodeViewSet.as_view({'get': 'retrieve'})
-measure_list = MeasuresViewSet.as_view({'get': 'node_detail'})
+measure_list = MeasuresViewSet.as_view({'get': 'node_detail', 'post':'post'})
 measure_last = MeasuresViewSet.as_view({'get': 'last'})
 
 # URLS

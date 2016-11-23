@@ -27,6 +27,13 @@ MONTH_TO_ID = {'11': 11, '01': 1, '03': 3, '07': 7, '02': 2, '10': 10, '04': 4, 
 DAY_TO_ID = {'11': 11, '23': 23, '03': 3, '02': 2, '10': 10, '16': 16, '29': 29, '13': 13, '17': 17, '09': 9, '05': 5, '28': 28, '20': 20, '25': 25, '01': 1, '07': 7, '15': 15, '30': 30, '14': 14, '04': 4, '26': 26, '21': 21, '19': 19, '24': 24, '27': 27, '18': 18, '22': 22, '06': 6, '12': 12, '08': 8}
 
 
+def get_yearid(datetime_str): return YEAR_TO_ID[datetime_str[0:4]]
+
+def get_monthid(datetime_str): return YEAR_TO_ID[datetime_str[5:7]]
+
+def get_dayid(datetime_str): return YEAR_TO_ID[datetime_str[8:10]]
+
+def get_timeid(datetime_str): return YEAR_TO_ID[datetime_str[11:16]]
 
 def ws_exception_handler(req, exc):
     elog('ERROR EN PETICION ' + str(req))
@@ -44,17 +51,66 @@ def tuple2Dict(tuple):
     # nodo, fecha_hora, energia_activa, energia_aparente, demanda
     return {
         'node': tuple[0],
-        'fecha_hora': tuple[1],
-        'energia_activa': tuple[2],
-        'energia_aparente': tuple[3],
-        'demanda': tuple[4],
+        'year_id': get_yearid(tuple[1]),
+        'month_id': get_monthid(tuple[1]),
+        'day_id': get_dayid(tuple[1]),
+        'time_id': get_timeid(tuple[1]),
+        'active': tuple[2],
+        'apparent': tuple[3],
+        'demand': tuple[4],
     }
 
 def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modifier=None):
-    sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
-              "WhTot as energia_activa, VAhTot as energia_aparente, " \
-              "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
-    sql += "WHERE Fecha_hora>%s limit 50;"
+    
+    SQL = """
+SELECT
+%(nodo)s,
+IF (
+    mins % 15 >= 8,
+    DATE_ADD(
+        DATE_FORMAT(
+            fecha_hora,
+            '%Y-%m-%d %H:%i:00'
+        ),
+        INTERVAL 15 - mins % 15 MINUTE
+    ),
+
+IF (
+    mins % 15 = 0,
+    DATE_FORMAT(
+        fecha_hora,
+        '%Y-%m-%d %H:%i:00'
+    ),
+    DATE_SUB(
+        DATE_FORMAT(
+            fecha_hora,
+            '%Y-%m-%d %H:%i:00'
+        ),
+        INTERVAL mins % 15 MINUTE
+    )
+)
+) datetime_str,
+ energia_activa,
+ energia_aparente,
+ demanda
+FROM
+    (
+        SELECT
+            fecha_hora,
+            MINUTE (Fecha_hora) mins,
+            WhTot AS energia_activa,
+            VAhTot AS energia_aparente,
+            Pos_Watts_3ph_Av AS demanda
+        FROM
+            %(table)s
+        WHERE
+            Fecha_hora>%(fh)s limit 50
+    ) bse;    
+    """%{
+        'nodo':node_id,
+        'table':tablename,
+        'fh':'%s'
+    }
     try:
         db=MySQLdb.connect(host=bdparam['DB_HOST'],
                            port=int(bdparam['DB_PORT']),
@@ -90,7 +146,7 @@ def start(dbparam, wsparam, conv):
     # usando el WS en /rest-api/mediciones/<nodo_id>/max/
     ws_host = wsparam['WS_HOST']
     for c in conv:
-        url = ws_host+'/rest-api/mediciones/%d/max/'%(c[0])
+        url = ws_host+'/api/nodes/%d/measures/last'%(c[0])
         response = requests.get(url)
         if response.status_code != 200:
             wlog('Could\'nt download max datetime for node %d, HTTP status %s' % (c[0],response.status_code))
