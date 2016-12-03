@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from dashboard.models import Node, Month, Day, Year, Time, Measure, TariffSchedule, Supplier
+from dashboard.models import Node, Month, Day, Year, Time, Measure, \
+    TariffSchedule, Supplier, TariffValue, TariffVariable, PowerFactorTariff
 
 
 class NodeAdmin(admin.ModelAdmin):
@@ -29,9 +30,20 @@ class MeasureAdmin(admin.ModelAdmin):
     exclude = ('datetime_str',)
 
 
+class TariffVariablesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'consume_begins', 'consume_ends', 'is_fixed')
+
+
+class TariffValuesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'variable', 'charge_value', 'charge_loss_of_transformation')
+
+
+class PowerFactorTariffAdmin(admin.ModelAdmin):
+    list_display = ('id', 'max_power_factor', 'min_power_factor', 'charge_value')
+
+
 class TariffScheduleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'supplier', 'valid_from', 'valid_to',
-            'fixed', 'peak', 'rest', 'valley', 'power')
+    list_display = ('id', 'supplier', 'valid_from', 'valid_to')
 
 
 class SupplierAdmin(admin.ModelAdmin):
@@ -46,3 +58,6 @@ admin.site.register(Time, TimeAdmin)
 admin.site.register(Measure, MeasureAdmin)
 admin.site.register(TariffSchedule, TariffScheduleAdmin)
 admin.site.register(Supplier, SupplierAdmin)
+admin.site.register(TariffValue, TariffValuesAdmin)
+admin.site.register(TariffVariable, TariffVariablesAdmin)
+admin.site.register(PowerFactorTariff, PowerFactorTariffAdmin)

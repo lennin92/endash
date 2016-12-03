@@ -2,6 +2,7 @@
 
 from django.contrib.gis.db import models
 from geoposition.fields import GeopositionField
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 def get_imagen_nodo_dir(obj, filename):
@@ -16,15 +17,43 @@ class Supplier(models.Model):
         return self.name
 
 
+class TariffVariable(models.Model):
+    name = models.CharField(max_length=35)
+    consume_begins = models.TimeField()
+    consume_ends = models.TimeField()
+    is_fixed = models.BooleanField(default=False)
+    calculated_over_demand = models.BooleanField(default=False)
+    calculated_over_demand = models.BooleanField(default=False)
+
+    def __str__(self): return self.name
+
+
+class TariffValue(models.Model):
+    variable = models.ForeignKey('TariffVariable')
+    charge_value = models.FloatField()
+    charge_loss_of_transformation = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+
+    def name(self): return self.variable.name
+
+    def consume_begins(self): return self.variable.consume_begins
+
+    def consume_ends(self): return self.variable.consume_ends
+
+    def is_fixed(self): return self.variable.is_fixed
+
+
+class PowerFactorTariff(models.Model):
+    max_power_factor = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1)])
+    min_power_factor = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1)])
+    charge_value = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+
+
 class TariffSchedule(models.Model):
     supplier = models.ForeignKey('Supplier')
     valid_from = models.DateField()
     valid_to = models.DateField(blank=True, null=True)
-    fixed = models.FloatField()
-    peak = models.FloatField()
-    rest = models.FloatField()
-    valley = models.FloatField()
-    power = models.FloatField()
+    tariff_values = models.ManyToManyField('TariffValue')
+    power_factor_tariff_values = models.ManyToManyField('PowerFactorTariff')
 
     def __str__(self):
         return "Tariff Schedule %s FROM: %s TO: %s"%(self.supplier.name,

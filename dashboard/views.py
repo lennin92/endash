@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from dashboard.models import Node, Measure, Year, Month, Day, Time
-from dashboard.serializers import NodeSerializer, MeasureSerializer
+from dashboard.models import Node, Measure, TariffSchedule
+from dashboard.serializers import NodeSerializer, MeasureSerializer, TariffScheduleSerializer
 from rest_framework import viewsets, permissions, response as resp
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -12,6 +12,7 @@ from rest_framework.decorators import list_route, detail_route
 from django.db.models import Max
 from rest_framework.response import Response
 
+
 class IndexView(TemplateView):
     template_name = 'main.html'
     http_method_names = ['get']
@@ -22,6 +23,12 @@ class IndexView(TemplateView):
             template_name=self.template_name,
             context={'API_KEY': settings.GEOPOSITION_GOOGLE_MAPS_API_KEY}
         )
+
+
+class TariffScheduleViewSet(viewsets.ModelViewSet):
+    queryset = TariffSchedule.objects.all()
+    serializer_class = TariffScheduleSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class NodeViewSet(viewsets.ModelViewSet):
@@ -84,6 +91,7 @@ node_list = NodeViewSet.as_view({'get': 'list'})
 node_detail = NodeViewSet.as_view({'get': 'retrieve'})
 measure_list = MeasuresViewSet.as_view({'get': 'node_detail', 'post':'create_measure'})
 measure_last = MeasuresViewSet.as_view({'get': 'last'})
+tariffschedule_list = TariffScheduleViewSet.as_view({'get': 'list'})
 
 # URLS
 
@@ -92,4 +100,6 @@ urls = [
     url(r'^nodes/(?P<pk>[0-9]+)/$', node_detail, name='node_detail'),
     url(r'^nodes/(?P<node>[0-9]+)/measures/$', measure_list, name='measure_list'),
     url(r'^nodes/(?P<node>[0-9]+)/measures/last$', measure_last, name='measure_last'),
+    url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
+    url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
 ]
