@@ -22,8 +22,6 @@ class TariffVariable(models.Model):
     consume_begins = models.TimeField()
     consume_ends = models.TimeField()
     is_fixed = models.BooleanField(default=False)
-    calculated_over_demand = models.BooleanField(default=False)
-    calculated_over_demand = models.BooleanField(default=False)
 
     def __str__(self): return self.name
 
@@ -80,6 +78,9 @@ class Year(models.Model):
     def __str__(self):
         return self.char_rep
 
+    class Meta:
+        unique_together = (('year',), ('char_rep',))
+
 
 class Month(models.Model):
     month = models.CharField(max_length=15)
@@ -89,6 +90,9 @@ class Month(models.Model):
     def __str__(self):
         return self.char_rep
 
+    class Meta:
+        unique_together = (('month',), ('char_rep',))
+
 
 class Day(models.Model):
     day = models.IntegerField()
@@ -97,6 +101,9 @@ class Day(models.Model):
 
     def __str__(self):
         return self.char_rep
+
+    class Meta:
+        unique_together = (('day',), ('char_rep',))
 
 
 class Time(models.Model):
@@ -108,7 +115,7 @@ class Time(models.Model):
         (16, '16'), (17, '17'), (18, '18'), (19, '19'),
         (20, '20'), (21, '21'), (22, '22'), (23, '23'),
     )
-    MINS  = (
+    MINS = (
         (0, '0'), (15, '15'), (30, '30'), (45, '45'),
     )
     hour = models.IntegerField(blank=False, null=False, choices=HOURS)
@@ -117,6 +124,9 @@ class Time(models.Model):
 
     def __str__(self):
         return self.char_rep
+
+    class Meta:
+        unique_together = (('hour', 'mins', ), ('char_rep',))
 
 
 class Measure(models.Model):

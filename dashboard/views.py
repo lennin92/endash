@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from dashboard.models import Node, Measure, TariffSchedule
+from dashboard.models import Node, Measure, TariffSchedule, Year, Month, Day, Time
 from dashboard.serializers import NodeSerializer, MeasureSerializer, TariffScheduleSerializer
 from rest_framework import viewsets, permissions, response as resp
 from rest_framework import status
@@ -74,10 +74,19 @@ class MeasuresViewSet(viewsets.ModelViewSet):
     
     @detail_route(methods=['post'])
     def create_measure(self, request, node=None):
-        measure = self.get_object()
-        serializer = MeasureSerializer(data=request.data)
+        serializer = MeasureSerializer(data=request.data, many=False)
+        print(request.data)
         if serializer.is_valid():
-            measure.node_id=node
+            measure = Measure()
+            measure.node = Node.objects.get(id=node)
+            datetime_str = request.data['datetime_str']
+            measure.year = Year.objects.find(char_rep=datetime_str[0:4])
+            measure.month = Month.objects.find(char_rep=datetime_str[5:7])
+            measure.day = Day.objects.find(char_rep=datetime_str[8:10])
+            measure.time = Time.objects.find(char_rep=datetime_str[11:16])
+            measure.demand = request.data['demand']
+            measure.active = request.data['active']
+            measure.apparent = request.data['apparent']
             node.save()      
             return Response({'status': 'stored'})  
         else:
@@ -90,6 +99,7 @@ class MeasuresViewSet(viewsets.ModelViewSet):
 node_list = NodeViewSet.as_view({'get': 'list'})
 node_detail = NodeViewSet.as_view({'get': 'retrieve'})
 measure_list = MeasuresViewSet.as_view({'get': 'node_detail', 'post':'create_measure'})
+# measure_list2 = MeasuresViewSet.as_view({'post':'create_measure'})
 measure_last = MeasuresViewSet.as_view({'get': 'last'})
 tariffschedule_list = TariffScheduleViewSet.as_view({'get': 'list'})
 
@@ -99,7 +109,8 @@ urls = [
     url(r'^nodes/$', node_list, name='node_list'),
     url(r'^nodes/(?P<pk>[0-9]+)/$', node_detail, name='node_detail'),
     url(r'^nodes/(?P<node>[0-9]+)/measures/$', measure_list, name='measure_list'),
-    url(r'^nodes/(?P<node>[0-9]+)/measures/last$', measure_last, name='measure_last'),
+    # url(r'^nodes/(?P<node>[0-9]+)/measures/add/$', measure_list2, name='measure_list2'),
+    url(r'^nodes/(?P<node>[0-9]+)/measures/last/$', measure_last, name='measure_last'),
     url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
     url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
 ]
