@@ -71,7 +71,7 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
     sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
               "WhTot as energia_activa, VAhTot as energia_aparente, " \
               "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
-    sql += "WHERE Fecha_hora>%s limit 50;"
+    sql += "WHERE Fecha_hora>%s limit 25;"
     try:
         db=MySQLdb.connect(host=bdparam['DB_HOST'],
                            port=int(bdparam['DB_PORT']),
@@ -144,8 +144,8 @@ if __name__=='__main__':
     # PARAMETROS DE CONEXION DE SERVICIO WEB (WS)
     WS_USER = 'updater'
     WS_PASS = 'updater123'
-    # WS_HOST = 'http://lennin92.pythonanywhere.com'
-    WS_HOST = 'http://localhost:8000'
+    WS_HOST = 'http://lennin92.pythonanywhere.com'
+    # WS_HOST = 'http://localhost:8000'
 
     WSP = {'WS_USER':WS_USER, 'WS_PASS':WS_PASS, 'WS_HOST':WS_HOST}
 
@@ -162,7 +162,7 @@ if __name__=='__main__':
         (18,'Humanidades2'), (26,'Humanidades3'), (25,'Humanidades4'),
         (14,'MecanicaComplejo'), (38,'Medicina'), (39,'Odontologia1'), (36,'Odontologia2'),
         (37,'Odontologia3'), (34,'OdontologiaImprenta'), (29L,'Periodismo'), (12,'PrimarioFIA'),
-        (30,'Quimica'), (31,'QuimicaAgronomia'), (33,'QuimicaOdontologia')
+        (30,'Quimica'), (31,'QuimicaAgronomia'), # (33,'QuimicaOdontologia')
     ]
 
     start(SDBP, WSP, CONVERSIONES)
