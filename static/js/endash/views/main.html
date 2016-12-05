@@ -1,15 +1,60 @@
-<div id="map">
-    <ui-gmap-google-map center="controller.map.center" zoom="controller.map.zoom" options="controller.options">
-        <ui-gmap-markers models="controller.markers" coords="'self'" icon="'icon'" events="controller.markerEvents">
-            <ui-gmap-window show="controller.window.show" coords="controller.window.model"
-                            options="controller.window.options" closeClick="controller.window.closeClick()">
-                <div style="color: black">
-                    {{controller.window.title}}
-                    <a href="/#/nodes/{{ controller.window.model.id }}/">Ver nodo</a>
-                </div>
-            </ui-gmap-window>
-        </ui-gmap-markers>
-         <ui-gmap-polyline ng-repeat="p in controller.lines" path="p.path" stroke="p.stroke" visible='p.visible'
-                  geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" ></ui-gmap-polyline>
-    </ui-gmap-google-map>
+<!-- LEFT-PANEL -->
+<div id="left-panel">
+
+	<!-- NODE LIST -->
+	<div id="node-list" class="node-list">
+		<div class="node-container" ng-repeat="n in controller.nodes"
+		ng-class="{{ n.class }}" ng-click="n.loadNode()">
+			<div class="node-name">
+				<h4>{{ n.name }}</h4>
+				{{n.class}}
+			</div>
+			<div class="node-image">
+				<img href="#" alt="node-{{ n.id }}" src="{{ n.photography }}" />
+			</div>
+		</div>
+	</div>
+	<!-- /NODE LIST -->
+	
+	<!-- MINIMAP -->	
+	<div id="node-show" ng-show="!controller.showMainMap">
+		MINIMAP
+	</div>
+	<!-- /MINIMAP -->
 </div>
+<!-- /LEFT-PANEL -->
+
+<!-- MAIN-PANEL -->
+<div id="main-panel">
+
+	<!-- MAP -->
+	<div id="map" ng-show="controller.showMainMap">
+		<ui-gmap-google-map center="controller.map.center"
+			zoom="controller.map.zoom" options="controller.options">
+	
+		<ui-gmap-markers models="controller.markers" coords="'self'"
+			icon="'icon'" events="controller.markerEvents"> <ui-gmap-window
+			show="controller.window.show" coords="controller.window.model"
+			options="controller.window.options"
+			closeClick="controller.window.closeClick()">
+		<div style="color: black">
+			{{controller.window.title}} 
+			<a ng-click="n.loadNode()">Ver nodo</a>
+		</div>
+		</ui-gmap-window> </ui-gmap-markers> <ui-gmap-polyline ng-repeat="p in controller.lines" path="p.path"
+			stroke="p.stroke" visible='p.visible' geodesic='p.geodesic'
+			fit="false" editable="p.editable" draggable="p.draggable"></ui-gmap-polyline>
+		</ui-gmap-google-map>
+	</div>
+	<!-- /MAP -->
+	
+	<!-- NODE -->
+	<div id="node-show" ng-show="!controller.showMainMap">
+		<a href="#" ng-click="controller.reset()">Ver Mapa</a>
+		NODE VIEW	
+	</div>
+	<!-- /NODE -->
+	
+	
+</div>
+<!-- /MAIN-PANEL -->

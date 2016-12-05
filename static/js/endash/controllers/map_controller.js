@@ -61,6 +61,25 @@ MapControllers.controller('MapController',
                             latitude:node.latitude,
                             longitude:node.longitude
                         };
+                        
+                        // add last measure to node
+                        $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
+                        	node.last = response.data;
+                        	dt = moment(node.last.datetime_str);
+                        	dta = moment();
+                        	if(dt-dta>15){
+                        		node.class="green";
+                        	}else{
+                        		node.class="red";                        		
+                        	}
+                        });
+                        
+                        // fix picture path
+                        if (node.photography==null){
+                        	node.photography="/static/img/no_pic.png";
+                        }
+                        
+                        node.loadNode = function(){vm.loadNode(node.id)};
                     }
                     // create lines objects
                     for(var i=0;i<nodes.length; i++){
@@ -90,8 +109,66 @@ MapControllers.controller('MapController',
 
         vm.map = mapOptions;
         vm.options= {scrollwheel: true};
+        
+        
+
+		vm.beginDate = moment().subtract(17, 'days');
+		vm.endDate = moment();
+		vm.measures = [];
+		vm.node = null;
+		vm.showMainMap = true;
+		
+		vm.loadMeasures = function(nodeid){
+			var url = "/api/nodes/"+nodeid+"/begin="+vm.beginDate+"&end="+vm.endDate; 
+			$http.get(url)
+			.then(function(response) {
+				vm.measures = response.data;
+			});
+		};
+		
+		vm.loadNode = function(nodeid){
+			var url = "/api/nodes/"+nodeid+"/"; 
+			$http.get(url)
+			.then(function(response) {
+				vm.node = response.data;
+                node.latitude = parseFloat(vm.node.location[0]);
+                node.longitude = parseFloat(vm.node.location[1]);
+                vm.showMainMap = false;
+                
+                // add last measure to node
+                $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
+                	node.last = response.data;
+                	dt = moment(node.last.datetime_str);
+                	dta = moment();
+                	if(dt-dta>15){
+                		node.class="green";
+                	}else{
+                		node.class="red";                        		
+                	}
+                });
+                
+                // fix picture path
+                if (node.photography==null){
+                	node.photography="/static/img/no_pic.png";
+                }
+                
+                vm.loadMeasures(vm.node.id);
+                
+			});		
+		};
+		
+		vm.reset = function(){
+			vm.measures = [];
+			vm.node = null;
+			vm.showMainMap = true;			
+		};
+        
+        
+        
         uiGmapGoogleMapApi.then(function(maps) {
             loadMarkersAndLines();
         });
+        
+        
 
     }]);
