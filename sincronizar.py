@@ -3,6 +3,8 @@ import MySQLdb
 import requests
 import grequests
 import logging
+import datetime
+
 
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', filename='log.txt', level=logging.DEBUG)
 
@@ -33,9 +35,28 @@ def postAllDemandas(wsparam, demand_list, url):
 def tuple2Dict(tuple):
     # ORDEN DE TUPLA
     # nodo, fecha_hora, energia_activa, energia_aparente, demanda
+    tm = tuple[1]
+    time = tm.strftime("%Y-%m-%d %H:%M:%S")
+    year = time[0:4]
+    month = time[5:7]
+    day = time[8:10]
+    time_hour = time[11:13]
+    time_mins = int(time[14:16])
+    # minute round to 15 mins
+    if time_mins%15 != 0:
+        tmod15 = time_mins%15
+        t15 = tmod15%15
+        if t15 > 0.5:
+            tm += datetime.timedelta(minutes=15-tmod15)
+        else:
+            tm -= datetime.timedelta(minutes=tmod15)
+            # time_mins -= tmod15
+    # time_mins = str(time_mins).zfill(2)
+    # datetime_str = '%s-%s-%s %s:%s'%(year, month, day, time_hour, time_mins)
+    datetime_str = tm.strftime("%Y-%m-%d %H:%M:%S")
     return {
         'node_id': tuple[0],
-        'datetime_str': tuple[1],
+        'datetime_str': datetime_str,
         'year_id': '',
         'month_id': '',
         'day_id': '',
@@ -144,6 +165,6 @@ if __name__=='__main__':
         (30,'Quimica'), (31,'QuimicaAgronomia'), (33,'QuimicaOdontologia')
     ]
 
-    start(SDBP, WSP, CONVERSIONES[0:2])
+    start(SDBP, WSP, CONVERSIONES)
 
 

@@ -74,25 +74,18 @@ class MeasuresViewSet(viewsets.ModelViewSet):
     
     @detail_route(methods=['post'])
     def create_measure(self, request, node=None):
-        serializer = MeasureSerializer(data=request.data, many=False)
-        print(request.data)
-        if serializer.is_valid():
-            measure = Measure()
-            measure.node = Node.objects.get(id=node)
-            datetime_str = request.data['datetime_str']
-            measure.year = Year.objects.find(char_rep=datetime_str[0:4])
-            measure.month = Month.objects.find(char_rep=datetime_str[5:7])
-            measure.day = Day.objects.find(char_rep=datetime_str[8:10])
-            measure.time = Time.objects.find(char_rep=datetime_str[11:16])
-            measure.demand = request.data['demand']
-            measure.active = request.data['active']
-            measure.apparent = request.data['apparent']
-            node.save()      
-            return Response({'status': 'stored'})  
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
+        measure = Measure()
+        measure.node = Node.objects.get(id=node)
+        datetime_str = request.data['datetime_str']
+        measure.year = Year.objects.get(year=datetime_str[0:4])
+        measure.month = Month.objects.get(char_rep=datetime_str[5:7])
+        measure.day = Day.objects.get(char_rep=datetime_str[8:10])
+        measure.time = Time.objects.get(char_rep=datetime_str[11:16])
+        measure.demand = request.data['demand']
+        measure.active = request.data['active']
+        measure.apparent = request.data['apparent']
+        measure.save()
+        return Response({'status': 'stored'})
 
 
 # Views
