@@ -10,11 +10,15 @@ MapControllers.controller('MapController',
         var vm = this;
         vm.markers = [];
 		vm.nodes = {};
+		vm.nodeid=null;
 
-        var mapOptions = {
-            zoom: 17,
-            center:  {latitude: 13.7193289, longitude: -89.2027828}
-        };
+        // PolyLines array (object array containing latitude and longitude)
+        vm.lines = [];
+        // Coordinates array: object that maps node id with its latitude and longitude.
+        vm.coordinates={};
+        vm.options= {scrollwheel: true};
+        vm.map = {zoom: 17, center: {latitude: 13.7193289, longitude: -89.2027828}};
+        vm.node_list_class = "node-list-detail-nominimap";
 
         vm.window= {
             marker: {},
@@ -34,13 +38,9 @@ MapControllers.controller('MapController',
                 vm.window.model = node;
                 vm.window.title = node.name;
                 vm.window.show = true;
+        		vm.nodeid=node.id;
             }
         };
-
-        // PolyLines array (object array containing latitude and longitude)
-        vm.lines = [];
-        // Coordinates array: object that maps node id with its latitude and longitude.
-        vm.coordinates={};
 
         var loadMarkersAndLines = function(){
             vm.markers = [];
@@ -112,8 +112,6 @@ MapControllers.controller('MapController',
         };
 
 
-        vm.map = mapOptions;
-        vm.options= {scrollwheel: true};
         
         
 
@@ -158,20 +156,24 @@ MapControllers.controller('MapController',
                 }
                 
                 vm.loadMeasures(vm.node.id);
-                
+                vm.node_list_class = "node-list-detail-minimap";
 			});		
 		};
 		
 		vm.reset = function(){
 			vm.measures = [];
 			vm.node = null;
-			vm.showMainMap = true;			
+			vm.showMainMap = true;		
+			vm.node_list_class = "node-list-detail-nominimap";
+			vm.nodeid=null;
 		};
         
         vm.showMainMap = true;
+        vm.altMap = true;
         
         uiGmapGoogleMapApi.then(function(maps) {
             loadMarkersAndLines();
+            vm.altMap = false;
         });
         
         

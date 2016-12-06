@@ -49,4 +49,12 @@ visualifeApp.config(['$routeProvider',
             v: '3',
             libraries: 'weather,geometry,visualization'
     });
+}]).config(['$mdThemingProvider', function($mdThemingProvider){
+	$mdThemingProvider.theme('default').primaryPalette('red',{
+		'default':'900'
+	}).accentPalette('cyan', {
+		'hue-3':'50'		
+	}).warnPalette('orange', {
+		'hue-3':'400'		
+	});
 }]);

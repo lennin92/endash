@@ -5,6 +5,9 @@ from rest_framework.authtoken import views
 from rest_framework_swagger.views import get_swagger_view
 
 from dashboard.views import urls as durls, IndexView
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 schema_view = get_swagger_view(title='UES Energy Dashboard')
 
@@ -16,3 +19,5 @@ urlpatterns = [
     url(r'^swagger/$', schema_view),
     url(r'^$', IndexView.as_view(), name='Main')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

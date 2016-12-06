@@ -7,51 +7,54 @@
     </div>
 </md-toolbar>
 
-<div layout="row" layout-xs="column">
+<md-content layout="row" layout-xs="column" class="main-container">
 
     <!-- LEFT-PANEL -->
-    <div id="left-panel" flex-lt-lg="15" flex-lt-md="30">
-        <div layout="row">
+    <md-content id="left-panel" flex-lt-lg="15" flex-lt-md="30" class="left-panel"> 
+    	
+        <md-content layout="column">
+        	
+        	<md-content class="node-list" flex="100">
+		    	<md-toolbar layout="row" class="md-accent md-hue-3">
+		    		<div class="md-toolbar-tools">
+		    			<span>Nodos:</span>
+		    		</div>
+		    	</md-toolbar>
+		    	<md-content ng-class="controller.node_list_class">
+		    		<md-list flex>
+		    			<md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="n.loadNode()" >
+		    				<img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" class="md-avatar" />
+		    				<div class="md-list-item-text" layout="column">
+		    					<h4>{{ n.name }}</h4>
+		    					<p>class {{ n.class }}</p>
+		    				</div>
+		    			</md-list-item>
+		    		</md-list>
+		    	</md-content>
+        	</md-content>
+        	
+        	<md-content ng-hide="controller.showMainMap" flex="30">
+	            <md-content layout="row">
+	                <!-- MINIMAP -->
+	                <md-content id="node-show">
+	                    MINIMAP
+	                </md-content>
+	                <!-- /MINIMAP -->
+	            </md-content>
+            </md-content>
 
-            <div layout="row" flex>
-                <!-- NODE LIST -->
-                <div id="node-list" class="node-list">
-                    <div class="node-container" ng-repeat="n in controller.markers"
-                         ng-click="n.loadNode()">
-                        <div class="{{ n.class }}">
-                            <div class="node-name">
-                                <h4>{{ n.name }}</h4>
-                                class: {{ n.class }}
-                            </div>
-                            <div class="node-image">
-                                <img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /NODE LIST -->
-            </div>
-
-            <div layout="row">
-                <!-- MINIMAP -->
-                <div id="node-show" ng-hide="controller.showMainMap">
-                    MINIMAP
-                </div>
-                <!-- /MINIMAP -->
-            </div>
-
-        </div>
-    </div>
+        </md-content>
+    </md-content>
     <!-- /LEFT-PANEL -->
 
     <!-- MAIN-PANEL -->
-    <div flex>
-        <div layout="row">
+    <md-content flex>
+        <md-content layout="row">
 
-            <div id="main-panel" flex>
+            <md-content id="main-panel" flex>
 
                 <!-- MAP -->
-                <div id="map" ng-show="{{ controller.showMainMap }}">
+                <md-content id="map" ng-show="controller.showMainMap">
                     <ui-gmap-google-map center="controller.map.center"
                                         zoom="controller.map.zoom" options="controller.options">
 
@@ -62,26 +65,36 @@
                                 closeClick="controller.window.closeClick()">
                             <div style="color: black">
                                 {{controller.window.title}}
-                                <a href="#/" ng-click="n.loadNode()">Ver nodo</a>
+                                <md-buttom class="md-raised md-warn" ng-click="controller.loadNode(controller.nodeid)">
+                                	Ver nodo
+                                </md-buttom>
                             </div>
                         </ui-gmap-window> </ui-gmap-markers> <ui-gmap-polyline ng-repeat="p in controller.lines" path="p.path"
                                                                                stroke="p.stroke" visible='p.visible' geodesic='p.geodesic'
                                                                                fit="false" editable="p.editable" draggable="p.draggable"></ui-gmap-polyline>
                     </ui-gmap-google-map>
-                </div>
+                </md-content>
                 <!-- /MAP -->
 
                 <!-- NODE -->
-                <div id="node-show" ng-hide="{{ controller.showMainMap }}" flex>
-                    <a href="#" ng-click="controller.reset()">Ver Mapa</a>
+                <md-content id="node-show" ng-hide="controller.showMainMap" flex>
+                    <a href="/#/" ng-click="controller.reset()">Ver Mapa</a>
                     NODE VIEW
-                </div>
+                </md-content>
                 <!-- /NODE -->
 
-            </div>
-        </div>
+            </md-content>
+        </md-content>
         <!-- /MAIN-PANEL -->
 
-    </div>
+    </md-content>
 
-</div>
+</md-content>
+
+
+<md-toolbar class="md-tall">
+	<span flex></span>
+    <h5 class="md-toolbar-tools">
+    	<span>UES Energy Dashboard - 2016</span>
+    </h5>
+</md-toolbar>
