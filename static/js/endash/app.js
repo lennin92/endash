@@ -12,7 +12,8 @@ var visualifeApp=angular.module('endashApp',[
     'ngResource',
     'uiGmapgoogle-maps',
     'MapControllers',
-    'NodeControllers'
+    'NodeControllers',
+    'ngMaterial'
 ]);
 
 

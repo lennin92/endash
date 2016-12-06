@@ -9,6 +9,7 @@ MapControllers.controller('MapController',
         // MAP
         var vm = this;
         vm.markers = [];
+		vm.nodes = {};
 
         var mapOptions = {
             zoom: 17,
@@ -54,23 +55,27 @@ MapControllers.controller('MapController',
                         poss = node.location.split(',');
                         node.latitude = parseFloat(poss[0]);
                         node.longitude = parseFloat(poss[1]);
-                        vm.markers.push(node);
+
 
                         // add coordinates to vm.coordinates object
                         vm.coordinates[nodes[i].id] = {
                             latitude:node.latitude,
                             longitude:node.longitude
                         };
-                        
+
+                        node.class = "red-node";
+                        vm.markers.push(node);
+                        vm.nodes[node.id] = node;
                         // add last measure to node
                         $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
-                        	node.last = response.data;
-                        	dt = moment(node.last.datetime_str);
+                            var node2 = vm.nodes[response.data.node_id];
+                        	node2.last = response.data;
+                        	dt = moment(node2.last.datetime_str);
                         	dta = moment();
                         	if(dt-dta>15){
-                        		node.class="green";
+                        		node2.class="green-node";
                         	}else{
-                        		node.class="red";                        		
+                        		node2.class="red-node";
                         	}
                         });
                         
@@ -80,6 +85,7 @@ MapControllers.controller('MapController',
                         }
                         
                         node.loadNode = function(){vm.loadNode(node.id)};
+                        vm.auxnode = null;
                     }
                     // create lines objects
                     for(var i=0;i<nodes.length; i++){
@@ -102,7 +108,6 @@ MapControllers.controller('MapController',
                             geodesic:false
                         });
                     }
-                    console.log(vm.lines);
                 });
         };
 
@@ -119,7 +124,7 @@ MapControllers.controller('MapController',
 		vm.showMainMap = true;
 		
 		vm.loadMeasures = function(nodeid){
-			var url = "/api/nodes/"+nodeid+"/begin="+vm.beginDate+"&end="+vm.endDate; 
+			var url = "/api/nodes/"+nodeid+"/measures/?begin="+vm.beginDate+"&end="+vm.endDate;
 			$http.get(url)
 			.then(function(response) {
 				vm.measures = response.data;
@@ -131,25 +136,25 @@ MapControllers.controller('MapController',
 			$http.get(url)
 			.then(function(response) {
 				vm.node = response.data;
-                node.latitude = parseFloat(vm.node.location[0]);
-                node.longitude = parseFloat(vm.node.location[1]);
+                vm.node.latitude = parseFloat(vm.node.location[0]);
+                vm.node.longitude = parseFloat(vm.node.location[1]);
                 vm.showMainMap = false;
                 
                 // add last measure to node
-                $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
-                	node.last = response.data;
-                	dt = moment(node.last.datetime_str);
+                $http.get("/api/nodes/"+vm.node.id+"/measures/last/").then(function(response){
+                	vm.node.last = response.data;
+                	dt = moment(vm.node.last.datetime_str);
                 	dta = moment();
                 	if(dt-dta>15){
-                		node.class="green";
+                		vm.node.class="green-node";
                 	}else{
-                		node.class="red";                        		
+                		vm.node.class="red-node";
                 	}
                 });
                 
                 // fix picture path
-                if (node.photography==null){
-                	node.photography="/static/img/no_pic.png";
+                if (vm.node.photography==null){
+                	vm.node.photography="/static/img/no_pic.png";
                 }
                 
                 vm.loadMeasures(vm.node.id);
@@ -163,7 +168,7 @@ MapControllers.controller('MapController',
 			vm.showMainMap = true;			
 		};
         
-        
+        vm.showMainMap = true;
         
         uiGmapGoogleMapApi.then(function(maps) {
             loadMarkersAndLines();
