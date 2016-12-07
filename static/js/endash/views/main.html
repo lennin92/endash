@@ -10,37 +10,37 @@
 <md-content layout="row" layout-xs="column" class="main-container">
 
     <!-- LEFT-PANEL -->
-    <md-content id="left-panel" flex-lt-lg="15" flex-lt-md="30" class="left-panel"> 
-    	
+    <md-content id="left-panel" flex-lt-lg="15" flex-lt-md="30" class="left-panel">
+
         <md-content layout="column">
-        	
-        	<md-content class="node-list" flex="100">
-		    	<md-toolbar layout="row" class="md-accent md-hue-3">
-		    		<div class="md-toolbar-tools">
-		    			<span>Nodos:</span>
-		    		</div>
-		    	</md-toolbar>
-		    	<md-content ng-class="controller.node_list_class">
-		    		<md-list flex>
-		    			<md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="n.loadNode()" >
-		    				<img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" class="md-avatar" />
-		    				<div class="md-list-item-text" layout="column">
-		    					<h4>{{ n.name }}</h4>
-		    					<p>class {{ n.class }}</p>
-		    				</div>
-		    			</md-list-item>
-		    		</md-list>
-		    	</md-content>
-        	</md-content>
-        	
-        	<md-content ng-hide="controller.showMainMap" flex="30">
-	            <md-content layout="row">
-	                <!-- MINIMAP -->
-	                <md-content id="node-show">
-	                    MINIMAP
-	                </md-content>
-	                <!-- /MINIMAP -->
-	            </md-content>
+
+            <md-content class="node-list" flex="100">
+                <md-toolbar layout="row" class="md-accent md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Medidores:</span>
+                    </div>
+                </md-toolbar>
+                <md-content ng-class="controller.node_list_class">
+                    <md-list flex="100">
+                        <md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="n.loadNode()" >
+                            <img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" class="md-avatar" />
+                            <div class="md-list-item-text" layout="column">
+                                <h4>{{ n.name }}</h4>
+                                <p>{{ n.desc}}</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-content>
+
+            <md-content ng-hide="controller.showMainMap" flex="30">
+                <md-content layout="row">
+                    <!-- MINIMAP -->
+                    <md-content id="node-show">
+                        MINIMAP
+                    </md-content>
+                    <!-- /MINIMAP -->
+                </md-content>
             </md-content>
 
         </md-content>
@@ -53,32 +53,39 @@
 
             <md-content id="main-panel" flex>
 
-                <!-- MAP -->
-                <md-content id="map" ng-show="controller.showMainMap">
-                    <ui-gmap-google-map center="controller.map.center"
-                                        zoom="controller.map.zoom" options="controller.options">
+                <div class="map-wrapper" ng-show="controller.showMainMap">
+                    <!-- MAP -->
+                        <ng-map id="ngmap1" center="{{ controller.map.center }}" zoom="{{ controller.map.zoom }}"
+                                default-style="false">
+                            <marker ng-repeat="n in controller.markers"
+                                    id="m{{ n.id }}"
+                                    position="{{n.position}}"
+                                    data="{{n}}"
+                                    title="Medidor: {{n.name}}"
+                                    on-click="controller.showDetail(n)"></marker>
+                            <shape ng-repeat="l in controller.lines"
+                                   name="polyline" id="l.id"
+                                   path="{{l.path}}"
+                                   stroke-color="#48ce6e"
+                                   stroke-opacity="1.0"
+                                   stroke-weight="2">
+                            </shape>
 
-                        <ui-gmap-markers models="controller.markers" coords="'self'"
-                                         icon="'icon'" events="controller.markerEvents"> <ui-gmap-window
-                                show="controller.window.show" coords="controller.window.model"
-                                options="controller.window.options"
-                                closeClick="controller.window.closeClick()">
-                            <div style="color: black">
-                                {{controller.window.title}}
-                                <md-buttom class="md-raised md-warn" ng-click="controller.loadNode(controller.nodeid)">
-                                	Ver nodo
-                                </md-buttom>
-                            </div>
-                        </ui-gmap-window> </ui-gmap-markers> <ui-gmap-polyline ng-repeat="p in controller.lines" path="p.path"
-                                                                               stroke="p.stroke" visible='p.visible' geodesic='p.geodesic'
-                                                                               fit="false" editable="p.editable" draggable="p.draggable"></ui-gmap-polyline>
-                    </ui-gmap-google-map>
-                </md-content>
-                <!-- /MAP -->
+                            <info-window id="foo-iw">
+                                <div ng-non-bindable="">
+                                    {{ controller.__node.name }}
+                                    <a href="/#/" class="md-button md-primary md-raised" ng-click="controller.__node.loadNode()">
+                                        Ver nodo
+                                    </a>
+                                </div>
+                            </info-window>
+                        </ng-map>
+                    <!-- /MAP -->
+                </div>
 
                 <!-- NODE -->
-                <md-content id="node-show" ng-hide="controller.showMainMap" flex>
-                    <a href="/#/" ng-click="controller.reset()">Ver Mapa</a>
+                <md-content id="node-show" ng-hide="controller.showMainMap" class="node-view" flex>
+                    <md-button class="md-raised md-accent md-hue-2" href="/#/" ng-click="controller.reset()">Ver Mapa</md-button>
                     NODE VIEW
                 </md-content>
                 <!-- /NODE -->
@@ -92,9 +99,10 @@
 </md-content>
 
 
-<md-toolbar class="md-tall">
-	<span flex></span>
-    <h5 class="md-toolbar-tools">
-    	<span>UES Energy Dashboard - 2016</span>
-    </h5>
+<md-toolbar>
+    <span flex> </span>
+    <span flex> </span>
+    <p class="md-toolbar-tools footer">
+        <span>UES Energy Dashboard - 2016</span>
+    </p>
 </md-toolbar>
