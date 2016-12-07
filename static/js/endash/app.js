@@ -10,7 +10,7 @@ var visualifeApp=angular.module('endashApp',[
     'ngRoute',
     'ngCookies',
     'ngResource',
-    'uiGmapgoogle-maps',
+    'ngMap',
     'MapControllers',
     'NodeControllers',
     'ngMaterial'
@@ -42,19 +42,14 @@ visualifeApp.config(['$routeProvider',
         otherwise({
             redirectTo:'/'
     });
-}]).config(['uiGmapGoogleMapApiProvider',
-    function(uiGmapGoogleMapApiProvider) {
-        uiGmapGoogleMapApiProvider.configure({
-            key: __GOOGLE_API_KEY__,
-            v: '3',
-            libraries: 'weather,geometry,visualization'
-    });
 }]).config(['$mdThemingProvider', function($mdThemingProvider){
-	$mdThemingProvider.theme('default').primaryPalette('red',{
-		'default':'900'
-	}).accentPalette('cyan', {
-		'hue-3':'50'		
-	}).warnPalette('orange', {
-		'hue-3':'400'		
-	});
+
+    $mdThemingProvider.theme('default').primaryPalette('red',{
+        'default':'900'
+    }).accentPalette('cyan', {
+        'hue-3':'50',
+        'hue-2':'800'
+    }).warnPalette('orange', {
+        'hue-3':'400'
+    });
 }]);
