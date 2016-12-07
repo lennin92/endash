@@ -5,5 +5,7 @@
 .node-list-detail-nominimap{height: calc(100vh - 64px - 64px - 64px);}
 .minimap{height: 15vh;}
 #ngmap1{ height: calc(100vh - 64px - 64px); }
+#ngmap2{height: 15vh;}
 .node-view{ height: calc(100vh - 64px - 64px); }
 .footer{font-size: 9pt;}
+#chart{width:100% !important;}

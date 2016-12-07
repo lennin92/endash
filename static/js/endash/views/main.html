@@ -36,8 +36,18 @@
             <md-content ng-hide="controller.showMainMap" flex="30">
                 <md-content layout="row">
                     <!-- MINIMAP -->
-                    <md-content id="node-show">
-                        MINIMAP
+                    <md-content id="node-show" flex>
+                		<div class="map-wrapper2" ng-hide="controller.showMainMap" >
+	                    <!-- MAP -->
+	                        <ng-map id="ngmap2" center="{{ controller.node.position }}" zoom="19"
+	                                default-style="false">
+	                            <marker id="m{{ controller.node.id }}"
+	                                    position="{{controller.node.position}}"
+	                                    data="{{controller.node}}"
+	                                    title="Medidor: {{controller.node.name}}"></marker>
+	                        </ng-map>
+	                    <!-- /MAP -->
+                		</div>
                     </md-content>
                     <!-- /MINIMAP -->
                 </md-content>
@@ -87,6 +97,9 @@
                 <md-content id="node-show" ng-hide="controller.showMainMap" class="node-view" flex>
                     <md-button class="md-raised md-accent md-hue-2" href="/#/" ng-click="controller.reset()">Ver Mapa</md-button>
                     NODE VIEW
+                    
+                    <nvd3 options="controller.chartopts" data="controller.chartdata" id="chart">
+                    </nvd3>
                 </md-content>
                 <!-- /NODE -->
 

@@ -11,6 +11,7 @@ var visualifeApp=angular.module('endashApp',[
     'ngCookies',
     'ngResource',
     'ngMap',
+    'nvd3',
     'MapControllers',
     'NodeControllers',
     'ngMaterial'
