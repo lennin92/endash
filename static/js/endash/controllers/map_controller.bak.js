@@ -26,6 +26,13 @@ MapControllers.controller('MapController',
         vm.coordinates={};
         vm.map = {zoom: 17, center:'13.7193289, -89.2027828'};
 
+		vm.loadMeasures = function(nodeid){
+			var url = "/api/nodes/"+nodeid+"/measures/?begin="+vm.beginDate+"&end="+vm.endDate;
+			$http.get(url)
+			.then(function(response) {
+				vm.measures = response.data;
+			});
+		};
 
 		vm.loadNode = function(nodeid){
 			var url = "/api/nodes/"+nodeid+"/";
