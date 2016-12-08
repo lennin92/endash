@@ -1,7 +1,7 @@
 
 .red-node{background-color: #ffddda;}
 .green-node{background-color: #c8ffdd;}
-.node-list-detail-minimap{height: calc(100vh - 64px - 64px - 64px - 15vh)}
+.node-list-detail-minimap{height: calc(100vh - 64px - 64px - 64px)}
 .node-list-detail-nominimap{height: calc(100vh - 64px - 64px - 64px);}
 .minimap{height: 15vh;}
 #ngmap1{ height: calc(100vh - 64px - 64px); }

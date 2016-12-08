@@ -40,10 +40,11 @@ MapControllers.controller('MapController',
 			.then(function(response) {
 				vm.node = response.data;
 		        $scope.node = vm.node;
+                vm.node.position = vm.node.location;
                 vm.node.latitude = parseFloat(vm.node.location[0]);
                 vm.node.longitude = parseFloat(vm.node.location[1]);
                 vm.showMainMap = false;
-                vm.node_list_class = "node-list-detail-minimap";
+                // vm.node_list_class = "node-list-detail-minimap";
 
                 // add last measure to node
                 $http.get("/api/nodes/"+vm.node.id+"/measures/last/").then(function(response){
@@ -76,7 +77,7 @@ MapControllers.controller('MapController',
                     // Put nodes on vm.markers array
                     for(var i=0;i<nodes.length; i++){
                         node = nodes[i];
-                        poss = node.location.split(',');;
+                        poss = node.location.split(',');
                         node.position = poss;
                         node.latitude = parseFloat(poss[0]);
                         node.longitude = parseFloat(poss[1]);
