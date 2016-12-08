@@ -8,4 +8,10 @@
 #ngmap2{height: 15vh;}
 .node-view{ height: calc(100vh - 64px - 64px); }
 .footer{font-size: 9pt;}
-#chart{width:100% !important;}
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width:80%;
+    height: 95%;
+}

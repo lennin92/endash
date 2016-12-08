@@ -1,9 +1,9 @@
 
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <h3>
+        <h1>
             <span>UES Energy Dashboard</span>
-        </h3>
+        </h1>
     </div>
 </md-toolbar>
 
@@ -75,11 +75,48 @@
 
                 <!-- NODE -->
                 <md-content id="node-show" ng-hide="controller.showMainMap" class="node-view" flex>
-                    <md-button class="md-raised md-accent md-hue-2" href="/#/" ng-click="controller.reset()">Ver Mapa</md-button>
-                    NODE VIEW
                     
-                    <nvd3 options="controller.chartopts" data="controller.chartdata" id="chart" flex>
-                    </nvd3>
+                    <md-toolbar class="md-warn">
+					<div class="md-toolbar-tools">
+						<md-button class="md-raised" aria-label="Go Back" ng-click="controller.reset()"> Ver Mapa </md-button>
+						<h2>
+							<span>{{ controller.node.name }}</span>
+						</h2>
+					</div>
+					</md-toolbar>
+					
+					<md-content>
+					
+			          <md-input-container flex="30">
+			            <label>Fecha de Inicio</label>
+			            <md-datepicker ng-model="user.submissionDate"></md-datepicker>
+			          </md-input-container>
+			          <md-input-container flex="30">
+			            <label>Fecha de Finalizar</label>
+			            <md-datepicker ng-model="user.submissionDate"></md-datepicker>
+			          </md-input-container>
+			          <md-input-container flex="40">
+			          <md-button type="submit" class="md-raised">Actualizar</md-button>
+			          </md-input-container>
+					</md-content>
+					
+					
+					<md-content>
+					TABLAS<br/>
+					TABLAS<br/>
+					TABLAS<br/>
+					TABLAS<br/>
+					TABLAS<br/>
+					</md-content>
+					
+					<md-content layout="column">
+						<div flex-gt="30" flex-sm="100">
+		                    <canvas id="line" class="chart chart-line" chart-data="data"
+								chart-labels="labels" chart-series="series" chart-options="options"
+								chart-dataset-override="datasetOverride" chart-click="onClick">
+							</canvas>
+						</div>
+					</md-content>
                 </md-content>
                 <!-- /NODE -->
 
@@ -93,8 +130,6 @@
 
 
 <md-toolbar>
-    <span flex> </span>
-    <span flex> </span>
     <p class="md-toolbar-tools footer">
         <span>UES Energy Dashboard - 2016</span>
     </p>
