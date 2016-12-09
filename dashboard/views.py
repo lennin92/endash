@@ -59,6 +59,7 @@ class MeasuresViewSet(viewsets.ModelViewSet):
             if 'end' not in request.GET:
                 return resp.Response(status=status.HTTP_400_BAD_REQUEST)
             end = request.GET['end']
+            print(begin,end)
             measures = Measure.objects.filter(node__id=node, datetime_str__range=(begin, end))
         else:
             measures = Measure.objects.filter(node__id=node)

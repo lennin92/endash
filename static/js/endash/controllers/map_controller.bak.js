@@ -9,6 +9,9 @@ MapControllers.controller('MapController',
         // MAP
         var vm = this;
 
+        $scope.fecha_fin = moment().toDate();
+        $scope.fecha_inicio = moment().subtract(7,'day').toDate();
+
         NgMap.getMap("ngmap1").then(function(map) {
             console.log('map', map);
             vm.map = map;
@@ -27,24 +30,35 @@ MapControllers.controller('MapController',
         vm.map = {zoom: 17, center:'13.7193289, -89.2027828'};
 
 		vm.loadMeasures = function(nodeid){
-			var url = "/api/nodes/"+nodeid+"/measures/?begin="+vm.beginDate+"&end="+vm.endDate;
+			var begin = moment($scope.fecha_inicio).format('YYYY-MM-DD HH:mm');
+			var end = moment($scope.fecha_fin).format('YYYY-MM-DD HH:mm');
+			var url = "/api/nodes/"+nodeid+"/measures/?begin="+begin+"&end="+end;
 			$http.get(url)
 			.then(function(response) {
 				vm.measures = response.data;
 			});
 		};
 
+		vm.reset = function(){
+			vm.measures = [];
+			vm.node = null;
+            $scope.node = vm.node;
+			vm.showMainMap = true;
+			vm.node_list_class = "node-list-detail-nominimap";
+			vm.nodeid=null;
+		};
+
 		vm.loadNode = function(nodeid){
 			var url = "/api/nodes/"+nodeid+"/";
-			$http.get(url)
-			.then(function(response) {
-				vm.node = response.data;
+				vm.node = vm.nodes[nodeid];
 		        $scope.node = vm.node;
+                /*
                 vm.node.position = vm.node.location;
                 vm.node.latitude = parseFloat(vm.node.location[0]);
                 vm.node.longitude = parseFloat(vm.node.location[1]);
-                vm.showMainMap = false;
+                */
                 // vm.node_list_class = "node-list-detail-minimap";
+                vm.showMainMap = false;
 
                 // add last measure to node
                 $http.get("/api/nodes/"+vm.node.id+"/measures/last/").then(function(response){
@@ -64,7 +78,6 @@ MapControllers.controller('MapController',
                 }
 
                 vm.loadMeasures(vm.node.id);
-			});
 		};
 
         var loadMarkersAndLines = function(){
@@ -90,20 +103,18 @@ MapControllers.controller('MapController',
                         };
 
                         node.class = "red-node";
-                        vm.markers.push(node);
-                        vm.nodes[node.id] = node;
                         // add last measure to node
                         $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
                             var node2 = vm.nodes[response.data.node_id];
                         	node2.last = response.data;
-                        	dt = moment(node2.last.datetime_str);
+                        	dt = moment(node2.last.datetime_str, "YYYY-MM-DD HH:mm");
                         	dta = moment();
                         	if(dt-dta>15){
                         		node2.class="green-node";
                         	}else{
                         		node2.class="red-node";
                         	}
-                        	node2.desc = "Ultima medicion el: " + dt.fromNow();
+                        	node2.desc = "Ultima medicion " + dt.fromNow();
                         });
                         
                         // fix picture path
@@ -113,6 +124,8 @@ MapControllers.controller('MapController',
                         
                         node.loadNode = function(){vm.loadNode(node.id)};
                         vm.auxnode = null;
+                        vm.markers.push(node);
+                        vm.nodes[node.id] = node;
                     }
                     // create lines objects
                     for(var i=0;i<nodes.length; i++){

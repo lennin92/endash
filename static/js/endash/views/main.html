@@ -22,7 +22,7 @@
                 </md-toolbar>
                 <md-content ng-class="controller.node_list_class">
                     <md-list flex="100">
-                        <md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="n.loadNode()" >
+                        <md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="controller.loadNode(n.id)" >
                             <img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" class="md-avatar" />
                             <div class="md-list-item-text" layout="column">
                                 <h4>{{ n.name }}</h4>
@@ -84,21 +84,53 @@
 						</h2>
 					</div>
 					</md-toolbar>
-					
-					<md-content>
-					
-			          <md-input-container flex="30">
-			            <label>Fecha de Inicio</label>
-			            <md-datepicker ng-model="user.submissionDate"></md-datepicker>
-			          </md-input-container>
-			          <md-input-container flex="30">
-			            <label>Fecha de Finalizar</label>
-			            <md-datepicker ng-model="user.submissionDate"></md-datepicker>
-			          </md-input-container>
-			          <md-input-container flex="40">
-			          <md-button type="submit" class="md-raised">Actualizar</md-button>
-			          </md-input-container>
-					</md-content>
+
+                    <md-content layout="row" flex>
+                        <md-content flex-offset="5" flex="20" layout="column" flex-xs="100">
+                            <md-content layout="row"></md-content>
+                            <md-card>
+                                <img ng-src="{{ controller.node.photography }}">
+                                <md-card-title>
+                                    <md-card-title-text>
+                                        <span class="md-headline">{{ controller.node.name }}</span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                                <md-card-content>
+                                    {{ controller.node.desc }}
+                                    <p>{{ controller.node.description }}</p>
+                                </md-card-content>
+                            </md-card>
+                        </md-content>
+
+                        <md-content flex layout="column" flex-offset="10" flex-xs="100" flex-offset-xs="0">
+
+                            <md-content layout="row" flex>
+                                <md-input-container flex="40">
+                                    <label>Fecha de Inicio</label>
+                                    <md-datepicker ng-model="fecha_inicio"></md-datepicker>
+                                </md-input-container>
+                                <md-input-container flex="40">
+                                    <label>Fecha de Fin</label>
+                                    <md-datepicker ng-model="fecha_fin"></md-datepicker>
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <md-button type="submit" class="md-raised" ng-click="controller.loadMeasures(controller.node.id)">Actualizar</md-button>
+                                </md-input-container>
+                            </md-content>
+
+                            <md-content flex layout="row">
+                                <div flex="70" flex-offset="15">
+                                    <canvas id="line" class="chart chart-line" chart-data="data"
+                                            chart-labels="labels" chart-series="series" chart-options="options"
+                                            chart-dataset-override="datasetOverride" chart-click="onClick">
+                                    </canvas>
+                                </div>
+                            </md-content>
+
+
+                        </md-content>
+
+                    </md-content>
 					
 					
 					<md-content>
@@ -110,12 +142,6 @@
 					</md-content>
 					
 					<md-content layout="column">
-						<div flex-gt="30" flex-sm="100">
-		                    <canvas id="line" class="chart chart-line" chart-data="data"
-								chart-labels="labels" chart-series="series" chart-options="options"
-								chart-dataset-override="datasetOverride" chart-click="onClick">
-							</canvas>
-						</div>
 					</md-content>
                 </md-content>
                 <!-- /NODE -->
