@@ -1,17 +1,34 @@
-
-.red-node{background-color: #ffddda;}
-.green-node{background-color: #c8ffdd;}
-.node-list-detail-minimap{height: calc(100vh - 64px - 64px - 64px)}
-.node-list-detail-nominimap{height: calc(100vh - 64px - 64px - 64px);}
-.minimap{height: 15vh;}
-#ngmap1{ height: calc(100vh - 64px - 64px); }
-#ngmap2{height: 15vh;}
-.node-view{ height: calc(100vh - 64px - 64px); }
-.footer{font-size: 9pt;}
-.chart-container {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-width:80%;
-    height: 95%;
+@media only screen and (max-width: 1279px) {
+    .menu-btn {
+        display:block;
+    }
 }
+
+@media only screen and (min-width: 1280px) {
+    .menu-btn {
+        display:none;
+    }
+    .node-list-detail{height: calc(100vh - 64px - 64px - 64px);}
+}
+
+@media only screen and (max-width: 759px) {
+    .main-panel{ height: calc(100vh - 56px - 56px); width: 100%;}
+    #ngmap1{ height: calc(100vh - 56px - 56px); }
+    .node-view{ height: calc(100vh - 56px - 56px); }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 760px){
+    .main-panel{ height: calc(100vh - 48px - 48px); width: 100%;}
+    #ngmap1{ height: calc(100vh - 48px - 48px); }
+    .node-view{ height: calc(100vh - 48px - 48px); }
+}
+
+@media only screen and (min-width: 960px) {
+    .main-panel{ height: calc(100vh - 64px - 64px);  width: 100%;}
+    #ngmap1{ height: calc(100vh - 64px - 64px); }
+    .node-view{ height: calc(100vh - 64px - 64px); }
+}
+.footer{font-size: 9pt;}
+.sidebar-main{min-width: 300px;}
+.md-error-spacer{display: none;}
+.actualizar-btn{height:40px;}

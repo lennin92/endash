@@ -43,7 +43,8 @@ visualifeApp.config(['$routeProvider',
         otherwise({
             redirectTo:'/'
     });
-}]).config(['$mdThemingProvider', function($mdThemingProvider){
+}]);
+    /*.config(['$mdThemingProvider', function($mdThemingProvider){
 
     $mdThemingProvider.theme('default').primaryPalette('red',{
         'default':'900'
@@ -53,4 +54,4 @@ visualifeApp.config(['$routeProvider',
     }).warnPalette('orange', {
         'hue-3':'400'
     });
-}]);
+}]); */

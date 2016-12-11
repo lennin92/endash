@@ -5,10 +5,12 @@
 var MapControllers=angular.module('MapControllers',[]);
 
 MapControllers.controller('MapController',
-    ['$scope', '$http', 'NgMap', function($scope, $http, NgMap){
+    ['$scope', '$http', 'NgMap', '$mdSidenav', function($scope, $http, NgMap, $mdSidenav){
         // MAP
         var vm = this;
-
+        $scope.toggleSidebar = function(){
+            $mdSidenav('sidebar').toggle();
+        };
         $scope.fecha_fin = moment().toDate();
         $scope.fecha_inicio = moment().subtract(7,'day').toDate();
 
@@ -18,10 +20,10 @@ MapControllers.controller('MapController',
         });
 
         vm.markers = [];
-		vm.nodes = {};
-		vm.nodeid=null;
-		vm.showMainMap=true;
-		vm.__map = null;
+        vm.nodes = {};
+        vm.nodeid=null;
+        vm.showMainMap=true;
+        vm.__map = null;
         vm.node_list_class = "node-list-detail-nominimap";
         // PolyLines array (object array containing latitude and longitude)
         vm.lines = [];
@@ -29,56 +31,56 @@ MapControllers.controller('MapController',
         vm.coordinates={};
         vm.map = {zoom: 17, center:'13.7193289, -89.2027828'};
 
-		vm.loadMeasures = function(nodeid){
-			var begin = moment($scope.fecha_inicio).format('YYYY-MM-DD HH:mm');
-			var end = moment($scope.fecha_fin).format('YYYY-MM-DD HH:mm');
-			var url = "/api/nodes/"+nodeid+"/measures/?begin="+begin+"&end="+end;
-			$http.get(url)
-			.then(function(response) {
-				vm.measures = response.data;
-			});
-		};
-
-		vm.reset = function(){
-			vm.measures = [];
-			vm.node = null;
-            $scope.node = vm.node;
-			vm.showMainMap = true;
-			vm.node_list_class = "node-list-detail-nominimap";
-			vm.nodeid=null;
-		};
-
-		vm.loadNode = function(nodeid){
-			var url = "/api/nodes/"+nodeid+"/";
-				vm.node = vm.nodes[nodeid];
-		        $scope.node = vm.node;
-                /*
-                vm.node.position = vm.node.location;
-                vm.node.latitude = parseFloat(vm.node.location[0]);
-                vm.node.longitude = parseFloat(vm.node.location[1]);
-                */
-                // vm.node_list_class = "node-list-detail-minimap";
-                vm.showMainMap = false;
-
-                // add last measure to node
-                $http.get("/api/nodes/"+vm.node.id+"/measures/last/").then(function(response){
-                	vm.node.last = response.data;
-                	dt = moment(vm.node.last.datetime_str);
-                	dta = moment();
-                	if(dt-dta>15){
-                		vm.node.class="green-node";
-                	}else{
-                		vm.node.class="red-node";
-                	}
+        vm.loadMeasures = function(nodeid){
+            var begin = moment($scope.fecha_inicio).format('YYYY-MM-DD HH:mm');
+            var end = moment($scope.fecha_fin).format('YYYY-MM-DD HH:mm');
+            var url = "/api/nodes/"+nodeid+"/measures/?begin="+begin+"&end="+end;
+            $http.get(url)
+                .then(function(response) {
+                    vm.measures = response.data;
                 });
+        };
 
-                // fix picture path
-                if (vm.node.photography==null){
-                	vm.node.photography="/static/img/no_pic.png";
+        vm.reset = function(){
+            vm.measures = [];
+            vm.node = null;
+            $scope.node = vm.node;
+            vm.showMainMap = true;
+            vm.node_list_class = "node-list-detail-nominimap";
+            vm.nodeid=null;
+        };
+
+        vm.loadNode = function(nodeid){
+            var url = "/api/nodes/"+nodeid+"/";
+            vm.node = vm.nodes[nodeid];
+            $scope.node = vm.node;
+            /*
+             vm.node.position = vm.node.location;
+             vm.node.latitude = parseFloat(vm.node.location[0]);
+             vm.node.longitude = parseFloat(vm.node.location[1]);
+             */
+            // vm.node_list_class = "node-list-detail-minimap";
+            vm.showMainMap = false;
+
+            // add last measure to node
+            $http.get("/api/nodes/"+vm.node.id+"/measures/last/").then(function(response){
+                vm.node.last = response.data;
+                dt = moment(vm.node.last.datetime_str);
+                dta = moment();
+                if(dt-dta>15){
+                    vm.node.class="green-node";
+                }else{
+                    vm.node.class="red-node";
                 }
+            });
 
-                vm.loadMeasures(vm.node.id);
-		};
+            // fix picture path
+            if (vm.node.photography==null){
+                vm.node.photography="/static/img/no_pic.png";
+            }
+
+            vm.loadMeasures(vm.node.id);
+        };
 
         var loadMarkersAndLines = function(){
             vm.markers = [];
@@ -106,22 +108,22 @@ MapControllers.controller('MapController',
                         // add last measure to node
                         $http.get("/api/nodes/"+node.id+"/measures/last/").then(function(response){
                             var node2 = vm.nodes[response.data.node_id];
-                        	node2.last = response.data;
-                        	dt = moment(node2.last.datetime_str, "YYYY-MM-DD HH:mm");
-                        	dta = moment();
-                        	if(dt-dta>15){
-                        		node2.class="green-node";
-                        	}else{
-                        		node2.class="red-node";
-                        	}
-                        	node2.desc = "Ultima medicion " + dt.fromNow();
+                            node2.last = response.data;
+                            dt = moment(node2.last.datetime_str, "YYYY-MM-DD HH:mm");
+                            dta = moment();
+                            if(dt-dta>15){
+                                node2.class="green-node";
+                            }else{
+                                node2.class="red-node";
+                            }
+                            node2.desc = "Ultima medicion " + dt.fromNow();
                         });
-                        
+
                         // fix picture path
                         if (node.photography==null){
-                        	node.photography="/static/img/no_pic.png";
+                            node.photography="/static/img/no_pic.png";
                         }
-                        
+
                         node.loadNode = function(){vm.loadNode(node.id)};
                         vm.auxnode = null;
                         vm.markers.push(node);
@@ -152,33 +154,44 @@ MapControllers.controller('MapController',
         };
 
         loadMarkersAndLines();
+
+
+        vm.showDetail = function(e, node) {
+            vm.__node = node;
+            vm.map.showInfoWindow('foo-iw', 'm' + node.id.toString());
+        };
+
+        vm.hideDetail = function() {
+            vm.map.hideInfoWindow('foo-iw');
+        };
+
         $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
         $scope.series = ['Series A', 'Series B'];
         $scope.data = [
-          [65, 59, 80, 81, 56, 55, 40],
-          [28, 48, 40, 19, 86, 27, 90]
+            [65, 59, 80, 81, 56, 55, 40],
+            [28, 48, 40, 19, 86, 27, 90]
         ];
         $scope.onClick = function (points, evt) {
-          console.log(points, evt);
+            console.log(points, evt);
         };
         $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
         $scope.options = {
-          scales: {
-            yAxes: [
-              {
-                id: 'y-axis-1',
-                type: 'linear',
-                display: true,
-                position: 'left'
-              },
-              {
-                id: 'y-axis-2',
-                type: 'linear',
-                display: true,
-                position: 'right'
-              }
-            ]
-          }
+            scales: {
+                yAxes: [
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        display: true,
+                        position: 'left'
+                    },
+                    {
+                        id: 'y-axis-2',
+                        type: 'linear',
+                        display: true,
+                        position: 'right'
+                    }
+                ]
+            }
         };
 
 

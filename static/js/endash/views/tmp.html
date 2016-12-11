@@ -1,0 +1,147 @@
+
+<md-content layout="row" layout-xs="column" class="main-container">
+
+    <!-- LEFT-PANEL -->
+    <md-content id="left-panel" class="left-panel">
+
+        <md-content layout="column">
+
+            <md-content class="node-list" flex="100">
+                <md-toolbar layout="row" class="md-accent md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Medidores:</span>
+                    </div>
+                </md-toolbar>
+                <md-content ng-class="controller.node_list_class">
+                    <md-list flex="100">
+                        <md-list-item class="md-2-line" ng-repeat="n in controller.markers" ng-click="controller.loadNode(n.id)" >
+                            <img href="#" alt="node-{{ n.id }}" ng-src="{{ n.photography }}" class="md-avatar" />
+                            <div class="md-list-item-text" layout="column">
+                                <h4>{{ n.name }}</h4>
+                                <p>{{ n.desc}}</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-content>
+
+        </md-content>
+    </md-content>
+    <!-- /LEFT-PANEL -->
+
+    <!-- MAIN-PANEL -->
+    <md-content flex>
+        <md-content layout="row">
+
+            <md-content id="main-panel" flex>
+
+                <!-- MAP -->
+                <div class="map-wrapper" ng-show="controller.showMainMap">
+                    <!-- MAP -->
+                    <ng-map id="ngmap1" center="{{ controller.map.center }}" zoom="{{ controller.map.zoom }}"
+                            default-style="false">
+                        <marker ng-repeat="n in controller.markers"
+                                id="m{{ n.id }}"
+                                position="{{n.position}}"
+                                data="{{n}}"
+                                title="Medidor: {{n.name}}"
+                                on-click="controller.showDetail(n)"></marker>
+                        <shape ng-repeat="l in controller.lines"
+                               name="polyline" id="l.id"
+                               path="{{l.path}}"
+                               stroke-color="#48ce6e"
+                               stroke-opacity="1.0"
+                               stroke-weight="2">
+                        </shape>
+
+                        <info-window id="foo-iw">
+                            <div ng-non-bindable="">
+                                {{ controller.__node.name }}
+                                <a href="/#/" class="md-button md-primary md-raised" ng-click="controller.__node.loadNode()">
+                                    Ver nodo
+                                </a>
+                            </div>
+                        </info-window>
+                    </ng-map>
+                    <!-- /MAP -->
+                </div>
+                <!-- /MAP -->
+
+                <!-- NODE -->
+                <md-content id="node-show" ng-hide="controller.showMainMap" class="node-view" flex>
+
+                    <md-toolbar class="md-warn">
+                        <div class="md-toolbar-tools">
+                            <md-button class="md-raised" aria-label="Go Back" ng-click="controller.reset()"> Ver Mapa </md-button>
+                            <h2>
+                                <span>{{ controller.node.name }}</span>
+                            </h2>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content layout="row" flex>
+                        <md-content flex-offset="5" flex="20" layout="column" flex-xs="100">
+                            <md-content layout="row"></md-content>
+                            <md-card>
+                                <img ng-src="{{ controller.node.photography }}">
+                                <md-card-title>
+                                    <md-card-title-text>
+                                        <span class="md-headline">{{ controller.node.name }}</span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                                <md-card-content>
+                                    {{ controller.node.desc }}
+                                    <p>{{ controller.node.description }}</p>
+                                </md-card-content>
+                            </md-card>
+                        </md-content>
+
+                        <md-content flex layout="column" flex-offset="10" flex-xs="100" flex-offset-xs="0">
+
+                            <md-content layout="row" flex>
+                                <md-input-container flex="40">
+                                    <label>Fecha de Inicio</label>
+                                    <md-datepicker ng-model="fecha_inicio"></md-datepicker>
+                                </md-input-container>
+                                <md-input-container flex="40">
+                                    <label>Fecha de Fin</label>
+                                    <md-datepicker ng-model="fecha_fin"></md-datepicker>
+                                </md-input-container>
+                                <md-button type="submit" class="md-raised" ng-click="controller.loadMeasures(controller.node.id)">Actualizar</md-button>
+                            </md-content>
+
+                            <md-content flex layout="row">
+                                <div flex="70" flex-offset="15">
+                                    <canvas id="line" class="chart chart-line" chart-data="data"
+                                            chart-labels="labels" chart-series="series" chart-options="options"
+                                            chart-dataset-override="datasetOverride" chart-click="onClick">
+                                    </canvas>
+                                </div>
+                            </md-content>
+
+
+                        </md-content>
+
+                    </md-content>
+
+
+                    <md-content>
+                        TABLAS<br/>
+                        TABLAS<br/>
+                        TABLAS<br/>
+                        TABLAS<br/>
+                        TABLAS<br/>
+                    </md-content>
+
+                    <md-content layout="column">
+                    </md-content>
+                </md-content>
+                <!-- /NODE -->
+
+            </md-content>
+        </md-content>
+        <!-- /MAIN-PANEL -->
+
+    </md-content>
+
+</md-content>
