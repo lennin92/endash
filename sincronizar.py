@@ -71,7 +71,7 @@ def get_all_node_meditions(bdparam, tablename, node_id, min_date_time, reg_modif
     sql = "SELECT %d as nodo, Fecha_hora as fecha_hora, " \
               "WhTot as energia_activa, VAhTot as energia_aparente, " \
               "Pos_Watts_3ph_Av as demanda FROM %s "%(node_id, tablename)
-    sql += "WHERE Fecha_hora>%s limit 25;"
+    sql += "WHERE Fecha_hora>%s limit 60;"
     try:
         db=MySQLdb.connect(host=bdparam['DB_HOST'],
                            port=int(bdparam['DB_PORT']),
@@ -144,8 +144,8 @@ if __name__=='__main__':
     # PARAMETROS DE CONEXION DE SERVICIO WEB (WS)
     WS_USER = 'updater'
     WS_PASS = 'updater123'
-    # WS_HOST = 'http://lennin92.pythonanywhere.com'
-    WS_HOST = 'http://localhost:8000'
+    WS_HOST = 'http://lennin92.pythonanywhere.com'
+    # WS_HOST = 'http://localhost:8000'
 
     WSP = {'WS_USER':WS_USER, 'WS_PASS':WS_PASS, 'WS_HOST':WS_HOST}
 
