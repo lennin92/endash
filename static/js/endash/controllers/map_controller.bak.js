@@ -38,6 +38,23 @@ MapControllers.controller('MapController',
             $http.get(url)
                 .then(function(response) {
                     vm.measures = response.data;
+                    $scope.labels = [];
+                    $scope.data = [];
+                    var activas = [];
+                    var aparentes = [];
+                    var demandas = [];
+                    for(var i=0; i<vm.measures.length; i++){
+                        var m = vm.measures[i];
+                        $scope.labels.push(m.datetime_str);
+                        demandas.push(m.demand);
+                        aparentes.push(m.apparent);
+                        activas.push(m.active);
+                    }
+                    $scope.data = [
+                        demandas,
+                        activas,
+                        aparentes
+                    ];
                 });
         };
 
@@ -48,6 +65,9 @@ MapControllers.controller('MapController',
             vm.showMainMap = true;
             vm.node_list_class = "node-list-detail-nominimap";
             vm.nodeid=null;
+            $scope.labels = [];
+            $scope.series = ['Demanda', 'Activa', 'Aparente'];
+            $scope.data = [];
         };
 
         vm.loadNode = function(nodeid){
@@ -165,16 +185,13 @@ MapControllers.controller('MapController',
             vm.map.hideInfoWindow('foo-iw');
         };
 
-        $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-        $scope.series = ['Series A', 'Series B'];
-        $scope.data = [
-            [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
-        ];
+        $scope.labels = [];
+        $scope.series = ['Demanda', 'Activa', 'Aparente'];
+        $scope.data = [];
         $scope.onClick = function (points, evt) {
             console.log(points, evt);
         };
-        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }, { yAxisID: 'y-axis-3' }];
         $scope.options = {
             scales: {
                 yAxes: [
@@ -188,6 +205,12 @@ MapControllers.controller('MapController',
                         id: 'y-axis-2',
                         type: 'linear',
                         display: true,
+                        position: 'right'
+                    },
+                    {
+                        id: 'y-axis-3',
+                        type: 'linear',
+                        display: false,
                         position: 'right'
                     }
                 ]

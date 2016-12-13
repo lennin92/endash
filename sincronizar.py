@@ -144,8 +144,8 @@ if __name__=='__main__':
     # PARAMETROS DE CONEXION DE SERVICIO WEB (WS)
     WS_USER = 'updater'
     WS_PASS = 'updater123'
-    WS_HOST = 'http://lennin92.pythonanywhere.com'
-    # WS_HOST = 'http://localhost:8000'
+    # WS_HOST = 'http://lennin92.pythonanywhere.com'
+    WS_HOST = 'http://localhost:8000'
 
     WSP = {'WS_USER':WS_USER, 'WS_PASS':WS_PASS, 'WS_HOST':WS_HOST}
 
