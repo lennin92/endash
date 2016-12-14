@@ -30,6 +30,12 @@ class TariffScheduleViewSet(viewsets.ModelViewSet):
     serializer_class = TariffScheduleSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+    @detail_route(methods=['get'])
+    def list(self, request, supplier, *args, **kwargs):
+        queryset = TariffSchedule.objects.filter(supplier_id=supplier)
+        serializer = TariffScheduleSerializer(queryset, many=True)
+        return resp.Response(serializer.data)
+    
 
 class NodeViewSet(viewsets.ModelViewSet):
     queryset = Node.objects.all()
@@ -108,6 +114,6 @@ urls = [
     url(r'^nodes/(?P<node>[0-9]+)/measures/$', measure_list, name='measure_list'),
     # url(r'^nodes/(?P<node>[0-9]+)/measures/add/$', measure_list2, name='measure_list2'),
     url(r'^nodes/(?P<node>[0-9]+)/measures/last/$', measure_last, name='measure_last'),
-    url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
-    url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
+    url(r'^tariff_schedule/(?P<supplier>[0-9]+)/$', tariffschedule_list, name='tariffschedule_list'),
+    #url(r'^tariff_schedule/$', tariffschedule_list, name='tariffschedule_list'),
 ]

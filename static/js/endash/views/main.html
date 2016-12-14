@@ -100,6 +100,15 @@
                         <md-card-content>
                             {{ controller.node.desc }}
                             <p>{{ controller.node.description }}</p>
+                            <md-divider></md-divider>
+                            <md-content layout="row">
+                            	<div flex="65">
+                            		<p>Proveedor {{ controller.node.supplier.name }}</p>
+                            	</div>
+                            	<div flex>
+                            		<img height="40px" ng-src="{{ controller.node.supplier.logo }}">
+                            	</div>
+                            <md-content>                            
                         </md-card-content>
                     </md-card>
                 </md-content>
@@ -107,7 +116,7 @@
 
 
                 <!-- MEASURES INFO -->
-                <md-content layout="column" flex="70">
+                <md-content layout="column" flex="80">
 
                     <!-- DATE RANGE -->
                     <md-content layout="row" layout-sm="column" laflex>
@@ -170,25 +179,9 @@
                                 <md-content>
                                     <md-list>
                                         <md-subheader>Tarifa aplicada</md-subheader>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Energia en punta USD/kWh</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Energia en resto USD/kWh</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Energia en valle USD/kWh</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo de distribución USD/kWh-mes</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo de comercialización USD/kWh-mes</p></div>
-                                            <div flex><p>asdas</p></div>
+                                        <md-list-item layout="row" ng-repeat="tariff in controller.pliego.tariff_values">
+                                            <div flex="70"><p>{{ tariff.name }}</p></div>
+                                            <div flex><p>{{ tariff.charge_value }} <span style="font-size: 9pt">{{ tariff.unit_of_measurement }}</span></p></div>
                                         </md-list-item>
                                     </md-list>
                                     <md-divider></md-divider>
@@ -196,25 +189,9 @@
                                 <md-content>
                                     <md-list>
                                         <md-subheader>Lecturas</md-subheader>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Consumo en punta</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Consumo en resto</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Consumo en valle</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Demanda máxima</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Factor de potencia</p></div>
-                                            <div flex><p>asdas</p></div>
+                                        <md-list-item layout="row" ng-repeat="lectura in controller.lecturas">
+                                            <div flex="70"><p>{{ lectura.name }}</p></div>
+                                            <div flex><p>{{ lectura.consumo }}</p></div>
                                         </md-list-item>
                                     </md-list>
                                     <md-divider></md-divider>
@@ -247,7 +224,7 @@
                                             <div flex><p>asdas</p></div>
                                         </md-list-item>
                                         <md-list-item layout="row">
-                                            <div flex="80"><p>IVA/p></div>
+                                            <div flex="80"><p>IVA</p></div>
                                             <div flex><p>asdas</p></div>
                                         </md-list-item>
                                         <md-list-item layout="row">

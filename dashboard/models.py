@@ -22,6 +22,8 @@ class TariffVariable(models.Model):
     consume_begins = models.TimeField()
     consume_ends = models.TimeField()
     is_fixed = models.BooleanField(default=False)
+    over_max_demand = models.BooleanField(default=False)
+    unit_of_measurement = models.CharField(max_length=35, blank=True, null=True)
 
     def __str__(self): return self.name
 
@@ -30,7 +32,7 @@ class TariffValue(models.Model):
     variable = models.ForeignKey('TariffVariable')
     charge_value = models.FloatField()
     charge_loss_of_transformation = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-
+    
     def name(self): return self.variable.name
 
     def consume_begins(self): return self.variable.consume_begins
@@ -38,12 +40,23 @@ class TariffValue(models.Model):
     def consume_ends(self): return self.variable.consume_ends
 
     def is_fixed(self): return self.variable.is_fixed
+    
+    def over_max_demand(self): return self.variable.over_max_demand
+    
+    def unit_of_measurement(self): return self.variable.unit_of_measurement
+    
+    def __str__(self): return  '%s : $ %f'%(self.name(), self.charge_value)
 
 
 class PowerFactorTariff(models.Model):
     max_power_factor = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1)])
     min_power_factor = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1)])
     charge_value = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    charge_value_to_max = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0.0)
+    
+    def __str__(self): return 'Desde %.2f hasta %.2f: %.2f + %.2f por centesima hasta llegar a %.2f.'%(
+            self.min_power_factor, self.max_power_factor, self.charge_value, 
+            self.charge_value_to_max, self.max_power_factor)
 
 
 class TariffSchedule(models.Model):
