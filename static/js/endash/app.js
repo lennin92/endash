@@ -43,6 +43,15 @@ visualifeApp.config(['$routeProvider',
         otherwise({
             redirectTo:'/'
     });
+}]).config(['ChartJsProvider', function (ChartJsProvider) {
+  ChartJsProvider.setOptions({
+      colors : [
+          '#803690',
+          '#00ADF9',
+          '#46BFBD',
+          '#FDB45C',
+          '#949FB1'
+      ]});
 }]);
     /*.config(['$mdThemingProvider', function($mdThemingProvider){
 

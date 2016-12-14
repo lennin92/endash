@@ -216,6 +216,13 @@ MapControllers.controller('MapController',
                 ]
             }
         };
+        $scope.colors = [
+          '#803690',
+          '#00ADF9',
+          '#FDB45C',
+          '#bf0006',
+          '#949FB1'
+      ]
 
 
     }]);

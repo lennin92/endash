@@ -85,7 +85,10 @@ class MeasuresViewSet(viewsets.ModelViewSet):
         measure.demand = request.data['demand']
         measure.active = request.data['active']
         measure.apparent = request.data['apparent']
-        measure.save()
+        try:
+            measure.save()
+        except Exception as e:
+            print("ERROR ON SAVING")
         return Response({'status': 'stored'})
 
 
