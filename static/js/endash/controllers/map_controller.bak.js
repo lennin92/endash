@@ -61,17 +61,32 @@ MapControllers.controller('MapController',
                     	vm.pliego = response.data[0];
                     	vm.lecturas = [];
                     	var format = 'hh:mm:ss';
-                    	for(var j=0;j<vm.pliego.tariff_values;j++){
+                    	for(var j=0;j<vm.pliego.tariff_values.length;j++){
                     		var variable = vm.pliego.tariff_values[j];
-                    		var var_begin = moment(variable.consume_begins, format);
-                    		var var_ends = moment(variable.consume_begins, format);
-                    		var lecs = {name:variable.name} , sum=0.0;
-                    		for(var x=0; x<vm.measures.length; x++){
-                    			var measure = vm.measures[x];
-                    			var mea_time = moment(measure.datetime_str.substring(11), format);
-                    			if(mea_time.isBetween(var_begin, var_ends)){
-                    				sum += measure.demand;
-                    			}
+                    		var lecs = {name:"Consumo en " + variable.name} , sum=0.0;
+                    		if(variable.over_max_demand){
+                    			var max=0;
+	                    		for(var u=0; u<vm.measures.length; u++){
+	                    			var measure = vm.measures[u];
+	                    			if(max<measure.demand) max=measure.demand;
+	                    		}
+	                    		sum=max;
+                    		} else if(variable.is_fixed){
+                    			sum=variable.charge_value;
+                    		} else {
+                        		var var_begin = moment(variable.consume_begins, format);
+                        		var var_ends = moment(variable.consume_ends, format);
+	                    		for(var x=0; x<vm.measures.length; x++){
+	                    			var measure = vm.measures[x];
+	                    			var mea_time = moment(measure.datetime_str.substring(11), format);
+	                    			if(var_ends.isBefore(var_begin)){
+	                    				if(mea_time.isBetween(var_begin, moment("23:59:59",format)) || mea_time.isBetween(moment("00:00:00",format), var_ends)){
+		                    				sum = sum + measure.demand;
+		                    			}
+	                    			} else if(mea_time.isBetween(var_begin, var_ends)){
+	                    				sum = sum + measure.demand;
+	                    			}
+	                    		}
                     		}
                 			lecs.consumo = sum;
                         	vm.lecturas.push(lecs);
