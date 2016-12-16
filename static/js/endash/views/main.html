@@ -154,7 +154,8 @@
                         <!-- BILL INFO -->
                         <md-tab label="Factura">
                             <md-content layout="column">
-                                <md-content>
+                                <!--
+                                <md-content> 
                                     <md-list>
                                         <md-subheader>Detalles del grafico</md-subheader>
                                         <md-list-item layout="row">
@@ -176,6 +177,7 @@
                                     </md-list>
                                     <md-divider></md-divider>
                                 </md-content>
+                                 -->
                                 <md-content>
                                     <md-list>
                                         <md-subheader>Tarifa aplicada</md-subheader>
@@ -199,37 +201,9 @@
                                 <md-content>
                                     <md-list>
                                         <md-subheader>Tarifa aplicada</md-subheader>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo por energia en punta USD</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo por energia en resto USD</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo por energia en valle USD</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Cargo de distribución USD</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Recargo de comercialización</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Subtotal</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>IVA</p></div>
-                                            <div flex><p>asdas</p></div>
-                                        </md-list-item>
-                                        <md-list-item layout="row">
-                                            <div flex="80"><p>Total</p></div>
-                                            <div flex><p>asdas</p></div>
+                                        <md-list-item layout="row" ng-repeat="cargo in controller.facturacion">
+                                            <div flex="80"><p>{{ cargo.name }}</p></div>
+                                            <div flex><p>{{ cargo.cargo | currency:"USD$" }}</p></div>
                                         </md-list-item>
                                     </md-list>
                                 </md-content>

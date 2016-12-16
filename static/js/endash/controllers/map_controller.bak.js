@@ -60,10 +60,12 @@ MapControllers.controller('MapController',
                     $http.get('/api/tariff_schedule/'+vm.node.supplier.id+'/').then(function(response){
                     	vm.pliego = response.data[0];
                     	vm.lecturas = [];
+                    	vm.facturacion = [];
                     	var format = 'hh:mm:ss';
                     	for(var j=0;j<vm.pliego.tariff_values.length;j++){
                     		var variable = vm.pliego.tariff_values[j];
                     		var lecs = {name:"Consumo en " + variable.name} , sum=0.0;
+                    		var cargo = {name: 'Cargo por ' + variable.name}, v_cargo=1;
                     		if(variable.over_max_demand){
                     			var max=0;
 	                    		for(var u=0; u<vm.measures.length; u++){
@@ -71,8 +73,10 @@ MapControllers.controller('MapController',
 	                    			if(max<measure.demand) max=measure.demand;
 	                    		}
 	                    		sum=max;
+	                    		v_cargo=sum*variable.charge_value / 1000.0;
                     		} else if(variable.is_fixed){
                     			sum=variable.charge_value;
+	                    		v_cargo=sum;
                     		} else {
                         		var var_begin = moment(variable.consume_begins, format);
                         		var var_ends = moment(variable.consume_ends, format);
@@ -81,16 +85,28 @@ MapControllers.controller('MapController',
 	                    			var mea_time = moment(measure.datetime_str.substring(11), format);
 	                    			if(var_ends.isBefore(var_begin)){
 	                    				if(mea_time.isBetween(var_begin, moment("23:59:59",format)) || mea_time.isBetween(moment("00:00:00",format), var_ends)){
-		                    				sum = sum + measure.demand;
+		                    				sum = sum + measure.active;
 		                    			}
 	                    			} else if(mea_time.isBetween(var_begin, var_ends)){
-	                    				sum = sum + measure.demand;
+	                    				sum = sum + measure.active;
 	                    			}
 	                    		}
+	                    		v_cargo = variable.charge_value * sum / 1000.0;
                     		}
                 			lecs.consumo = sum;
+                			cargo.cargo = v_cargo;
                         	vm.lecturas.push(lecs);
+                        	vm.facturacion.push(cargo);
                     	}
+                    	var subtotal=0.0, iva=0.0, total=0.0;
+                    	for(var k=0;k<vm.facturacion.length;k++){
+                    		subtotal = subtotal + vm.facturacion[k].cargo;
+                    	}
+                    	iva = 0.13 * subtotal;
+                    	total = iva + subtotal;
+                    	vm.facturacion.push({name:'Subtotal', cargo: subtotal});
+                    	vm.facturacion.push({name:'IVA', cargo: iva});
+                    	vm.facturacion.push({name:'Total', cargo: total});
                     });
                 });
         };
